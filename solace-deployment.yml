@@ -6,10 +6,6 @@ releases:
   version: latest
 - name: solace-messaging
   version: latest
-stemcells:
-- alias: default
-  os: ubuntu-trusty
-  version: '3468'
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -23,8 +19,7 @@ instance_groups:
 - name: Shared-VMR
   stemcell: default
   instances: 0
-  vm_type: small-highmem
-  memory: 6144
+  vm_type: solace.medium
   azs:
   - z1
   - z2
@@ -88,8 +83,6 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      memory: 4G
-      memory_swap: 6G
       name: solace
       net: host
       privileged: true
@@ -125,9 +118,8 @@ instance_groups:
     vmr_agent_port: 18080
 - name: Community-VMR
   stemcell: default
-  instances: 0
-  vm_type: small-highmem
-  memory: 6144
+  instances: 1
+  vm_type: solace.medium
   azs:
   - z1
   - z2
@@ -164,8 +156,6 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      memory: 4G
-      memory_swap: 6G
       name: solace
       net: host
       privileged: true
@@ -229,8 +219,7 @@ instance_groups:
 - name: Large-HA-VMR
   stemcell: default
   instances: 0
-  vm_type: small-highmem
-  memory: 6144
+  vm_type: solace.large
   azs:
   - z1
   - z2
@@ -294,8 +283,6 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      memory: 4G
-      memory_swap: 6G
       name: solace
       net: host
       privileged: true
@@ -332,8 +319,7 @@ instance_groups:
 - name: Large-VMR
   stemcell: default
   instances: 0
-  vm_type: small-highmem
-  memory: 6144
+  vm_type: solace.large
   azs:
   - z1
   - z2
@@ -397,8 +383,6 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      memory: 4G
-      memory_swap: 6G
       name: solace
       net: host
       privileged: true
@@ -435,8 +419,7 @@ instance_groups:
 - name: Medium-HA-VMR
   stemcell: default
   instances: 0
-  vm_type: small-highmem
-  memory: 6144
+  vm_type: solace.medium
   azs:
   - z1
   - z2
@@ -500,8 +483,6 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      memory: 4G
-      memory_swap: 6G
       name: solace
       net: host
       privileged: true
@@ -578,7 +559,7 @@ instance_groups:
         env:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: 'UNSET_SOLACE_VMR_LOAD_VERSION'
+          SOLACE_LOAD_VERSION: ((solace_load_version))
           SOLACE_ROUTER_CLIENT_ID: solace_router
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
@@ -634,7 +615,7 @@ instance_groups:
         env:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: 'UNSET_SOLACE_VMR_LOAD_VERSION'
+          SOLACE_LOAD_VERSION: ((solace_load_version))
           SOLACE_ROUTER_CLIENT_ID: solace_router
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
