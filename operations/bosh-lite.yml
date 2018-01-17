@@ -1,11 +1,5 @@
 # Bosh Lite
-# Add memory constraints to the docker containers
-- type: replace
-  path: /instance_groups/name=Community-VMR?/properties/containers/0/memory?
-  value: 4G
-- type: replace
-  path: /instance_groups/name=Community-VMR?/properties/containers/0/memory_swap?
-  value: 6G
+# Add memory constraints to the docker containers 
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/containers/0/memory?
   value: 4G
