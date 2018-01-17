@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# bosh -d solace_messaging run-errand delete-all
-
 bosh interpolate solace-deployment.yml \
 	-o operations/plan_inventory.yml \
 	-o operations/bosh-lite.yml \
