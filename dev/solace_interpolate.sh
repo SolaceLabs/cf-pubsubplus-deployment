@@ -8,7 +8,7 @@ cd $SCRIPTPATH/..
 
 bosh interpolate solace-deployment.yml \
 	-o operations/plan_inventory.yml \
-	-o operations/bosh-lite.yml \
+	-o operations/bosh_lite.yml \
 	-v system_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
 	-v vmr_edition=evaluation \
