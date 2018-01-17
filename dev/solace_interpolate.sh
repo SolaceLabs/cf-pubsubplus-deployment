@@ -1,5 +1,11 @@
 #!/bin/bash
 
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
+
+cd $SCRIPTPATH/..
+
 bosh interpolate solace-deployment.yml \
 	-o operations/plan_inventory.yml \
 	-o operations/bosh-lite.yml \
