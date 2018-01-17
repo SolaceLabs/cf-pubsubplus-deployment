@@ -1,0 +1,10 @@
+properties:
+  openstack:
+    auth_url: http://pistoncloud.com:5000/v3
+    username: admin
+    api_key: QRoqsenPsNGX6
+    project: Bosh
+    domain: sample-domain
+    region: RegionOne
+    default_key_name: bosh
+    default_security_groups: [bosh]
