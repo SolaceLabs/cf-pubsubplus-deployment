@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# bosh -d solace_messaging run-errand delete-all
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
+
+cd $SCRIPTPATH/..
 
 bosh interpolate solace-deployment.yml \
 	-o operations/plan_inventory.yml \
