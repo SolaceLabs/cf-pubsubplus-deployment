@@ -1,6 +1,12 @@
+mysql_plan: 100mb
 apply_open_security_group: true
 solace_broker_cf_organization: solace
 solace_broker_cf_space: solace-messaging
 solace_router_client_secret: 1234
 starting_port: 6000
 vmr_admin_password: admin1
+community_plan_instances: 0
+shared_plan_instances: 0
+large_plan_instances: 0 
+large_ha_plan_instances: 0 
+medium_ha_plan_instances: 0

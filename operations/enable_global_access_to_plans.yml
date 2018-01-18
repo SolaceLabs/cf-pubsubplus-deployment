@@ -1,0 +1,6 @@
+- type: replace
+  path: /instance_groups/name=delete-all/properties/solace_messaging/enable_global_access_to_plans?
+  value: true
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/solace_messaging/enable_global_access_to_plans?
+  value: true

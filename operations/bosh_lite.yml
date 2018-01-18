@@ -30,3 +30,5 @@
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/containers/0/memory_swap?
   value: 6G
+# Should also set a smaller persistent disk for all VMs
+#

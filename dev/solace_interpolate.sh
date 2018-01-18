@@ -21,11 +21,12 @@ export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 cd $SCRIPTPATH/..
 
 bosh interpolate solace-deployment.yml \
-	-o operations/plan_inventory.yml \
+	-o operations/set_plan_inventory.yml \
 	-o operations/bosh_lite.yml \
+	-o operations/is_evaluation.yml \
+	-o operations/enable_global_access_to_plans.yml \
 	-v system_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
-	-v vmr_edition=evaluation \
 	-l vars.yml \
 	-l release-vars.yml
 

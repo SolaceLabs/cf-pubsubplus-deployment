@@ -555,7 +555,7 @@ instance_groups:
       user: ((solace_broker_user))
     solace_messaging:
       app_manifest:
-        buildpack: java_buildpack_offline
+        buildpack: java_buildpack
         env:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
@@ -569,8 +569,8 @@ instance_groups:
         timeout: 180
       auto_services:
       - name: p-mysql
-        plan: 100mb
-      enable_global_access_to_plans: true
+        plan: ((mysql_plan))
+      enable_global_access_to_plans: ((enable_global_access_to_plans))
       password: ((solace_broker_password))
       user: ((solace_broker_user))
     space: ((solace_broker_cf_space))
@@ -614,7 +614,7 @@ instance_groups:
       user: ((solace_broker_user))
     solace_messaging:
       app_manifest:
-        buildpack: java_buildpack_offline
+        buildpack: java_buildpack
         env:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
@@ -627,8 +627,8 @@ instance_groups:
         health-check-type: http
       auto_services:
       - name: p-mysql
-        plan: 100mb
-      enable_global_access_to_plans: true
+        plan: ((mysql_plan))
+      enable_global_access_to_plans: ((enable_global_access_to_plans))
       password: ((solace_broker_password))
       user: ((solace_broker_user))
     space: ((solace_broker_cf_space))

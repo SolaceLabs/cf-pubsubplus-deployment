@@ -1,0 +1,6 @@
+- type: replace
+  path: /instance_groups/name=delete-all/properties/solace_messaging/app_manifest/buildpack?
+  value: java_buildpack_offline
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/solace_messaging/app_manifest/buildpack?
+  value: java_buildpack_offline

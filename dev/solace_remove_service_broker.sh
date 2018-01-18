@@ -20,15 +20,4 @@ export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 
 cd $SCRIPTPATH/..
 
-bosh -d solace_messaging \
-	deploy solace-deployment.yml \
-	-o operations/set_plan_inventory.yml \
-	-o operations/bosh_lite.yml \
-	-o operations/is_evaluation.yml \
-	-o operations/enable_global_access_to_plans.yml \
-	--vars-store $WORKSPACE/deployment-vars.yml \
-	-v system_domain=bosh-lite.com  \
-	-v cf_deployment=cf  \
-	-l vars.yml \
-	-l release-vars.yml 
-
+bosh -d solace_messaging run-errand delete-all $@
