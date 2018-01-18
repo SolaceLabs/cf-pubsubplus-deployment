@@ -564,6 +564,8 @@ instance_groups:
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar))
+        health-check-http-endpoint: /health
+        health-check-type: http
       auto_services:
       - name: p-mysql
         plan: 100mb
@@ -620,6 +622,8 @@ instance_groups:
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar)) 
+        health-check-http-endpoint: /health
+        health-check-type: http
       auto_services:
       - name: p-mysql
         plan: 100mb

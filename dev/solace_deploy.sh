@@ -21,5 +21,5 @@ bosh -d solace_messaging \
 	-l vars.yml \
 	-l local-vars.yml
 
-# bosh -d solace_messaging run-errand deploy-all
+bosh -d solace_messaging run-errand deploy-all
 
