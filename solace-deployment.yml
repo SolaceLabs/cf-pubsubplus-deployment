@@ -566,6 +566,7 @@ instance_groups:
         path: ((solace_service_broker_jar))
         health-check-http-endpoint: /health
         health-check-type: http
+        timeout: 180
       auto_services:
       - name: p-mysql
         plan: 100mb
