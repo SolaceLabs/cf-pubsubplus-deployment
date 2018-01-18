@@ -1,10 +1,24 @@
+##
+# Default testing plan, for production deployment please choose a High availability Plan.
+##
 mysql_plan: 100mb
+
+# This is used for the service broker once it is installed in the elastic runtime.
+# It will need access to its VMs to manage them.
 apply_open_security_group: true
+
 solace_broker_cf_organization: solace
 solace_broker_cf_space: solace-messaging
+
+
 solace_router_client_secret: 1234
+
 starting_port: 6000
 vmr_admin_password: admin1
+##
+# Control populating each plan with VMRs
+# Note that the "HA" Plans need to be provided in groups of 3
+##
 community_plan_instances: 0
 shared_plan_instances: 0
 large_plan_instances: 0 
