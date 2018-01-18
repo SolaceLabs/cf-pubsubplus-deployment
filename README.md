@@ -1,6 +1,6 @@
 # CF-SOLACE-MESSAGING-DEPLOYMENT
 
-A Cloud Foundry Solace Messaging Bosh Deployment
+A Cloud Foundry Solace Messaging BOSH Deployment
 
 ## Table of contents
 
@@ -10,7 +10,7 @@ A Cloud Foundry Solace Messaging Bosh Deployment
 
 [Registering the Service Broker](#registering-broker)
 
-This project provides a BOSH 2 manifest for solace messaging deployment.
+This project provides a BOSH 2 manifest for a Solace Messaging deployment.
 
 This project takes advantage of new features such as:
 
@@ -28,16 +28,16 @@ This project takes advantage of new features such as:
 - A deployment of [Cloud Foundry MySQL](https://github.com/cloudfoundry/cf-mysql-deployment)
 - Java Offline BuildPacks 
 - Stemcell
-- Solace Bosh releases
+- Solace BOSH releases
 
-### The Solace Bosh Release
+### The Solace BOSH Releases
 
-These Solace provided Bosh Releases can be obtained from Solace, or extracted from a Solace Pivotal Tile.
+These Solace provided BOSH Releases can be obtained from Solace, or extracted from a Solace Pivotal Tile.
 - solace-vmr
 - solace-messaging
 - docker-bosh
 
-Using the Solace Pivotal Tile you can extract the necessary Bosh releases that need to be used for this deployment.
+Using the Solace Pivotal Tile you can extract the necessary BOSH releases that need to be used for this deployment.
 
 * The Solace Pivotal Evaluation Tile is available for download from [PivNet](https://network.pivotal.io/products/solace-messaging/).
 * The Solace Pivotal Enterprise Tile is available by contacting Solace.
@@ -57,15 +57,21 @@ Use extract_tile.sh to extract the relevant contents we need.
 
 ~~~~
 cd workspace
-dev/extract_tile.sh -t solace-messaging-1.4.0.pivotal
+extract_tile.sh -t solace-messaging-1.4.0-POC1.pivotal
 ~~~~
 
 The same can be done using 'unzip'
 
 ~~~~
 cd workspace
-unzip -o -d .  solace-messaging-1.4.0.pivotal releases/*.tgz
+unzip -o -d .  solace-messaging-1.4.0-POC1.pivotal releases/*.tgz
 ~~~~
 
 
+Example of uploading the Solace provided releases to BOSH.
+~~~~
+bosh upload-release workspace/releases/docker-30.1.4.tgz
+bosh upload-release workspace/releases/solace-messaging-1.4.0-POC1.tgz
+bosh upload-release workspace/releases/solace-vmr-1.4.0-POC1.tgz
+~~~~
 
