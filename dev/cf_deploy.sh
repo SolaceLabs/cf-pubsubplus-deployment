@@ -29,11 +29,11 @@ export STEMCELL_URL="https://s3.amazonaws.com/bosh-core-stemcells/warden/$STEMCE
 cd $WORKSPACE
 
 if [ ! -d $WORKSPACE/cf-deployment ]; then
- git clone https://github.com/cloudfoundry/cf-deployment.git
+ git clone https://github.com/cloudfoundry/cf-deployment.git 
+ (cd cf-deployment; git checkout tags/$CF_DEPLOYMENT_VERSION)
 fi
 
 cd cf-deployment
-git checkout $CF_DEPLOYMENT_VERSION
 
 echo "Checking stemcell $STEMCELL_NAME"
 
@@ -44,8 +44,8 @@ echo "Checking stemcell $STEMCELL_NAME"
      echo "$STEMCELL_NAME was found $FOUND_STEMCELL"
   fi
 
-echo "Loading cloud-config bosh-lite-cloud-config.yml"
-bosh update-cloud-config $SCRIPTPATH/bosh-lite-cloud-config.yml
+echo "Loading cloud-config iaas-support/bosh-lite/cloud-config.yml"
+bosh update-cloud-config $SCRIPTPATH/../iaas-support/bosh-lite/cloud-config.yml
 
 bosh -d cf deploy cf-deployment.yml \
 	-o operations/bosh-lite.yml \
