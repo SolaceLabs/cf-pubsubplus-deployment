@@ -59,7 +59,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((system_domain))
+    broker_hostname: solace-messaging.((app_domain))
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
@@ -132,7 +132,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((system_domain))
+    broker_hostname: solace-messaging.((app_domain))
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
@@ -259,7 +259,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((system_domain))
+    broker_hostname: solace-messaging.((app_domain))
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
@@ -359,7 +359,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((system_domain))
+    broker_hostname: solace-messaging.((app_domain))
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
@@ -459,7 +459,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((system_domain))
+    broker_hostname: solace-messaging.((app_domain))
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
@@ -538,7 +538,7 @@ instance_groups:
   properties:
     apply_open_security_group: ((apply_open_security_group))
     app_domains:
-    - ((system_domain))
+    - ((app_domain))
     application_access_auth_scheme:
       value: vmr_internal
     cf:
@@ -596,7 +596,7 @@ instance_groups:
   - name: default
   properties:
     app_domains:
-    - ((system_domain))
+    - ((app_domain))
     application_access_auth_scheme:
       value: vmr_internal
     cf:

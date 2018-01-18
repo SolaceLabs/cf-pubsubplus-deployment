@@ -16,6 +16,7 @@ bosh -d solace_messaging \
 	-o operations/bosh_lite.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \
 	-v system_domain=bosh-lite.com  \
+	-v app_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
 	-v vmr_edition=evaluation \
 	-l vars.yml \
