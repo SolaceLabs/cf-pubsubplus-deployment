@@ -26,6 +26,7 @@ bosh interpolate solace-deployment.yml \
 	-o operations/is_evaluation.yml \
 	-o operations/enable_global_access_to_plans.yml \
 	-v system_domain=bosh-lite.com  \
+	-v app_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
 	-l vars.yml \
 	-l release-vars.yml

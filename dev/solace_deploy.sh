@@ -28,6 +28,7 @@ bosh -d solace_messaging \
 	-o operations/enable_global_access_to_plans.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \
 	-v system_domain=bosh-lite.com  \
+	-v app_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
 	-l vars.yml \
 	-l release-vars.yml 
