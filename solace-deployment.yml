@@ -226,7 +226,7 @@ instance_groups:
   - z3
   networks:
   - name: default
-  persistent_disk: 20480
+  persistent_disk: 40960
   jobs:
   - name: docker
     release: docker
@@ -326,7 +326,7 @@ instance_groups:
   - z3
   networks:
   - name: default
-  persistent_disk: 20480
+  persistent_disk: 40960
   jobs:
   - name: docker
     release: docker
