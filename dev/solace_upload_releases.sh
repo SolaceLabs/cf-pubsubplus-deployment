@@ -18,15 +18,10 @@ WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 
-cd $SCRIPTPATH/..
+for RELEASE_FILE in `ls $WORKSPACE/releases/*.tgz`; do
+  RELEASE=$(basename $RELEASE_FILE)
+  echo "Uploading release $RELEASE"
+  bosh upload-release $RELEASE_FILE
+done
 
-bosh interpolate solace-deployment.yml \
-	-o operations/plan_inventory.yml \
-	-o operations/bosh_lite.yml \
-	-v system_domain=bosh-lite.com  \
-	-v cf_deployment=cf  \
-	-v vmr_edition=evaluation \
-	-l vars.yml \
-	-l release-vars.yml
-
-
+bosh releases

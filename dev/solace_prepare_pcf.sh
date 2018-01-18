@@ -16,17 +16,10 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
-export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
+source $SCRIPTPATH/cf_env.sh
 
-cd $SCRIPTPATH/..
+## Just making sure there is a 'java_buildpack_offline' as it is a current requirement for the service broker manifest.
 
-bosh interpolate solace-deployment.yml \
-	-o operations/plan_inventory.yml \
-	-o operations/bosh_lite.yml \
-	-v system_domain=bosh-lite.com  \
-	-v cf_deployment=cf  \
-	-v vmr_edition=evaluation \
-	-l vars.yml \
-	-l release-vars.yml
-
+# This is NOT an offline version, but it will do for testing...
+cf create-buildpack java_buildpack_offline https://github.com/cloudfoundry/java-buildpack/releases/download/v4.7.1/java-buildpack-v4.7.1.zip 0
 
