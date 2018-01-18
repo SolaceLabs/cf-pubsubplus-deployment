@@ -1,14 +1,26 @@
 #!/bin/bash
 
+# Cross-OS compatibility ( greadlink, gsed )
+[[ `uname` == 'Darwin' ]] && {
+	which greadlink gsed > /dev/null || {
+		echo 'ERROR: GNU utils required for Mac. You may use homebrew to install them: brew install coreutils gnu-sed'
+		exit 1
+	}
+
+   shopt -s expand_aliases
+   alias readlink=`which greadlink`
+   alias sed=`which gsed`
+}
+
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
+export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
+
 cd $SCRIPTPATH/..
 
 # bosh -d solace_messaging run-errand delete-all
-
-#	-o operations/set_vmr_version.yml  \
 
 bosh -d solace_messaging \
 	deploy solace-deployment.yml \
@@ -20,7 +32,7 @@ bosh -d solace_messaging \
 	-v cf_deployment=cf  \
 	-v vmr_edition=evaluation \
 	-l vars.yml \
-	-l local-vars.yml
+	-l release-vars.yml
 
 bosh -d solace_messaging run-errand deploy-all
 
