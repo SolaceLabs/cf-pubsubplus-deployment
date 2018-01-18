@@ -116,18 +116,21 @@ solace_deploy.sh
 
 
 <a name="deploy_solace_messaging"></a>
-### Deploy Solace Messaging to BOSH
+### Deploy Solace Messaging 
+
+This will deploy Solace Messaging to BOSH and adds Solace Messaging as a Service to Cloud Foundry
 
 ~~~~
 solace_deploy.sh
 ~~~~
 
+Verify solace-messaging is available
 
-<a name="deploy_add_solace_messaging_service"></a>
-### Add Solace Messaging as as Service to Cloud Foundry
 
 ~~~~
-solace_add_service_broker.sh
+cf target -o test
+cf m
 ~~~~
 
+You expect no errors, and you should see solace-messaging with its plans visible in the marketplace.
 
