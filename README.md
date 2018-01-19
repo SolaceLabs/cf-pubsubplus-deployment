@@ -32,8 +32,8 @@ This project takes advantage of new features such as:
 - Instructions for installing BOSH and Cloud Foundry can be found at http://docs.cloudfoundry.org/.
 - A deployment of [Cloud Foundry MySQL](https://github.com/cloudfoundry/cf-mysql-deployment)
 - Stemcell: ubuntu-trusty, tested on version: "3468.17"
-- Solace BOSH releases
-- Operator resolving bosh cloud-config
+- Compatible Solace BOSH releases: Version 1.4.0+
+- Operator resolving BOSH cloud-config
    For correct resource allocation for each vm_type and plan please consult [Solace Pivotal Tile Installation Documentation](http://docs.pivotal.io/partners/solace-messaging/installing.html)
 
 ### The Solace BOSH Releases
@@ -50,13 +50,13 @@ Using the Solace Pivotal Tile you can extract the necessary BOSH releases that n
 
 Please download or obtain a Solace Pivotal Tile file and keep it around for later use. 
 
-For my example I have downloaded version 1.4.0 and placed it in:
+For example, download version 1.4.0 and place it in:
 
 ~~~~
 cf-solace-messaging-deployment/workspace/solace-messaging-1.4.0.pivotal
 ~~~~
 
-The Solace Pivotal Tile file is a zip file from which we can extract the required bosh releases.
+The Solace Pivotal Tile file is a zip file from which we can extract the required BOSH releases.
 
 Use extract_tile.sh to extract the relevant contents we need.
 
@@ -179,7 +179,7 @@ bosh -d solace_messaging run-errand deploy-all
 
 ## Developement and testing
 
-The [dev](./dev) folder contains supporting tools that can help do some testing on bosh-lite, give it a try.
+The [dev](./dev) folder contains supporting tools that can help do some testing on bosh-lite.
 
 ## Contributing
 
