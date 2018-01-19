@@ -93,13 +93,15 @@ Variable controls are provided for:
 | mysql_plan               | No | MySQL database plan selection. Please consider an HA service for a production deployment. |
 | starting_port            | No | The VMR will listen on a range of ports starting from this port number. |
 | vmr_admin_password       | No | The 'admin' password for the VMR.  Will set property admin_password |
-| shared_plan_instances    | No | The number of VMR instances to create supporting the "shared" plan |
-| large_plan_instances     | No | The number of VMR instances to create supporting the "large" plan |
-| medium_ha_plan_instances | No | The number of VMR instances to create supporting the "medium-ha" plan |
-| large_ha_plan_instances  | No | The number of VMR instances to create supporting the "large-ha" plan |
-| community_plan_instances | No | The number of VMR instances to create supporting the "community" plan. This will have no effect when using an enterprise solace-vmr release. |
+| shared_plan_instances    | Yes | The number of VMR instances to create supporting the "shared" plan |
+| large_plan_instances     | Yes | The number of VMR instances to create supporting the "large" plan |
+| medium_ha_plan_instances | Yes | The number of VMR instances to create supporting the "medium-ha" plan |
+| large_ha_plan_instances  | Yes | The number of VMR instances to create supporting the "large-ha" plan |
+| community_plan_instances | Yes | The number of VMR instances to create supporting the "community" plan. This will have no effect when using an enterprise solace-vmr release. |
 
-The manifest contains many properties which are not variable controlled, but may be added and adjusted if necessary.
+Just keep in mind that any __*plan_instances__ are static, and setting them all Zero means there is no inventory to support the solace-messaging plans.
+
+The manifest contains many properties which are not variable controlled, but may be adjusted if necessary.
 
 | Property      | Optional | Description |
 | --- | --- | --- |
@@ -113,12 +115,17 @@ The manifest contains many properties which are not variable controlled, but may
 | tls_config          | Yes | TLS Configuration |
 | ldap_config         | Yes | LDAP Configuration |
 
-Operator files provide controls for:
-- Configuration to use VMR evaluation or enterprise editions given a matching solace-vmr BOSH release.
-- Enable/Disable global access to solace-messaging service during service broker installation.
-- Disable service broker's open access security group ( required to access MySQL service and manage VMRs )
-- Using java_builpack_offline for the service broker
-- Downscaling and adjusting key settings to work on bosh-lite
+BOSH operator files provide controls for:
+
+| File      | Optional | Description |
+| --- | --- | --- |
+| [bosh_lite.yml](operations/bosh_lite.yml)              | Yes | - Downscaling and adjusting key settings to work on bosh-lite |
+| [disable_service_broker_open_security_group.yml](operations/disable_service_broker_open_security_group.yml)  | Yes | Disable service broker's open access security group ( required to access MySQL service and manage VMRs ) |
+| [enable_global_access_to_plans.yml](operations/enable_global_access_to_plans.yml) | Yes | Enables global access to solace-messaging service during service broker installation. |
+| [is_enterprise.yml](operations/is_enterprise.yml) | X | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
+| [is_evaluation.yml](operations/is_evaluation.yml) | X | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, this is what can be found on pivnet. |
+| [use_java_builpack_offline.yml](operations/use_java_builpack_offline.yml) | Yes | Using java_builpack_offline for the service broker |
+| [google_cloud.yml](operations/google_cloud.yml) | Yes | Adjusts manifest vm_types for a google cloud deployment |
 
 Sample iaas-support:
 - bosh-lite
