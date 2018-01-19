@@ -10,6 +10,10 @@ Development and testing support tools.
 
 [Deployment](#Deployment)
 
+
+<a name="About"></a>
+## About
+
 This folder contains some basic scripts to support a deployment of solace messaging to on bosh-lite.
 This can be used for development and testing.
 
@@ -18,20 +22,23 @@ This can be used for development and testing.
 
 In order to use solace-messaging on a development environment these requirements need to be met:
 
-* Install Virtualbox, tested on 5.2.6
+* Install [Virtualbox](https://www.virtualbox.org/), tested on 5.2.6
 * Install [BOSH Cli v2](https://bosh.io/docs/cli-v2.html#install)
 * Install [CF Cli](https://github.com/cloudfoundry/cli#downloads)
 
+### Installation overview
+
 The remainder of this document will guide you through the installation of:
+
 * A Virtualbox BOSH-Lite [bosh-deployment](https://github.com/cloudfoundry/bosh-deployment), using [BUCC](https://github.com/starkandwayne/bucc)
 * [Cloud Foundry](https://github.com/cloudfoundry/cf-deployment) deployment on BOSH-Lite
 * [MySQL for Cloud Foundry](https://github.com/cloudfoundry/cf-mysql-deployment)
-* Solace Messaging
+* [Solace Messaging](#Deployment)
 
 <a name="install_bosh"></a>
 ### Install BOSH
 
-A BOSH Deployment is required with sufficient RAM and Disk to support the desired installation.
+A BOSH-Lite [bosh-deployment](https://github.com/cloudfoundry/bosh-deployment) is required with sufficient RAM and Disk to support the desired installation.
 
 A quick way to get started with BOSH is to use [BUCC](https://github.com/starkandwayne/bucc).
 
@@ -39,6 +46,7 @@ Add cf-solace-messaging-deployment/dev to the $PATH, assuming you have cloned th
 
 ~~~~
 export PATH=$HOME/cf-solace-messaging-deployment/dev:$PATH
+cd cf-solace-messaging-deployment
 ~~~~
 
 This script will use [BUCC](https://github.com/starkandwayne/bucc) on a Linux or Mac, there is NO support for Windows yet. 
@@ -51,14 +59,14 @@ This is enough to install all the tools and deploy a single solace VMR for testi
 
 Verify bosh is deployed, we expect to see no listed VMs, and no errors accessing BOSH.
 ~~~~
-source ../workspace/bosh_env.sh
+source workspace/bosh_env.sh
 bosh vms
 ~~~~
 
 Ensure routes are setup.
 ~~~~
-source ../workspace/bosh_env.sh
-../workspace/bucc/bin/bucc routes
+source workspace/bosh_env.sh
+workspace/bucc/bin/bucc routes
 ~~~~
 
 <a name="install_cf"></a>
