@@ -16,14 +16,17 @@ This can be used for development and testing.
 <a name="Requirements"></a>
 ## Requirements
 
-In order to use solace-messaging these requirements need to be met:
+In order to use solace-messaging on a development environment these requirements need to be met:
 
-* Install Virtualbox
-* Install BOSH Cli v2
-* Install BOSH Director 
-* Install Cloud Foundry 
-* Install CF Cli
-* Install MySQL for Cloud Foundry
+* Install Virtualbox, tested on 5.2.6
+* Install [BOSH Cli v2](https://bosh.io/docs/cli-v2.html#install)
+* Install [CF Cli](https://github.com/cloudfoundry/cli#downloads)
+
+The remainder of this document will guide you through the installation of:
+* BOSH Director
+* Cloud Foundry 
+* MySQL for Cloud Foundry
+* Solace Messaging
 
 <a name="install_bosh"></a>
 ### Install BOSH
@@ -38,8 +41,7 @@ Add cf-solace-messaging-deployment/dev to the $PATH, assuming you have cloned th
 export PATH=$HOME/cf-solace-messaging-deployment/dev:$PATH
 ~~~~
 
-
-This script will use BUCC on a Linux or Mac , there is NO support for Windows yet. 
+This script will use [BUCC](https://github.com/starkandwayne/bucc) on a Linux or Mac, there is NO support for Windows yet. 
 ~~~~
 setup_bosh_bucc.sh
 ~~~~
