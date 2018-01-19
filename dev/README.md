@@ -32,6 +32,13 @@ A BOSH Deployment is required with sufficient RAM and Disk to support the desire
 
 A quick way to get started with BOSH is to use [BUCC](https://github.com/starkandwayne/bucc).
 
+Add cf-solace-messaging-deployment/dev to the $PATH, assuming you have cloned this project in your $HOME folder.
+
+~~~~
+export PATH=$HOME/cf-solace-messaging-deployment/dev:$PATH
+~~~~
+
+
 This script will use BUCC on a Linux or Mac , there is NO support for Windows yet. 
 ~~~~
 setup_bosh_bucc.sh
@@ -98,8 +105,10 @@ With the installation of BOSH, Cloud Foundry and MySQL for Cloud Foundry we are 
 <a name="deploy_extract"></a>
 ### Obtain and extract the BOSH releases of a Solace Pivotal Tile.
 
+For example, having obtained solace-messaging-1.4.0.pivotal from Solace:
+
 ~~~
-extract_tile.sh -t solace-messaging-1.4.0-POC1.pivotal
+extract_tile.sh -t solace-messaging-1.4.0.pivotal
 ~~~
 
 This will unzip the file and keep the required BOSH releases under workspace/releases/*.tgz
