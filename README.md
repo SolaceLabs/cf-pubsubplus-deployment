@@ -119,7 +119,7 @@ BOSH operator files provide controls for:
 
 | File      | Description |
 | --- | --- |
-| [bosh_lite.yml](operations/bosh_lite.yml)              | - Downscaling and adjusting key settings to work on bosh-lite |
+| [bosh_lite.yml](operations/bosh_lite.yml)              | Downscaling and adjusting key settings to work on bosh-lite |
 | [disable_service_broker_open_security_group.yml](operations/disable_service_broker_open_security_group.yml)  | Disable service broker's open access security group ( required to access MySQL service and manage VMRs ) |
 | [enable_global_access_to_plans.yml](operations/enable_global_access_to_plans.yml) | Enables global access to solace-messaging service during service broker installation. |
 | [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
@@ -131,9 +131,9 @@ BOSH operator files provide controls for:
 Only one of these files can be used, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
 
 Sample iaas-support:
-- bosh-lite
-- GCP
-- Openstack
+- [bosh-lite](iaas-support/bosh-lite/)
+- [Openstack](iaas-support/openstack/)
+- [GCP](operations/google_cloud.yml)
 
 ### Deployment manifest limitations:
 
