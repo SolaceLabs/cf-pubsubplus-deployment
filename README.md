@@ -31,7 +31,7 @@ This project takes advantage of new features such as:
 - A deployment of [Cloud Foundry](https://github.com/cloudfoundry/cf-deployment), tested on v1.7.0
 - Instructions for installing BOSH and Cloud Foundry can be found at http://docs.cloudfoundry.org/.
 - A deployment of [Cloud Foundry MySQL](https://github.com/cloudfoundry/cf-mysql-deployment)
-- Stemcell: ubuntu-trusty, tested on version: "3468.17
+- Stemcell: ubuntu-trusty, tested on version: "3468.17"
 - Solace BOSH releases
 - Operator resolving bosh cloud-config
    For correct resource allocation for each vm_type and plan please consult [Solace Pivotal Tile Installation Documentation](http://docs.pivotal.io/partners/solace-messaging/installing.html)
@@ -87,6 +87,7 @@ bosh upload-release workspace/releases/solace-vmr-1.4.0.tgz
 The solace-deployment manifest expresses key but not all features of the underlying Solace BOSH releases.
 
 Variable controls are provided for:
+
 | Variable      | Optional | Description |
 | --- | --- | --- |
 | mysql_plan               | No | MySQL database plan selection. Please consider an HA service for a production deployment. |
