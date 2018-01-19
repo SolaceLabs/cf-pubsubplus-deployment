@@ -46,6 +46,12 @@ source ../workspace/bosh_env.sh
 bosh vms
 ~~~~
 
+Ensure routes are setup.
+~~~~
+source ../workspace/bosh_env.sh
+../workspace/bucc/bin/bucc routes
+~~~~
+
 <a name="install_cf"></a>
 ### Install Cloud Foundry
 
@@ -59,7 +65,7 @@ cf_deploy.sh
 Cloud Foundry (CF) Is now installed, verify access to CF. Expect no errors.
 
 ~~~~
-source cf_env.sh
+cf_env.sh
 cf orgs
 cf target -o system
 cf create-space system
@@ -73,7 +79,7 @@ cf m
 How to deploy MySQL for cloud foundry to BOSH. 
 
 ~~~~
-source cf_env.sh
+cf_env.sh
 cf_mysql_deploy.sh
 ~~~~
 
