@@ -106,17 +106,16 @@ This will uploaded the releases found in workspace/releases/*.tgz to BOSH
 solace_upload_releases.sh
 ~~~~
 
-
-<a name="deploy_solace_messaging"></a>
-### Deploy Solace Messaging to BOSH
-
-~~~~
-solace_deploy.sh
-~~~~
-
-
 <a name="deploy_solace_messaging"></a>
 ### Deploy Solace Messaging 
+
+Adjust the [vars.yml](../vars.yml)  to set the number of VMRs, set shared_plan_instances to 1.
+By default an evaluation VMR is assumed to be in use. 
+
+If you are using the enterprise edition:
+~~~~
+export VMR_EDITION="enterprise"
+~~~~
 
 This will deploy Solace Messaging to BOSH and adds Solace Messaging as a Service to Cloud Foundry
 
@@ -125,7 +124,6 @@ solace_deploy.sh
 ~~~~
 
 Verify solace-messaging is available
-
 
 ~~~~
 cf target -o test
