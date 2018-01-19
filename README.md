@@ -112,7 +112,6 @@ The manifest contains many properties which are not variable controlled, but may
 | vmr_agent_port      | No | The Port the VMR-Agent will listen onto for instructions from service broker |
 | syslog_config       | Yes | Syslog configuration |
 | tcp_routes_config   | Yes | TCP Routes configuration |
-| tls_config          | Yes | TLS Configuration |
 | ldap_config         | Yes | LDAP Configuration |
 
 BOSH operator files provide controls for:
@@ -126,6 +125,7 @@ BOSH operator files provide controls for:
 | [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
 | [use_java_builpack_offline.yml](operations/use_java_builpack_offline.yml) | Using java_builpack_offline for the service broker |
 | [google_cloud.yml](operations/google_cloud.yml) | Adjusts manifest vm_types for a google cloud deployment |
+| [config_tls.yml](operations/config_tls.yml) | TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)   |
 
 
 Only one of these files can be used, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
