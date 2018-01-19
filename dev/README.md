@@ -23,9 +23,9 @@ In order to use solace-messaging on a development environment these requirements
 * Install [CF Cli](https://github.com/cloudfoundry/cli#downloads)
 
 The remainder of this document will guide you through the installation of:
-* BOSH Director
-* Cloud Foundry 
-* MySQL for Cloud Foundry
+* A Virtualbox BOSH-Lite [bosh-deployment](https://github.com/cloudfoundry/bosh-deployment), using [BUCC](https://github.com/starkandwayne/bucc)
+* [Cloud Foundry](https://github.com/cloudfoundry/cf-deployment) deployment on BOSH-Lite
+* [MySQL for Cloud Foundry](https://github.com/cloudfoundry/cf-mysql-deployment)
 * Solace Messaging
 
 <a name="install_bosh"></a>
