@@ -32,3 +32,18 @@
   value: 6G
 # Should also set a smaller persistent disk for all VMs
 #
+- type: replace
+  path: /instance_groups/name=Shared-VMR/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=Community-VMR/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=Large-VMR/persistent_disk?
+  value: 20480

@@ -536,7 +536,7 @@ instance_groups:
   networks:
   - name: default
   properties:
-    apply_open_security_group: ((apply_open_security_group))
+    apply_open_security_group: true
     app_domains:
     - ((app_domain))
     application_access_auth_scheme:
