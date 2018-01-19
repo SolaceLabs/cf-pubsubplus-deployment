@@ -134,3 +134,14 @@ cf m
 
 You expect no errors, and you should see solace-messaging with its plans visible in the marketplace.
 
+
+### Creating and using solace-messaging services
+
+So you have a deployment, you can go ahead and try out [Solace Messaging tutorials and sample application for Cloud Foundry](http://dev.solace.com/get-started/pcf-tutorials/)
+
+## Other notes.
+
+There are current limitations with the bosh-virtualbox and the deployment cannot be simply resumed if virtual box was shutdown.
+If you want to keep your deployment on virtual box, remeber to pause and save it before any reboot/shutdown.
+
+
