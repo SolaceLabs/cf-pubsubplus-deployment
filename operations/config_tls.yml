@@ -1,11 +1,17 @@
 # TLS
 # This adds certificates
 - type: replace
+  path: /variables/-
+  value: {name: solace_ca, type: certificate, options: {is_ca: true, common_name: solace-ca}}
+- type: replace
+  path: /variables/-
+  value: {name: solace_cert, type: certificate, options: {ca: solace_ca, common_name: solace-cert, extended_key_usage: [client_auth, server_auth]}}
+- type: replace
   path: /instance_groups/name=Community-VMR/properties/cert_pem?
-  value: ((cert_pem))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tls_config/value
   value: enabled
@@ -14,22 +20,16 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=Community-VMR/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=Community-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/cert_pem?
-  value: ((cert_pem))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tls_config/value
   value: enabled
@@ -38,22 +38,16 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/cert_pem?
-  value: ((cert_pem))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/value
   value: enabled
@@ -62,22 +56,16 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/cert_pem?
-  value: ((cert_pem))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tls_config/value
   value: enabled
@@ -86,22 +74,16 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/cert_pem?
-  value: ((cert_pem))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tls_config/value
   value: enabled
@@ -110,16 +92,10 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/value
   value: enabled
@@ -128,13 +104,7 @@
   value: ((broker_validate_cert_disabled))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
-  value: ((private_key_pem))
+  value: ((solace_cert.private_key))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
-  value: ((cert_pem))
-- type: replace
-  path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/public_key_pem?
-  value: ((public_key_pem))
-- type: replace
-  path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/cert_and_private_key_pems?
-  value: ((cert_and_private_key_pems))
+  value: ((solace_cert.certificate))
