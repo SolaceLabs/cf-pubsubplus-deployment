@@ -84,9 +84,6 @@ Cloud Foundry (CF) Is now installed, verify access to CF. Expect no errors.
 ~~~~
 cf_env.sh
 cf orgs
-cf target -o system
-cf create-space system
-cf target -o system
 cf m
 ~~~~
 
