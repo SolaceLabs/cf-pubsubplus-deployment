@@ -1,5 +1,5 @@
-# Adds Certificates to be use by the VMR
-# Note that if the certificates are self signed:
+# Adds Certificates for use by the VMR
+# Note that if the certificates are self signed or untrusted:
 #  the broker_validate_cert_disabled should be set to true, please use -o operations/disable_service_broker_certificate_validation.yml
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/cert_pem?
