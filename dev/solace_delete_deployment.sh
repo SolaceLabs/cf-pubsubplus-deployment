@@ -18,6 +18,10 @@ WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 
+if [ -f $WORKSPACE/bosh_env.sh ]; then
+ source $WORKSPACE/bosh_env.sh
+fi
+
 cd $SCRIPTPATH/..
 
 bosh -d solace_messaging run-errand delete-all
