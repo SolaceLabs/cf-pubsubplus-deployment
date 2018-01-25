@@ -26,7 +26,15 @@ export STEMCELL_VERSION=${STEMCELL_VERSION:-"3468.17"}
 export STEMCELL_NAME="bosh-stemcell-$STEMCELL_VERSION-warden-boshlite-ubuntu-trusty-go_agent.tgz"
 export STEMCELL_URL="https://s3.amazonaws.com/bosh-core-stemcells/warden/$STEMCELL_NAME"
 
+if [ ! -d $WORKSPACE ]; then
+  mkdir -p $WORKSPACE
+fi
+
 cd $WORKSPACE
+
+if [ -f bosh_env.sh ]; then
+ source bosh_env.sh
+fi
 
 if [ ! -d $WORKSPACE/cf-deployment ]; then
  git clone https://github.com/cloudfoundry/cf-deployment.git 
@@ -50,6 +58,19 @@ bosh update-cloud-config $SCRIPTPATH/../iaas-support/bosh-lite/cloud-config.yml
 bosh -d cf deploy cf-deployment.yml \
 	-o operations/bosh-lite.yml \
 	-o operations/use-compiled-releases.yml \
+	-o operations/use-trusted-ca-cert-for-apps.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \
+        -l $SCRIPTPATH/cf_trusted-ca-cert-for-apps.yml \
 	-v system_domain=$SYSTEM_DOMAIN
+        
 
+if [ -f $SCRIPTPATH/cf_env.sh ]; then
+  $SCRIPTPATH/cf_env.sh 
+[[ $? -eq 0 ]] && {
+	echo "Create a system/system org and space"
+	cf target -o system
+	cf create-space system
+	cf target -o system
+	cf m
+}
+fi
