@@ -1,5 +1,4 @@
-broker_validate_cert_disabled: true
-solace_cert:
+solace_vmr_cert:
   certificate: |
     -----BEGIN CERTIFICATE-----
     MIIDnzCCAoegAwIBAgIJAKEsd5V3+exFMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNV
