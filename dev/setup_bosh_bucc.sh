@@ -18,6 +18,10 @@ WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 
+if [ ! -d $WORKSPACE ]; then
+  mkdir -p $WORKSPACE
+fi
+
 cd $WORKSPACE
 
 if [ ! -d bucc ]; then
