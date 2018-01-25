@@ -93,6 +93,7 @@ Variable controls are provided for:
 | mysql_plan               | No | MySQL database plan selection. Please consider an HA service for a production deployment. |
 | starting_port            | No | The VMR will listen on a range of ports starting from this port number. |
 | vmr_admin_password       | No | The 'admin' password for the VMR.  Will set property admin_password |
+| solace_vmr_cert          | Yes | The certificate to be used on the VMR for secure connections. Use with [config_tls.yml](operations/config_tls.yml), [example](operations/example-vars-files/certs.yml). Can be combined with [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) if this is a test certificate.  |
 | shared_plan_instances    | Yes | The number of VMR instances to create supporting the "shared" plan |
 | large_plan_instances     | Yes | The number of VMR instances to create supporting the "large" plan |
 | medium_ha_plan_instances | Yes | The number of VMR instances to create supporting the "medium-ha" plan |
@@ -121,14 +122,14 @@ BOSH operator files provide controls for:
 | [bosh_lite.yml](operations/bosh_lite.yml)              | Downscaling and adjusting key settings to work on bosh-lite |
 | [disable_service_broker_open_security_group.yml](operations/disable_service_broker_open_security_group.yml)  | Disable service broker's open access security group ( required to access MySQL service and manage VMRs ) |
 | [enable_global_access_to_plans.yml](operations/enable_global_access_to_plans.yml) | Enables global access to solace-messaging service during service broker installation. |
-| [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
-| [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
 | [use_java_builpack_offline.yml](operations/use_java_builpack_offline.yml) | Using java_builpack_offline for the service broker |
 | [google_cloud.yml](operations/google_cloud.yml) | Adjusts manifest vm_types for a google cloud deployment |
-| [config_tls.yml](operations/config_tls.yml) | TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)   |
+| [config_tls.yml](operations/config_tls.yml) | Adds a server certificate to the VMR. solace_vmr_cert TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)  , if no solace_vmr_cert is provided as a property, a self signed certificate will be generate by bosh. |
+| [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) | Disables certificate validation on the service broker when it communicates with the VMR. This should only be considered for non production test certificates. |
+| [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
+| [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
 
-
-Only one of these files can be used, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
+Only one of these required files can be used and should only be applied as the last operator file, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
 
 Sample iaas-support:
 - [bosh-lite](iaas-support/bosh-lite/)
@@ -141,7 +142,7 @@ While the capabililties of the Solace BOSH releases are well documented in [Sola
 not all Solace BOSH release capabilities have been fully expressed in this deployment project with samples.
 Futures releases of this deployment project will address these capabilities:
 
-- No TLS Config
+- No VMR Trusted Root Certs Config
 - No Syslog Config
 - No LDAP Config
 - No TCP Routes Config
