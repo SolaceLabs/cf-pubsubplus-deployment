@@ -24,7 +24,25 @@ fi
 
 cd $SCRIPTPATH/..
 
-bosh -d solace_messaging run-errand delete-all
+DEPLOYMENT_FOUND_COUNT=`bosh deployments | grep solace_messaging | wc -l`
+SOLACE_VMR_RELEASE_FOUND_COUNT=`bosh releases | grep solace-vmr | wc -l`
+SOLACE_MESSAGING_RELEASE_FOUND_COUNT=`bosh releases | grep solace-messaging | wc -l`
 
-bosh -d solace_messaging delete-deployment
+if [ "$DEPLOYMENT_FOUND_COUNT" -eq "1" ]; then
+
+ bosh -d solace_messaging run-errand delete-all
+
+ bosh -d solace_messaging delete-deployment
+
+fi
+
+ORPHANED_DISKS=$( bosh disks --orphaned --json | jq '.Tables[].Rows[] | select(.deployment="solace_messaging") | .disk_cid' | sed 's/\"//g' )
+
+for DISK_ID in $ORPHANED_DISKS; do
+        echo "Will delete $DISK_ID"
+        bosh -n delete-disk $DISK_ID
+        echo
+        echo "Orphaned Disk $DISK_ID was deleted"
+        echo
+done
 

@@ -25,6 +25,7 @@ In order to use solace-messaging on a development environment these requirements
 * Install [Virtualbox](https://www.virtualbox.org/), tested on 5.2.6
 * Install [BOSH Cli v2](https://bosh.io/docs/cli-v2.html#install)
 * Install [CF Cli](https://github.com/cloudfoundry/cli#downloads)
+* Install [jq](https://stedolan.github.io/jq/)
 
 ### Installation overview
 
