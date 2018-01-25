@@ -25,6 +25,20 @@ fi
 
 cd $SCRIPTPATH/..
 
+SOLACE_VMR_RELEASE_FOUND_COUNT=`bosh releases | grep solace-vmr | wc -l`
+
+if [ "$SOLACE_VMR_RELEASE_FOUND_COUNT" -eq "0" ]; then
+   echo "solace-vmr release seem to be missing from bosh, please upload-release to bosh"
+   exit 1
+fi
+
+SOLACE_MESSAGING_RELEASE_FOUND_COUNT=`bosh releases | grep solace-messaging | wc -l`
+
+if [ "$SOLACE_MESSAGING_RELEASE_FOUND_COUNT" -eq "0" ]; then
+   echo "solace-messaging release seem to be missing from bosh, please upload-release to bosh"
+   exit 1
+fi
+
 bosh -d solace_messaging \
 	deploy solace-deployment.yml \
 	-o operations/set_plan_inventory.yml \

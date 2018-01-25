@@ -120,7 +120,7 @@ BOSH operator files provide controls for:
 | File      | Description |
 | --- | --- |
 | [bosh_lite.yml](operations/bosh_lite.yml)              | Downscaling and adjusting key settings to work on bosh-lite |
-| [disable_service_broker_open_security_group.yml](operations/disable_service_broker_open_security_group.yml)  | Disable service broker's open access security group ( required to access MySQL service and manage VMRs ) |
+| [disable_service_broker_open_security_group.yml](operations/disable_service_broker_open_security_group.yml)  | Disable service brokers open access security group ( required to access MySQL service and manage VMRs ) |
 | [enable_global_access_to_plans.yml](operations/enable_global_access_to_plans.yml) | Enables global access to solace-messaging service during service broker installation. |
 | [use_java_builpack_offline.yml](operations/use_java_builpack_offline.yml) | Using java_builpack_offline for the service broker |
 | [google_cloud.yml](operations/google_cloud.yml) | Adjusts manifest vm_types for a google cloud deployment |
@@ -150,21 +150,26 @@ Futures releases of this deployment project will address these capabilities:
 ### How to deploy
 
 Assuming the operator has resolved all [prerequisites](#prerequisites), just use the bosh cli to deploy.
-This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite, the deployment is named 'solace_messaging', it depends on 'cf' deployment.
+
+This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite with self-signed bosh generated vmr certificates, the deployment is named 'solace_messaging', it depends on 'cf' deployment.
 
 ~~~~
+
 bosh -d solace_messaging \
-	deploy solace-deployment.yml \
-	-o operations/set_plan_inventory.yml \
-	-o operations/bosh_lite.yml \
-	-o operations/is_evaluation.yml \
-	-o operations/enable_global_access_to_plans.yml \
-	--vars-store $WORKSPACE/deployment-vars.yml \
-	-v system_domain=bosh-lite.com  \
-	-v app_domain=bosh-lite.com  \
-	-v cf_deployment=cf  \
-	-l vars.yml \
-	-l release-vars.yml 
+        deploy solace-deployment.yml \
+        -o operations/set_plan_inventory.yml \
+        -o operations/bosh_lite.yml \
+        -o operations/config_tls.yml \
+        -o operations/disable_service_broker_certificate_validation.yml \
+        -o operations/enable_global_access_to_plans.yml \
+        -o operations/is_evaluation.yml \
+        --vars-store $WORKSPACE/deployment-vars.yml \
+        -v system_domain=bosh-lite.com  \
+        -v app_domain=bosh-lite.com  \
+        -v cf_deployment=cf  \
+        -l vars.yml \
+        -l release-vars.yml 
+
 ~~~~
 
 <a name="registering-broker"></a>
