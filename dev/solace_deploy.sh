@@ -31,7 +31,7 @@ bosh -d solace_messaging \
 	deploy solace-deployment.yml \
 	-o operations/set_plan_inventory.yml \
 	-o operations/bosh_lite.yml \
-	-o operations/config_tls.yml \
+	-o operations/set_solace_vmr_cert.yml \
 	-o operations/enable_global_access_to_plans.yml \
 	-o operations/is_${VMR_EDITION}.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \

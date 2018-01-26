@@ -19,7 +19,7 @@ vmr_admin_password: admin1
 # Control populating each plan with VMRs
 # Note that the "HA" Plans need to be provided in groups of 3
 ##
-shared_plan_instances: 0
+shared_plan_instances: 1
 large_plan_instances: 0 
 medium_ha_plan_instances: 0
 large_ha_plan_instances: 0 

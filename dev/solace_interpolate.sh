@@ -16,7 +16,8 @@ cd $SCRIPTPATH/..
 bosh interpolate solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
         -o operations/bosh_lite.yml \
-        -o operations/config_tls.yml \
+        -o operations/set_solace_vmr_cert.yml \
+        -o operations/add_vmr_trusted_certs.yml \
         -o operations/is_${VMR_EDITION}.yml \
         -o operations/enable_global_access_to_plans.yml \
         --vars-store $WORKSPACE/deployment-vars.yml \
