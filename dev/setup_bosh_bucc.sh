@@ -21,4 +21,7 @@ sed -i 's/vm_memory: 4096/vm_memory: 8192/' $WORKSPACE/bucc/ops/cpis/virtualbox/
 $WORKSPACE/bucc/bin/bucc up --cpi virtualbox --lite --debug | tee $WORKSPACE/bucc_up.log
 $WORKSPACE/bucc/bin/bucc env > $WORKSPACE/bosh_env.sh
 
+echo "Adding routes, you may need to enter credentials"
+$WORKSPACE/bucc/bin/bucc routes
+
 
