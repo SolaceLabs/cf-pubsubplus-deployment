@@ -93,7 +93,7 @@ Variable controls are provided for:
 | mysql_plan               | No | MySQL database plan selection. Please consider an HA service for a production deployment. |
 | starting_port            | No | The VMR will listen on a range of ports starting from this port number. |
 | vmr_admin_password       | No | The 'admin' password for the VMR.  Will set property admin_password |
-| solace_vmr_cert          | Yes | The certificate to be used on the VMR for secure connections. Use with [config_tls.yml](operations/config_tls.yml), [example](operations/example-vars-files/certs.yml). Can be combined with [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) if this is a test certificate.  |
+| solace_vmr_cert          | Yes | The certificate to be used on the VMR for secure connections. Use with [set_solace_vmr_cert.yml](operations/set_solace_vmr_cert.yml), [example](operations/example-vars-files/certs.yml). Can be combined with [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) if this is a test certificate.  |
 | shared_plan_instances    | Yes | The number of VMR instances to create supporting the "shared" plan |
 | large_plan_instances     | Yes | The number of VMR instances to create supporting the "large" plan |
 | medium_ha_plan_instances | Yes | The number of VMR instances to create supporting the "medium-ha" plan |
@@ -124,7 +124,8 @@ BOSH operator files provide controls for:
 | [enable_global_access_to_plans.yml](operations/enable_global_access_to_plans.yml) | Enables global access to solace-messaging service during service broker installation. |
 | [use_java_builpack_offline.yml](operations/use_java_builpack_offline.yml) | Using java_builpack_offline for the service broker |
 | [google_cloud.yml](operations/google_cloud.yml) | Adjusts manifest vm_types for a google cloud deployment |
-| [config_tls.yml](operations/config_tls.yml) | Adds a server certificate to the VMR. solace_vmr_cert TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)  , if no solace_vmr_cert is provided as a property, a self signed certificate will be generate by bosh. |
+| [set_solace_vmr_cert.yml](operations/set_solace_vmr_cert.yml) | Adds a server certificate to the VMR.solace_vmr_cert TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)  , if no solace_vmr_cert is provided as a property, a self signed certificate will be generate by bosh. |
+| [add_vmr_trusted_certs.yml](operations/add_vmr_trusted_certs.yml) | Adds trusted root certificates to the VMR.trusted_root_certificates TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml) There can be several certificates assigned to the solace_trusted_root_cert.certificate property, as shown in that example.
 | [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) | Disables certificate validation on the service broker when it communicates with the VMR. This should only be considered for non production test certificates. |
 | [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
 | [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
@@ -159,7 +160,7 @@ bosh -d solace_messaging \
         deploy solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
         -o operations/bosh_lite.yml \
-        -o operations/config_tls.yml \
+        -o operations/set_solace_vmr_cert.yml \
         -o operations/disable_service_broker_certificate_validation.yml \
         -o operations/enable_global_access_to_plans.yml \
         -o operations/is_evaluation.yml \
