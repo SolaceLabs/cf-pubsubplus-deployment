@@ -22,32 +22,41 @@ if [ "$DEPLOYMENT_FOUND_COUNT" -eq "1" ]; then
 
  bosh -d solace_messaging delete-deployment
 
+else
+    echo "No solace messaging deployment found: $DEPLOYMENT_FOUND_COUNT"
 fi
 
- if [ "$SOLACE_VMR_RELEASE_FOUND_COUNT" -eq "1" ]; then
+if [ "$SOLACE_VMR_RELEASE_FOUND_COUNT" -gt "0" ]; then
     # solace-vmr
     echo "Deleting release solace-vmr"
     bosh -n delete-release solace-vmr
- else
-    echo "No solace-vmr release found"
- fi
+else
+    echo "No solace-vmr release found: $SOLACE_VMR_RELEASE_FOUND_COUNT"
+fi
 
- if [ "$SOLACE_MESSAGING_RELEASE_FOUND_COUNT" -eq "1" ]; then
+if [ "$SOLACE_MESSAGING_RELEASE_FOUND_COUNT" -gt "0" ]; then
     # solace-messaging
     echo "Deleting release solace-messaging"
     bosh -n delete-release solace-messaging
- else
-    echo "No solace-messaging release found"
- fi
+else
+    echo "No solace-messaging release found: $SOLACE_MESSAGING_RELEASE_FOUND_COUNT"
+fi
 
 
+ORPHANED_DISKS_COUNT=$( bosh disks --orphaned --json | jq '.Tables[].Rows[] | select(.deployment="solace_messaging") | .disk_cid' | sed 's/\"//g' | wc -l )
 ORPHANED_DISKS=$( bosh disks --orphaned --json | jq '.Tables[].Rows[] | select(.deployment="solace_messaging") | .disk_cid' | sed 's/\"//g' )
 
-for DISK_ID in $ORPHANED_DISKS; do
+
+if [ "$ORPHANED_DISKS_COUNT" -gt "0" ]; then
+
+ for DISK_ID in $ORPHANED_DISKS; do
         echo "Will delete $DISK_ID"
         bosh -n delete-disk $DISK_ID
         echo
         echo "Orphaned Disk $DISK_ID was deleted"
         echo
-done
+ done
 
+else
+   echo "No orphaned disks found: $ORPHANED_DISKS_COUNT"
+fi
