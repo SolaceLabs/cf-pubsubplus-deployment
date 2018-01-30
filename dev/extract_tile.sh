@@ -4,6 +4,8 @@ export SCRIPT="$( basename "${BASH_SOURCE[0]}" )"
 export SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
+source $SCRIPTPATH/common.sh
+
 export CMD_NAME=`basename $0`
 
 export BASIC_USAGE_PARAMS="-t solace-messaging*.pivotal "
