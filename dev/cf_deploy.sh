@@ -35,7 +35,10 @@ echo "Checking stemcell $STEMCELL_NAME"
 
   FOUND_STEMCELL=`bosh stemcells | grep bosh-warden-boshlite-ubuntu-trusty-go_agent | grep $STEMCELL_VERSION | wc -l`
   if [ "$FOUND_STEMCELL" -eq "0" ]; then
-     bosh upload-stemcell $STEMCELL_URL
+     if [ ! -f $WORKSPACE/$STEMCELL_NAME ]; then
+        wget -O $WORKSPACE/$STEMCELL_NAME $STEMCELL_URL
+     fi
+     bosh upload-stemcell $WORKSPACE/$STEMCELL_NAME
   else
      echo "$STEMCELL_NAME was found $FOUND_STEMCELL"
   fi
