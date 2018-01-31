@@ -14,7 +14,7 @@ Development and testing support tools.
 <a name="About"></a>
 ## About
 
-This folder contains some basic scripts to support a deployment of solace messaging to on bosh-lite.
+This folder contains basic scripts to support a deployment of solace messaging on bosh-lite.
 This can be used for development and testing.
 
 <a name="Requirements"></a>
@@ -98,7 +98,7 @@ cf_env.sh
 cf_mysql_deploy.sh
 ~~~~
 
-Verify MySQL is installed, and its plans are visible in Cloud Foundry
+Verify that MySQL is installed and that its plans are visible in Cloud Foundry
 
 ~~~~
 cf target -o test
@@ -132,7 +132,7 @@ solace_upload_releases.sh
 <a name="deploy_solace_messaging"></a>
 ### Deploy Solace Messaging 
 
-Adjust the [vars.yml](../vars.yml)  to set the number of VMRs, set shared_plan_instances to 1.
+Adjust the [vars.yml](../vars.yml) to set the number of VMRs, set shared_plan_instances to 1.
 By default an evaluation VMR is assumed to be in use. 
 
 If you are using the enterprise edition:
@@ -163,6 +163,6 @@ So you have a deployment, you can go ahead and try out [Solace Messaging tutoria
 ## Other notes.
 
 There are current limitations with the bosh-virtualbox and the deployment cannot be simply resumed if virtual box was shutdown.
-If you want to keep your deployment on virtual box, remeber to pause and save it before any reboot/shutdown.
+If you want to keep your deployment on virtual box, remember to pause and save it before any reboot/shutdown.
 
 
