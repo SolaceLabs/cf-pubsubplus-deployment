@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 export SCRIPT="$( basename "${BASH_SOURCE[0]}" )"
 export SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -10,6 +10,45 @@ export VMR_EDITION=${VMR_EDITION:-"evaluation"}
 if [ -f $WORKSPACE/bosh_env.sh ]; then
  source $WORKSPACE/bosh_env.sh
 fi
+
+function showUsage() {
+    echo
+    echo "Usage: $CMD_NAME [OPTIONS]"
+    echo
+    echo "OPTIONS"
+    echo "  -s <starting_port>        provide starting port "
+    echo "  -p <vmr_admin_password>   provide vmr admin password "
+    echo "  -h                         show command options "
+    echo "$WORKSPACE"
+}
+
+
+while getopts "s:p:h" arg; do
+    case "${arg}" in
+        s)
+            starting_port="$OPTARG"
+            cd ..
+            grep -q 'starting_port' vars.yml && sed -i "s/starting_port.*/starting_port: $starting_port/" vars.yml || echo "starting_port: $starting_port" >> vars.yml
+	    ;;
+        p)
+            vmr_admin_password="${OPTARG}"
+            grep -q 'vmr_admin_password' vars.yml && sed -i "s/vmr_admin_password.*/vmr_admin_password: $vmr_admin_password/" vars.yml || echo "vmr_admin_password: $vmr_admin_password" >> vars.yml
+            ;;
+        h)
+            showUsage
+            exit 0
+       ;;
+       \?)
+       >&2 echo
+       >&2 echo "Invalid option: -$OPTARG" >&2
+       >&2 echo
+       showUsage
+       exit 1
+       ;;
+    esac
+done
+#shift $((OPTIND-1))
+
 
 cd $SCRIPTPATH/..
 
@@ -41,7 +80,6 @@ bosh -d solace_messaging \
 	-l vars.yml \
 	-l release-vars.yml \
         -l operations/example-vars-files/certs.yml 
-
 
 [[ $? -eq 0 ]] && { 
   $SCRIPTPATH/solace_add_service_broker.sh 
