@@ -4,6 +4,9 @@ export SCRIPT="$( basename "${BASH_SOURCE[0]}" )"
 export SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
+export VARS_PATH=$SCRIPTPATH/vars.yml
+export TLS_PATH=$SCRIPTPATH/operations/example-vars-files/certs.yml
+
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 export VMR_EDITION=${VMR_EDITION:-"evaluation"}
 
@@ -18,13 +21,18 @@ function showUsage() {
     echo "OPTIONS"
     echo "  -s <starting_port>        provide starting port "
     echo "  -p <vmr_admin_password>   provide vmr admin password "
-    echo "  -h                         show command options "
+    echo "  -h                        show command options "
+    echo "  -v <vars.yml file path>   provide vars.yml file path "
+    echo "  -t <tls_config.yml file>  provide tls config file path"
     echo "$WORKSPACE"
 }
 
 
-while getopts "s:p:h" arg; do
+while getopts "t:s:p:v:h" arg; do
     case "${arg}" in
+        t) 
+            export TLS_PATH="$OPTARG"
+            ;;
         s)
             starting_port="$OPTARG"
             cd ..
@@ -34,6 +42,9 @@ while getopts "s:p:h" arg; do
             vmr_admin_password="${OPTARG}"
             grep -q 'vmr_admin_password' vars.yml && sed -i "s/vmr_admin_password.*/vmr_admin_password: $vmr_admin_password/" vars.yml || echo "vmr_admin_password: $vmr_admin_password" >> vars.yml
             ;;
+        v) 
+            export VARS_PATH="$OPTARG" 
+            ;; 
         h)
             showUsage
             exit 0
@@ -77,9 +88,9 @@ bosh -d solace_messaging \
 	-v system_domain=bosh-lite.com  \
 	-v app_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
-	-l vars.yml \
+	-l $VARS_PATH \
 	-l release-vars.yml \
-        -l operations/example-vars-files/certs.yml 
+        -l $TLS_PATH
 
 [[ $? -eq 0 ]] && { 
   $SCRIPTPATH/solace_add_service_broker.sh 
