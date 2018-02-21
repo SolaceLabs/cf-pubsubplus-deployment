@@ -11,7 +11,7 @@ solace_broker_cf_space: solace-messaging
 solace_router_client_secret: 1234
 
 # The start port seed from which all ports allocation are based.
-starting_port: 6000
+starting_port: 7000
 
 # This is the password set for the "admin" user on the VMR
 vmr_admin_password: admin1
