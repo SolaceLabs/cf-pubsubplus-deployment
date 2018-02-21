@@ -1,0 +1,8 @@
+syslog:
+  hostname: '__HOSTNAME__'
+  port: 514
+  protocol: 'udp'
+  vmr_command_logs: true
+  vmr_event_logs: true
+  vmr_system_logs: true
+  broker_and_agent_logs: false
