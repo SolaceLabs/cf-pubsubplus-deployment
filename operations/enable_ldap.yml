@@ -22,7 +22,13 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/ldap_admin_password? 
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/ldap_admin_username? 
+  value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/ldap_group_membership_attribute_name?
   value: memberOf
@@ -37,7 +43,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/management_access_auth_scheme/value
   value: vmr_internal
@@ -67,7 +73,13 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/ldap_admin_password?
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/ldap_admin_username?
+  value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/ldap_group_membership_attribute_name?
   value: memberOf
@@ -82,7 +94,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/management_access_auth_scheme/value
   value: vmr_internal
@@ -112,7 +124,13 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/ldap_admin_password?
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/ldap_admin_username?
+  value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/ldap_group_membership_attribute_name?
   value: memberOf
@@ -127,7 +145,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/management_access_auth_scheme/value
   value: vmr_internal
@@ -157,7 +175,13 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/ldap_admin_password?
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/ldap_admin_username?
+  value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/ldap_group_membership_attribute_name?
   value: memberOf
@@ -172,7 +196,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/management_access_auth_scheme/value
   value: vmr_internal
@@ -202,7 +226,13 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/ldap_admin_password?
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/ldap_admin_username?
+  value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/ldap_group_membership_attribute_name?
   value: memberOf
@@ -217,7 +247,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/management_access_auth_scheme/value
   value: vmr_internal
@@ -247,7 +277,7 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=delete-all/properties/ldap_config/value
   value: enabled
@@ -271,4 +301,4 @@
   value: ((ldap.user_search_base))
 - type: replace
   path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_user_search_filter?
-  value: 'cn=$CLIENT_USERNAME'
+  value: '(cn=$CLIENT_USERNAME)'
