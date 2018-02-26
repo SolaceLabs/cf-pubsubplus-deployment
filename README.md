@@ -129,8 +129,8 @@ BOSH operator files provide controls for:
 | [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) | Disables certificate validation on the service broker when it communicates with the VMR. This should only be considered for non production test certificates. |
 | [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
 | [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
-| [enable_tcp_routes.yml](operations/enable_tcp_routes.yml) | Adjusts the manifest by adding tcp route configuration found in the format of this example-vars-file: [tcp_routes_config.yml](operations/example-vars-files/tcp_routes_config.yml). 
-| [enable_ldap.yml](operations/enable_ldap/yml) | Adjusts manifest by adding ldap configuration in the format of this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
+| [enable_tcp_routes.yml](operations/enable_tcp_routes.yml) | Adds tcp route configuration, see [tcp_routes_config.yml](operations/example-vars-files/tcp_routes_config.yml) file. 
+| [enable_ldap.yml](operations/enable_ldap/yml) | Adds ldap configuration, see this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
 | [set_management_access_ldap.yml](operations/set_management_access_ldap.yml) | Adds ldap authorization for management access. Configuration is found in the same ldap [vars.yml](operations/example-vars-files/ldap_config.yml) file.
 | [set_application_access_ldap.yml](operations/set_application_access_ldap.yml) | Adds ldap authorization for application access. 
 
