@@ -3,7 +3,7 @@ tcp_routes_config:
   amqp_tls_tcp_route_enabled: enabled_by_default
   cf_credentials:
     identity: solace_router
-    password: 1234
+    password: '1234'
   mqtt_tcp_route_enabled: enabled_by_default
   mqtt_tls_tcp_route_enabled: enabled_by_default
   mqtt_ws_tcp_route_enabled: enabled_by_default

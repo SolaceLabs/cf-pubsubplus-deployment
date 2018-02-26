@@ -18,3 +18,7 @@
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
+- type: replace
+  path: /instance_groups/name=tests/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+

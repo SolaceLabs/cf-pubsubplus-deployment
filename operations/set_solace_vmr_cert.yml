@@ -103,3 +103,16 @@
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
   value: ((solace_vmr_cert.certificate))
+- type: replace
+  path: /instance_groups/name=tests/properties/tls_config/value
+  value: enabled
+- type: replace
+  path: /instance_groups/name=tests/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: false
+- type: replace
+  path: /instance_groups/name=tests/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
+  value: ((solace_vmr_cert.private_key))
+- type: replace
+  path: /instance_groups/name=tests/properties/tls_config/selected_option?/rsa_server_cert/cert_pem?
+  value: ((solace_vmr_cert.certificate))
+

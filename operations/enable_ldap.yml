@@ -279,6 +279,30 @@
   path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/value
+  value: enabled
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  value: ((ldap.password))
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  value: ((ldap.username))
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
+  value: memberOf
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_server_url?
+  value: ((ldap.server_url))
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_start_tls?
+  value: disabled
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_user_search_base?
+  value: ((ldap.user_search_base))
+- type: replace
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_user_search_filter?
+  value: '(cn=$CLIENT_USERNAME)'
+- type: replace
   path: /instance_groups/name=delete-all/properties/ldap_config/value
   value: enabled
 - type: replace
