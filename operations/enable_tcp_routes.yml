@@ -11,10 +11,16 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/cf_client_id?
+  value: ((tcp_routes_config.solace_router_client.id))
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/cf_client_secret?
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=Community-VMR/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -64,10 +70,16 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/cf_client_id?
+  value: ((tcp_routes_config.solace_router_client.id))
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/cf_client_secret?
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -117,10 +129,16 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/cf_client_id?
+  value: ((tcp_routes_config.solace_router_client.id))
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/cf_client_secret?
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -170,10 +188,16 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/cf_client_id?
+  value: ((tcp_routes_config.solace_router_client.id))
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/cf_client_secret?
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -223,10 +247,16 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/cf_client_id?
+  value: ((tcp_routes_config.solace_router_client.id))
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/cf_client_secret?
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -276,10 +306,10 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
@@ -329,10 +359,10 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=tests/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=tests/properties/tcp_routes_config/selected_option?/cf_credentials?/password?
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=tests/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled))
@@ -382,10 +412,10 @@
   value: ((tcp_routes_config.amqp_tls_tcp_route_enabled))
 - type: replace
   path: /instance_groups/name=delete-all/properties/tcp_routes_config/selected_option?/cf_credentials?/identity?
-  value: ((tcp_routes_config.cf_credentials.identity))
+  value: ((tcp_routes_config.solace_router_client.id))
 - type: replace
   path: /instance_groups/name=delete-all/properties/tcp_routes_config/selected_option?/cf_credentials?/password? 
-  value: ((tcp_routes_config.cf_credentials.password))
+  value: ((tcp_routes_config.solace_router_client.secret))
 - type: replace
   path: /instance_groups/name=delete-all/properties/tcp_routes_config/selected_option?/mqtt_tcp_route_enabled?
   value: ((tcp_routes_config.mqtt_tcp_route_enabled)) 
