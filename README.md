@@ -133,6 +133,7 @@ BOSH operator files provide controls for:
 | [enable_ldap.yml](operations/enable_ldap/yml) | Adds ldap configuration, see this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
 | [set_management_access_ldap.yml](operations/set_management_access_ldap.yml) | Adds ldap authorization for management access. Configuration is found in the same ldap [vars.yml](operations/example-vars-files/ldap_config.yml) file.
 | [set_application_access_ldap.yml](operations/set_application_access_ldap.yml) | Adds ldap authorization for application access. 
+| [enable_syslog.yml](operations/enable_syslog.yml) | Addes syslog configuration, see [syslog_config.yml](operations/example-vars-files/syslog_config.yml) file. 
 
 Only one of these required files can be used and should only be applied as the last operator file, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
 
@@ -148,7 +149,6 @@ not all Solace BOSH release capabilities have been fully expressed in this deplo
 Futures releases of this deployment project will address these capabilities:
 
 - No VMR Trusted Root Certs Config
-- No Syslog Config
 
 ### How to deploy
 
