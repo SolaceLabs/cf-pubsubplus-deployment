@@ -586,6 +586,79 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_admin_password: ((vmr_admin_password))
+- name: tests
+  jobs:
+  - name: tests
+    release: solace-vmr
+    provides: {}
+    consumes:
+      solace_vmr_shared_vmr: { from: shared_vmr_list }
+      solace_vmr_community_vmr: { from: community_vmr_list }
+      solace_vmr_large_vmr: { from: large_vmr_list }
+      solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
+      solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+  instances: 1
+  vm_type: minimal
+  stemcell: default
+  lifecycle: errand
+  azs:
+  - z1
+  networks:
+  - name: default
+  properties:
+    apply_open_security_group: true
+    app_domains:
+    - ((app_domain))
+    application_access_auth_scheme:
+      value: vmr_internal
+    broker_hostname: solace-messaging.((app_domain))
+    broker_password: ((solace_broker_password))
+    broker_user: ((solace_broker_user))
+    cf:
+      admin_password: ((cf_admin_password))
+      admin_user: admin
+    domain: ((system_domain))
+    ldap_config:
+      value: disabled
+    management_access_auth_scheme:
+      value: vmr_internal
+    org: ((solace_broker_cf_organization))
+    security:
+      password: ((solace_broker_password))
+      user: ((solace_broker_user))
+    solace_messaging:
+      app_manifest:
+        buildpack: java_buildpack
+        env:
+          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+          SOLACE_LOAD_VERSION: ((solace_load_version))
+          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+        memory: 1024M
+        path: ((solace_service_broker_jar))
+        health-check-http-endpoint: /health
+        health-check-type: http
+        timeout: 180
+      auto_services:
+      - name: p-mysql
+        plan: ((mysql_plan))
+      enable_global_access_to_plans: ((enable_global_access_to_plans))
+      password: ((solace_broker_password))
+      user: ((solace_broker_user))
+    space: ((solace_broker_cf_space))
+    ssl:
+      skip_cert_verify: true
+    starting_port: ((starting_port))
+    syslog_config:
+      value: disabled
+    tcp_routes_config:
+      selected_option:
+        tcp_route_enabled: not_allowed
+      value: disabled
+    tls_config:
+      value: disabled
+    vmr_admin_password: ((vmr_admin_password))
 - name: delete-all
   instances: 1
   vm_type: minimal
