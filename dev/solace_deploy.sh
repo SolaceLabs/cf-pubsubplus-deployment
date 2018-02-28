@@ -4,9 +4,6 @@ export SCRIPT="$( basename "${BASH_SOURCE[0]}" )"
 export SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
-export VARS_PATH=$SCRIPTPATH/../vars.yml
-export TLS_PATH=$SCRIPTPATH/../operations/example-vars-files/certs.yml
-
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 export VMR_EDITION=${VMR_EDITION:-"evaluation"}
 
@@ -30,29 +27,33 @@ function showUsage() {
     echo "  -l <ldap_config.yml>      provide ldap config file path"   
     echo "  -b                        enable ldap management authorization access" 
     echo "  -c                        enable ldap application authorization access" 
+    echo "  -n                        disable service broker tls cert validation"
 }
 
 
-while getopts "t:a:b:c:s:l:p:v:eh" arg; do
+while getopts "t:a:n:b:c:r:l:s:p:v:eh" arg; do
     case "${arg}" in
-        b) 
-             mldap=true
-             ;;
-        c) 
-             aldap=true
-             ;;
         t) 
-            export TLS_PATH="$OPTARG"
+            TLS_PATH="$OPTARG"
             shift
             ;;
         a)
-            export SYSLOG_PATH="$OPTARG"
+            SYSLOG_PATH="$OPTARG"
             ;;
+        n) 
+            disablebrokertls=true
+            ;; 
+        b) 
+            mldap=true
+             ;;
+        c) 
+            aldap=true
+             ;;
         r) 
-	    export TCP_PATH="$OPTARG" 
+	    TCP_PATH="$OPTARG" 
             ;;
         l) 
-	    export LDAP_PATH="$OPTARG"
+	    LDAP_PATH="$OPTARG"
             ;; 
         s)
             starting_port="$OPTARG"
@@ -64,12 +65,12 @@ while getopts "t:a:b:c:s:l:p:v:eh" arg; do
             grep -q 'vmr_admin_password' vars.yml && sed -i "s/vmr_admin_password.*/vmr_admin_password: $vmr_admin_password/" vars.yml || echo "vmr_admin_password: $vmr_admin_password" >> vars.yml
             ;;
         v)
-            export VARS_PATH="$OPTARG"
+            VARS_PATH="$OPTARG"
             shift
             echo $SCRIPTPATH
             ;; 
         e) 
-	    export VMR_EDITION="enterprise"
+	    VMR_EDITION="enterprise"
             ;;
         h)
             showUsage
@@ -85,27 +86,40 @@ while getopts "t:a:b:c:s:l:p:v:eh" arg; do
     esac
 done
 
+if [ ! -f "$VARS_PATH" ]; then
+   VARS_PATH=$SCRIPTPATH/../vars.yml
+fi
+
 if [ -f "$SYSLOG_PATH" ]; then
-   sys='-o operations/enable_syslog.yml' 
-   sysconf="-l $SYSLOG_PATH" 
+   enable_syslog='-o operations/enable_syslog.yml' 
+   syslog_config="-l $SYSLOG_PATH" 
 fi
 
 if [ -f "$LDAP_PATH" ]; then 
-   ldap='-o operations/enable_ldap.yml' 
-   ldapconf="-l $LDAP_PATH"
+   enable_ldap='-o operations/enable_ldap.yml' 
+   ldap_config="-l $LDAP_PATH"
 fi 
 
 if [ -f "$mldap" ]; then 
-   m='-o operations/set_management_access_ldap.yml'
+   enable_management_access_ldap='-o operations/set_management_access_ldap.yml'
+fi 
+
+if [ -f "$disablebrokertls" ]; then 
+   tls_disable_service_broker_cert='-o operations/disable_service_broker_certificate_validation.yml'
+fi
+
+if [ -f "$TLS_PATH" ]; then 
+   set_tls_cert='-o operations/set_solace_vmr_cert.yml' 
+   tls_config="-l $TLS_PATH" 
 fi 
 
 if [ -f "$aldap" ]; then
-   a='-o operations/set_application_access_ldap.yml' 
+   enable_management_access_ldap='-o operations/set_application_access_ldap.yml' 
 fi 
 
 if [ -f "$TCP_PATH" ]; then
-    tcp='-o operations/enable_tcp_routes.yml' 
-    tcpconf="-l $TCP_PATH"
+    enable_tcp_routes='-o operations/enable_tcp_routes.yml' 
+    tcp_config="-l $TCP_PATH"
 fi
 
 cd $SCRIPTPATH/..
@@ -124,30 +138,29 @@ if [ "$SOLACE_MESSAGING_RELEASE_FOUND_COUNT" -eq "0" ]; then
    exit 1
 fi
 
-
 bosh -d solace_messaging \
         deploy solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
         -o operations/bosh_lite.yml \
-	-o operations/set_solace_vmr_cert.yml \
 	-o operations/enable_global_access_to_plans.yml \
 	-o operations/is_${VMR_EDITION}.yml \
-        $ldap \
-        $sys \
-        $m \
-        $a \
-        $tcp \
-        -o operations/enable_tcp_routes.yml \
+        $enable_ldap \
+        $enable_syslog \
+        $enable_management_access_ldap \
+        $enable_application_access_ldap \
+        $tls_disable_service_broker_cert \
+        $set_tls_cert \
+        $enable_tcp_routes \
 	--vars-store $SCRIPTPATH/deployment-vars.yml \
 	-v system_domain=bosh-lite.com  \
 	-v app_domain=bosh-lite.com  \
 	-v cf_deployment=cf  \
 	-l $VARS_PATH \
-	-l release-vars.yml \
-        $tcpconf \
-        $sysconf \
-        $ldapconf \
-        -l $TLS_PATH 
+	$tls_config \
+        $tcp_config \
+        $syslog_config \
+        $ldap_config \
+        -l release-vars.yml
        
 
 [[ $? -eq 0 ]] && { 
