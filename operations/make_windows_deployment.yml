@@ -1,0 +1,15 @@
+- type: delete
+  path: /instance_groups/name=jobs/consumes/nats_link?/deployment? 
+- type: delete
+  path: /instance_groups/name=jobs/consumes/nats_link?/from? 
+- type: delete
+  path: /instance_groups/name=jobs/name=route-registrar_active/
+  - type: delete
+  path: /instance_groups/name=jobs/consumes/nats_link?/deployment? 
+- type: delete
+  path: /instance_groups/name=jobs/consumes/nats_link?/from? 
+- type: delete
+  path: /instance_groups/name=jobs/name=route-registrar/
+- type: delete
+  path: /instance_groups/name=jobs/release=solace-vmr/
+
