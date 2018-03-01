@@ -25,11 +25,12 @@ if [ -f bosh_env.sh ]; then
 fi
 
 if [ ! -d $WORKSPACE/cf-deployment ]; then
- git clone https://github.com/cloudfoundry/cf-deployment.git 
- (cd cf-deployment; git checkout tags/$CF_DEPLOYMENT_VERSION)
+ ( cd $WORKSPACE; git clone https://github.com/cloudfoundry/cf-deployment.git )
 fi
 
-cd cf-deployment
+(cd $WORKSPACE/cf-deployment; git checkout tags/$CF_DEPLOYMENT_VERSION)
+
+cd $WORKSPACE/cf-deployment
 
 echo "Checking stemcell $STEMCELL_NAME"
 
