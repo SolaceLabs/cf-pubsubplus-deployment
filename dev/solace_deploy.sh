@@ -143,7 +143,6 @@ bosh -d solace_messaging \
         -o operations/bosh_lite.yml \
 	-o operations/enable_global_access_to_plans.yml \
 	-o operations/is_${VMR_EDITION}.yml \
-        -o ../operations/make_windows_deployment.yml \
         $enable_ldap \
         $enable_syslog \
         $enable_management_access_ldap \
@@ -151,9 +150,9 @@ bosh -d solace_messaging \
         $tls_disable_service_broker_cert \
         $set_tls_cert \
         $enable_tcp_routes \
-	--vars-store $SCRIPTPATH/deployment-vars.yml \
-	-v system_domain=local.pcfdev.io \
-	-v app_domain=local.pcfdev.io  \
+	--vars-store $WORKSPACE/deployment-vars.yml \
+	-v system_domain=bosh-lite.com \
+	-v app_domain=bosh-lite.com \
 	-v cf_deployment=cf  \
 	-l $VARS_PATH \
 	$tls_file \
@@ -161,6 +160,7 @@ bosh -d solace_messaging \
         $syslog_file \
         $ldap_file \
         -l release-vars.yml
+
 echo "bosh -d solace_messaging \
         deploy solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
