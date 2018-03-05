@@ -3,7 +3,7 @@
 - type: remove
   path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/solace_vmr_community_vmr
 - type: remove
-  path: /instance_groups/name=tests/jobs/name=deploy-all/consumes/solace_vmr_community_vmr
+  path: /instance_groups/name=tests/jobs/name=tests/consumes/solace_vmr_community_vmr
 - type: remove
   path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/solace_vmr_community_vmr
 - type: replace
@@ -11,6 +11,9 @@
   value: true
 - type: replace
   path: /instance_groups/name=deploy-all/properties/solace_messaging/app_manifest/env/IS_ENTERPRISE_MODE?
+  value: true
+- type: replace
+  path: /instance_groups/name=tests/properties/solace_messaging/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/edition
