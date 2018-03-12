@@ -22,10 +22,9 @@ if [ ! -d bucc ]; then
 else
  (cd bucc; git pull)
 fi
-
-sed -i "/vm_memory:/c\vm_memory: $VM_MEMORY" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
 echo "Setting VM MEMORY to $VM_MEMORY, VM_CPUS to $VM_CPUS"
-sed -i "s/vm_cpus: 2/vm_cpus: $VM_CPUS/" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
+sed -i "/vm_memory:/c\vm_memory: $VM_MEMORY" $WORKSPACE/bucc/state/vars.yml
+sed -i "/vm_cpus:/c\vm_cpus: $VM_CPUS/" $WORKSPACE/bucc/state/vars.yml
 
 $WORKSPACE/bucc/bin/bucc up --cpi virtualbox --lite --debug | tee $WORKSPACE/bucc_up.log
 $WORKSPACE/bucc/bin/bucc env > $WORKSPACE/bosh_env.sh
