@@ -8,9 +8,9 @@ export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 
 export SYSTEM_DOMAIN=${SYSTEM_DOMAIN:-"bosh-lite.com"}
 
-export CF_DEPLOYMENT_VERSION=${CF_DEPLOYMENT_VERSION:-"v1.7.0"}
+export CF_DEPLOYMENT_VERSION=${CF_DEPLOYMENT_VERSION:-"v1.16.0"}
 
-export STEMCELL_VERSION=${STEMCELL_VERSION:-"3468.17"}
+export STEMCELL_VERSION=${STEMCELL_VERSION:-"3541.5"}
 export STEMCELL_NAME="bosh-stemcell-$STEMCELL_VERSION-warden-boshlite-ubuntu-trusty-go_agent.tgz"
 export STEMCELL_URL="https://s3.amazonaws.com/bosh-core-stemcells/warden/$STEMCELL_NAME"
 
@@ -25,11 +25,12 @@ if [ -f bosh_env.sh ]; then
 fi
 
 if [ ! -d $WORKSPACE/cf-deployment ]; then
- git clone https://github.com/cloudfoundry/cf-deployment.git 
- (cd cf-deployment; git checkout tags/$CF_DEPLOYMENT_VERSION)
+ ( cd $WORKSPACE; git clone https://github.com/cloudfoundry/cf-deployment.git )
 fi
 
-cd cf-deployment
+(cd $WORKSPACE/cf-deployment; git checkout tags/$CF_DEPLOYMENT_VERSION)
+
+cd $WORKSPACE/cf-deployment
 
 echo "Checking stemcell $STEMCELL_NAME"
 
