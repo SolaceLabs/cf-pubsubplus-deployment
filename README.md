@@ -142,13 +142,6 @@ Sample iaas-support:
 - [Openstack](iaas-support/openstack/)
 - [GCP](operations/google_cloud.yml)
 
-### Deployment manifest limitations:
-
-While the capabililties of the Solace BOSH releases are well documented in [Solace Pivotal Tile Documentation](http://docs.pivotal.io/partners/solace-messaging/),
-not all Solace BOSH release capabilities have been fully expressed in this deployment project with samples.
-Futures releases of this deployment project will address these capabilities:
-
-- No VMR Trusted Root Certs Config
 
 ### How to deploy
 
