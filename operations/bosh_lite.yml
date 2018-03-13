@@ -30,6 +30,15 @@
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/containers/0/memory_swap?
   value: 6G
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/containers/0/env_vars?/name=SYSTEM_SCALING_MAXCONNECTIONCOUNT?
+  value: 1000
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/containers/0/env_vars?/name=SYSTEM_SCALING_MAXCONNECTIONCOUNT?
+  value: 1000
 # Should also set a smaller persistent disk for all VMs
 #
 - type: replace
