@@ -24,7 +24,7 @@ else
  (cd bucc; git pull)
 fi
 
-echo "Setting VM MEMORY to $VM_MEMORY, VM_CPUS to $VM_CPUS"
+echo "Setting VM MEMORY to $VM_MEMORY, VM_CPUS to $VM_CPUS, VM_DISK_SIZE to $VM_DISK_SIZE"
 sed -i "s/vm_memory: 4096/vm_memory: $VM_MEMORY/" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
 sed -i "s/vm_cpus: 2/vm_cpus: $VM_CPUS/" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
 echo "vm_disk_size: $VM_DISK_SIZE" >> $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
