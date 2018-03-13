@@ -18,6 +18,8 @@ fi
 
 if [ ! -d cf-mysql-deployment ]; then
   git clone https://github.com/cloudfoundry/cf-mysql-deployment.git
+else
+  ( cd cf-mysql-deployment; git pull )
 fi
 
 cd cf-mysql-deployment
