@@ -50,24 +50,30 @@ export PATH=$HOME/cf-solace-messaging-deployment/dev:$PATH
 cd cf-solace-messaging-deployment
 ~~~~
 
-This script will use [BUCC](https://github.com/starkandwayne/bucc) on a Linux or Mac, there is NO support for Windows yet. 
+Optional - Adjust settings for VM_MEMORY, VM_SWAP, VM_CPUS, VM_DISK_SIZE.
+The values shown below are the current defaults. Which are enough for the full installation of CF, P-MYSQL, and a single Solace VMR.
+You should increase the RAM by 4GB and SWAP by 2GB per additional VMR. 
+The VM_DISK_SIZE must be increased when using 3 or more VMRs.
 ~~~~
+export VM_MEMORY=8192
+export VM_SWAP=8192
+export VM_CPUS=4
+export VM_DISK_SIZE=65_536
+~~~
+
+This script will use [BUCC](https://github.com/starkandwayne/bucc) on a Linux or Mac, there is NO support for Windows yet. 
+This script will prompt you for administrator password in order to add routes. It will setup additional swap space in the BOSH-Lite VM.
+
+~~~
 setup_bosh_bucc.sh
 ~~~~
 
-This will use 8GB of RAM for a VM, install BOSH and create workspace/bosh_env.sh
-This is enough to install all the tools and deploy a single solace VMR for testing.
+Once done the script will create workspace/bosh_env.sh
 
 Verify bosh is deployed, we expect to see no listed VMs, and no errors accessing BOSH.
 ~~~~
 source workspace/bosh_env.sh
 bosh vms
-~~~~
-
-Ensure routes are setup.
-~~~~
-source workspace/bosh_env.sh
-workspace/bucc/bin/bucc routes
 ~~~~
 
 <a name="install_cf"></a>
@@ -165,4 +171,24 @@ So you have a deployment, you can go ahead and try out [Solace Messaging tutoria
 There are current limitations with the bosh-virtualbox and the deployment cannot be simply resumed if virtual box was shutdown.
 If you want to keep your deployment on virtual box, remember to pause and save it before any reboot/shutdown.
 
+
+<a name="delete_solace_messaging"></a>
+### Deleting the Solace Messaging Deployment
+
+This script will delete the solace-messaging deployment, remove the solace bosh releases and delete any orphaned disks.
+
+~~~~
+solace_delete_deployment.sh
+~~~~
+
+<a name="uninstall_everything"></a>
+### Uninstall everything
+
+This is usefull to delete everything, or reset in order to start over.
+
+To delete the full setup of the BOSH,  removing all its contents, allocated disks, and delete the VM.
+
+~~~~
+destroy_bosh_bucc.sh
+~~~~
 
