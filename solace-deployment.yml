@@ -11,10 +11,11 @@ update:
   canary_watch_time: 30000-240000
   max_in_flight: 1
   update_watch_time: 30000-600000
+  serial: false
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3541.5"
+  version: "3541.8"
 instance_groups:
 - name: Shared-VMR
   stemcell: default
