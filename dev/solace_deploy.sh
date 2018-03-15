@@ -35,7 +35,6 @@ while getopts "t:a:n:b:c:r:l:s:p:v:eh" arg; do
     case "${arg}" in
         t) 
             TLS_PATH="$OPTARG"
-            shift
             ;;
         a)
             SYSLOG_PATH="$OPTARG"
@@ -66,7 +65,6 @@ while getopts "t:a:n:b:c:r:l:s:p:v:eh" arg; do
             ;;
         v)
             VARS_PATH="$OPTARG"
-            shift
             ;; 
         e) 
 	    VMR_EDITION="enterprise"
@@ -85,38 +83,38 @@ while getopts "t:a:n:b:c:r:l:s:p:v:eh" arg; do
     esac
 done
 
-if [ ! -f "$VARS_PATH" ]; then
+if [ -n "$VARS_PATH" ]; then
    VARS_PATH=$SCRIPTPATH/../vars.yml
 fi
 
-if [ -f "$SYSLOG_PATH" ]; then
+if [ -n "$SYSLOG_PATH" ]; then
    enable_syslog='-o operations/enable_syslog.yml' 
    syslog_file="-l $SYSLOG_PATH" 
 fi
 
-if [ -f "$LDAP_PATH" ]; then 
+if [ -n "$LDAP_PATH" ]; then 
    enable_ldap='-o operations/enable_ldap.yml' 
    ldap_file="-l $LDAP_PATH"
 fi 
 
-if [ -f "$mldap" ]; then 
+if [ $mldap=true ]; then 
    enable_management_access_ldap='-o operations/set_management_access_ldap.yml'
 fi 
 
-if [ -f "$disablebrokertls" ]; then 
+if [ $disablebrokertls=true ]; then 
    tls_disable_service_broker_cert='-o operations/disable_service_broker_certificate_validation.yml'
 fi
 
-if [ -f "$TLS_PATH" ]; then 
+if [ -n "$TLS_PATH" ]; then 
    set_tls_cert='-o operations/set_solace_vmr_cert.yml' 
    tls_file="-l $TLS_PATH" 
 fi 
 
-if [ -f "$aldap" ]; then
+if [ $aldap=true ]; then
    enable_management_access_ldap='-o operations/set_application_access_ldap.yml' 
 fi 
 
-if [ -f "$TCP_PATH" ]; then
+if [ -n "$TCP_PATH" ]; then
     enable_tcp_routes='-o operations/enable_tcp_routes.yml' 
     tcp_file="-l $TCP_PATH"
 fi
@@ -136,30 +134,6 @@ if [ "$SOLACE_MESSAGING_RELEASE_FOUND_COUNT" -eq "0" ]; then
    echo "solace-messaging release seem to be missing from bosh, please upload-release to bosh"
    exit 1
 fi
-
-bosh -d solace_messaging \
-        deploy solace-deployment.yml \
-        -o operations/set_plan_inventory.yml \
-        -o operations/bosh_lite.yml \
-	-o operations/enable_global_access_to_plans.yml \
-        $enable_ldap \
-        $enable_syslog \
-        $enable_management_access_ldap \
-        $enable_application_access_ldap \
-        $tls_disable_service_broker_cert \
-        $set_tls_cert \
-        $enable_tcp_routes \
-        -o operations/is_${VMR_EDITION}.yml \
-	--vars-store $WORKSPACE/deployment-vars.yml \
-	-v system_domain=bosh-lite.com \
-	-v app_domain=bosh-lite.com \
-	-v cf_deployment=cf  \
-	-l $VARS_PATH \
-	$tls_file \
-        $tcp_file \
-        $syslog_file \
-        $ldap_file \
-        -l release-vars.yml
 
 echo "bosh -d solace_messaging \
         deploy solace-deployment.yml \
@@ -184,6 +158,30 @@ echo "bosh -d solace_messaging \
         $syslog_file \
         $ldap_file \
         -l release-vars.yml"
+
+bosh -d solace_messaging \
+        deploy solace-deployment.yml \
+        -o operations/set_plan_inventory.yml \
+        -o operations/bosh_lite.yml \
+	-o operations/enable_global_access_to_plans.yml \
+        $enable_ldap \
+        $enable_syslog \
+        $enable_management_access_ldap \
+        $enable_application_access_ldap \
+        $tls_disable_service_broker_cert \
+        $set_tls_cert \
+        $enable_tcp_routes \
+        -o operations/is_${VMR_EDITION}.yml \
+	--vars-store $WORKSPACE/deployment-vars.yml \
+	-v system_domain=bosh-lite.com \
+	-v app_domain=bosh-lite.com \
+	-v cf_deployment=cf  \
+	-l $VARS_PATH \
+	$tls_file \
+        $tcp_file \
+        $syslog_file \
+        $ldap_file \
+        -l release-vars.yml 
 
 [[ $? -eq 0 ]] && { 
   $SCRIPTPATH/solace_add_service_broker.sh 
