@@ -83,7 +83,7 @@ while getopts "t:a:n:b:c:r:l:s:p:v:eh" arg; do
     esac
 done
 
-if [ -n "$VARS_PATH" ]; then
+if [ -z "$VARS_PATH" ]; then
    VARS_PATH=$SCRIPTPATH/../vars.yml
 fi
 
