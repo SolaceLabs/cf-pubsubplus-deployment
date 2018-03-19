@@ -7,6 +7,8 @@ export WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 export BOSH_NON_INTERACTIVE=${BOSH_NON_INTERACTIVE:-true}
 export VMR_EDITION=${VMR_EDITION:-"evaluation"}
 
+export SYSTEM_DOMAIN=${SYSTEM_DOMAIN:-"bosh-lite.com"}
+
 if [ -f $WORKSPACE/bosh_env.sh ]; then
  source $WORKSPACE/bosh_env.sh
 fi
@@ -149,8 +151,8 @@ echo "bosh -d solace_messaging \
         $enable_tcp_routes \
         -o operations/is_${VMR_EDITION}.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \
-	-v system_domain=bosh-lite.com  \
-	-v app_domain=bosh-lite.com  \
+	-v system_domain=$SYSTEM_DOMAIN  \
+	-v app_domain=$SYSTEM_DOMAIN \
 	-v cf_deployment=cf  \
 	-l $VARS_PATH \
 	$tls_file \
@@ -173,8 +175,8 @@ bosh -d solace_messaging \
         $enable_tcp_routes \
         -o operations/is_${VMR_EDITION}.yml \
 	--vars-store $WORKSPACE/deployment-vars.yml \
-	-v system_domain=bosh-lite.com \
-	-v app_domain=bosh-lite.com \
+	-v system_domain=$SYSTEM_DOMAIN \
+	-v app_domain=$SYSTEM_DOMAIN \
 	-v cf_deployment=cf  \
 	-l $VARS_PATH \
 	$tls_file \

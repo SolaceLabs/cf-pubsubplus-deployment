@@ -28,6 +28,11 @@ function check_uaac() {
 function enableTcpRoutingForSolaceRouter() {
 
 	check_uaac
+	which uaac
+	if [ $? -eq 1 ]; then
+	   echo "Missing CloudFoundry UAA Command Line  ( uaac ), please install.."
+	   exit 1
+	fi
 
         TARGET=${1:-"uaa.$SYSTEM_DOMAIN"}
         uaac target $TARGET --skip-ssl-validation
