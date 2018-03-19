@@ -16,7 +16,18 @@ source $SCRIPTPATH/cf_env.sh
 
 export SYSTEM_DOMAIN=${SYSTEM_DOMAIN:-"bosh-lite.com"}
 
+function check_uaac() {
+	echo "Looking for CloudFoundry UAA Command Line  ( uaac )"
+	which uaac
+	if [ $? -eq 1 ]; then
+	   echo "Installing CloudFoundry UAA Command Line  ( uaac )"
+	   sudo gem install cf-uaac
+	fi
+}
+
 function enableTcpRoutingForSolaceRouter() {
+
+	check_uaac
 
         TARGET=${1:-"uaa.$SYSTEM_DOMAIN"}
         uaac target $TARGET --skip-ssl-validation

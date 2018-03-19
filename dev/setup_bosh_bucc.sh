@@ -25,8 +25,8 @@ else
 fi
 
 echo "Setting VM MEMORY to $VM_MEMORY, VM_CPUS to $VM_CPUS"
-sed -i "/vm_memory:/c\vm_memory: $VM_MEMORY" $WORKSPACE/bucc/state/vars.yml
-sed -i "/vm_cpus:/c\vm_cpus: $VM_CPUS/" $WORKSPACE/bucc/state/vars.yml
+sed -i "/vm_memory:/c\vm_memory: $VM_MEMORY" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
+sed -i "/vm_cpus:/c\vm_cpus: $VM_CPUS" $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
 
 echo "vm_disk_size: $VM_DISK_SIZE" >> $WORKSPACE/bucc/ops/cpis/virtualbox/vars.tmpl
 cp -f $SCRIPTPATH/vm-size.yml $WORKSPACE/bucc/ops/cpis/virtualbox/
@@ -39,7 +39,10 @@ echo "Adding routes, you may need to enter your credentials to grant sudo permis
 echo
 $SCRIPTPATH/setup_bosh_routes.sh
 echo
-echo "Adding swap. Please accept the The authenticity of host '192.168.50.6' when requested"
+echo "Adding swap of $VM_SWAP. You may need to accept the authenticity of host '192.168.50.6' when requested"
 echo
 $SCRIPTPATH/setup_bosh_swap.sh
 
+echo
+echo "TIP: To access bosh you should \"source $WORKSPACE/bosh_env.sh\""
+echo

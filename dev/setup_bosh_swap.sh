@@ -15,7 +15,8 @@ fi
 cd $WORKSPACE
 
 echo "Adding $VM_SWAP of swap space"
-ssh-keygen -f ~/.ssh/known_hosts -R 192.168.50.6
+ssh-keygen -f ~/.ssh/known_hosts -R $BOSH_ENVIRONMENT
+ssh-keyscan -H $BOSH_ENVIRONMENT >> ~/.ssh/known_hosts
 $WORKSPACE/bucc/bin/bucc ssh "sudo fallocate -l ${VM_SWAP}M /var/vcap/store/swapfile"
 $WORKSPACE/bucc/bin/bucc ssh "sudo chmod 600 /var/vcap/store/swapfile"
 $WORKSPACE/bucc/bin/bucc ssh "sudo mkswap /var/vcap/store/swapfile"
