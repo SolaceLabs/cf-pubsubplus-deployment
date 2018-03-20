@@ -4,6 +4,8 @@ export SCRIPT="$( basename "${BASH_SOURCE[0]}" )"
 export SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export WORKSPACE=${WORKSPACE:-$SCRIPTPATH/../workspace}
 
+source $SCRIPTPATH/common.sh
+
 grep solace_router_client_secret $WORKSPACE/deployment-vars.yml > /dev/null
 
 if [ $? -eq 0 ]; then
