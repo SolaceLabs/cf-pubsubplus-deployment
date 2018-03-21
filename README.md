@@ -181,7 +181,7 @@ bosh -d solace_messaging run-errand deploy-all
 
 ## Developement and testing
 
-The [dev](./dev) folder contains supporting tools that can help do some testing on bosh-lite.
+See the [solace-messaging-cf-dev](https://github.com/SolaceLabs/solace-messaging-cf-dev) projects which supports a local deployment of Solace Messaging for Cloud Foundry.
 
 ## Contributing
 
