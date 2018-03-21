@@ -58,15 +58,6 @@ cf-solace-messaging-deployment/workspace/solace-messaging-1.4.0.pivotal
 
 The Solace Pivotal Tile file is a zip file from which we can extract the required BOSH releases.
 
-Use extract_tile.sh to extract the relevant contents we need.
-
-~~~~
-cd workspace
-extract_tile.sh -t solace-messaging-1.4.0.pivotal
-~~~~
-
-The same can be done using 'unzip':
-
 ~~~~
 cd workspace
 unzip -o -d . solace-messaging-1.4.0.pivotal releases/*.tgz
