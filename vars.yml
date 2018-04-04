@@ -9,6 +9,7 @@ solace_broker_cf_space: solace-messaging
 
 # The client secret for the "solace_router" uaa client
 solace_router_client_secret: 1234
+solace_router_client_id: solace_router
 
 # The start port seed from which all ports allocation are based.
 starting_port: 7000

@@ -64,7 +64,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -137,7 +137,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -264,7 +264,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -364,7 +364,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -464,7 +464,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -561,7 +561,7 @@ instance_groups:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
           SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar))
@@ -634,7 +634,7 @@ instance_groups:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
           SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar))
@@ -693,7 +693,7 @@ instance_groups:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
           SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar)) 
