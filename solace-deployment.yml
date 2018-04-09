@@ -127,6 +127,7 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_agent_port: 18080
+    vmr_debug_logs: disabled
 - name: Community-VMR
   stemcell: default
   instances: 1
@@ -210,6 +211,7 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_agent_port: 18080
+    vmr_debug_logs: disabled
   jobs:
   - name: docker
     release: docker
@@ -347,6 +349,7 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_agent_port: 18080
+    vmr_debug_logs: disabled
 - name: Large-VMR
   stemcell: default
   instances: 0
@@ -457,6 +460,7 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_agent_port: 18080
+    vmr_debug_logs: disabled
 - name: Medium-HA-VMR
   stemcell: default
   instances: 0
@@ -567,6 +571,7 @@ instance_groups:
     tls_config:
       value: disabled
     vmr_agent_port: 18080
+    vmr_debug_logs: disabled
 - name: deploy-all
   jobs:
   - name: deploy-all
