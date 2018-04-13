@@ -1,0 +1,9 @@
+ldap: 
+  password: solace1
+  username: cn=root,dc=solace,dc=com
+  server_url: ldap://52.91.19.15
+  user_search_base: dc=solace,dc=com
+management_access_auth_scheme:
+  mgmt_admin_groups: cn=red,ou=groups,dc=solace,dc=com
+  mgmt_read_only_groups: cn=yellow,ou=groups,dc=solace,dc=com
+  mgmt_read_write_groups: cn=orange,ou=groups,dc=solace,dc=com

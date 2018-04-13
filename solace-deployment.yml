@@ -11,10 +11,11 @@ update:
   canary_watch_time: 30000-240000
   max_in_flight: 1
   update_watch_time: 30000-600000
+  serial: false
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3468.17"
+  version: ((bosh_stemcell_version))
 instance_groups:
 - name: Shared-VMR
   stemcell: default
@@ -63,7 +64,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -136,7 +137,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -263,7 +264,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -363,7 +364,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -463,7 +464,7 @@ instance_groups:
     broker_password: ((solace_broker_password))
     broker_user: ((solace_broker_user))
     cf_api_host: api.((system_domain))
-    cf_client_id: solace_router
+    cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
     cf_organization: ((solace_broker_cf_organization))
     cf_space: ((solace_broker_cf_space))
@@ -560,7 +561,80 @@ instance_groups:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
           SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+        memory: 1024M
+        path: ((solace_service_broker_jar))
+        health-check-http-endpoint: /health
+        health-check-type: http
+        timeout: 180
+      auto_services:
+      - name: p-mysql
+        plan: ((mysql_plan))
+      enable_global_access_to_plans: ((enable_global_access_to_plans))
+      password: ((solace_broker_password))
+      user: ((solace_broker_user))
+    space: ((solace_broker_cf_space))
+    ssl:
+      skip_cert_verify: true
+    starting_port: ((starting_port))
+    syslog_config:
+      value: disabled
+    tcp_routes_config:
+      selected_option:
+        tcp_route_enabled: not_allowed
+      value: disabled
+    tls_config:
+      value: disabled
+    vmr_admin_password: ((vmr_admin_password))
+- name: tests
+  jobs:
+  - name: tests
+    release: solace-vmr
+    provides: {}
+    consumes:
+      solace_vmr_shared_vmr: { from: shared_vmr_list }
+      solace_vmr_community_vmr: { from: community_vmr_list }
+      solace_vmr_large_vmr: { from: large_vmr_list }
+      solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
+      solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+  instances: 1
+  vm_type: minimal
+  stemcell: default
+  lifecycle: errand
+  azs:
+  - z1
+  networks:
+  - name: default
+  properties:
+    apply_open_security_group: true
+    app_domains:
+    - ((app_domain))
+    application_access_auth_scheme:
+      value: vmr_internal
+    broker_hostname: solace-messaging.((app_domain))
+    broker_password: ((solace_broker_password))
+    broker_user: ((solace_broker_user))
+    cf:
+      admin_password: ((cf_admin_password))
+      admin_user: admin
+    domain: ((system_domain))
+    ldap_config:
+      value: disabled
+    management_access_auth_scheme:
+      value: vmr_internal
+    org: ((solace_broker_cf_organization))
+    security:
+      password: ((solace_broker_password))
+      user: ((solace_broker_user))
+    solace_messaging:
+      app_manifest:
+        buildpack: java_buildpack
+        env:
+          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+          SOLACE_LOAD_VERSION: ((solace_load_version))
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar))
@@ -619,7 +693,7 @@ instance_groups:
           IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
           JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
           SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: solace_router
+          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
           SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
         memory: 1024M
         path: ((solace_service_broker_jar)) 
@@ -663,3 +737,9 @@ variables:
   type: password
 - name: solace_router_client_secret
   type: password
+- name: example_ca
+  type: certificate
+  options: {is_ca: true, common_name: example-ca}
+- name: solace_vmr_cert
+  type: certificate
+  options: {ca: example_ca, common_name: solace-vmr-cert, extended_key_usage: [client_auth, server_auth]}

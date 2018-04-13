@@ -30,6 +30,12 @@
 - type: replace
   path: /instance_groups/name=Large-HA-VMR/properties/containers/0/memory_swap?
   value: 6G
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/containers/0/env_vars?/2
+  value: SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/containers/0/env_vars?/2
+  value: SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
 # Should also set a smaller persistent disk for all VMs
 #
 - type: replace
@@ -47,3 +53,35 @@
 - type: replace
   path: /instance_groups/name=Large-VMR/persistent_disk?
   value: 20480
+## Fix SSH : SERVICE_SSH_PORT
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/containers/0/env_vars?/1
+  value: SERVICE_SSH_PORT=3022
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/containers/0/env_vars?/1
+  value: SERVICE_SSH_PORT=3022
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/containers/0/env_vars?/1
+  value: SERVICE_SSH_PORT=3022
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/containers/0/env_vars?/1
+  value: SERVICE_SSH_PORT=3022
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/containers/0/env_vars?/1
+  value: SERVICE_SSH_PORT=3022
+## Fix SSH : 
+- type: replace
+  path: /instance_groups/name=Shared-VMR/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=Large-VMR/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=Community-VMR/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=Medium-HA-VMR/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=Large-HA-VMR/properties/ssh_port?
+  value: 3022
