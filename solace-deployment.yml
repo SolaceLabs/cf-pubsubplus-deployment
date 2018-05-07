@@ -6,17 +6,167 @@ releases:
   version: latest
 - name: solace-messaging
   version: latest
+- name: cf-mysql
+  sha1: 170ed88b80e22ef5274210269eb1adaeed15b55f
+#  stemcell:
+#    os: ubuntu-trusty
+#    version: '3541.10'
+  url: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-mysql-36.12.0-ubuntu-trusty-3541.10-20180404-063922-21489785.tgz
+  version: 36.12.0
+- name: consul
+  version: latest
+#- name: routing
+#  sha1: 6f15de5699cbbce8a49ac3a1a49185460ef93f95
+#  url: https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.154.0
+#  version: 0.154.0
 update:
   canaries: 1
   canary_watch_time: 30000-240000
   max_in_flight: 1
   update_watch_time: 30000-600000
-  serial: false
+  serial: true
 stemcells:
 - alias: default
   os: ubuntu-trusty
   version: ((bosh_stemcell_version))
 instance_groups:
+- name: mysql
+  instances: 2
+  networks:
+  - name: default
+  azs: [z1, z2]
+  persistent_disk_type: 5GB
+  update:
+    serial: true
+  vm_type: small
+  stemcell: default
+  jobs:
+  - name: mysql
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password)) 
+          remote_admin_access: false
+          innodb_buffer_pool_size: 128M # https://github.com/cloudfoundry/cf-mysql-deployment/blob/master/operations/bosh-lite.yml
+          # binlog_enabled: false
+          cluster_health:
+            password: ((cf_mysql_mysql_cluster_health_password))
+          galera_healthcheck:
+            db_password: ((cf_mysql_mysql_galera_healthcheck_db_password))
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+            # endpoint_username: galera_healthcheck
+          port: 3306
+          seeded_databases:
+          - name: service_broker 
+            username: service_broker
+            password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+  - name: smoke-tests-user
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        smoke_tests:
+          db_password: ((cf_mysql_smoke_tests_db_password))
+
+- name: arbitrator
+  instances: 1
+  azs: [z3]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - release: cf-mysql
+    name: arbitrator
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+          galera_healthcheck:
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+
+- name: proxy
+  instances: 2
+  azs: [z1, z2]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - name: proxy
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        proxy:
+          api_password: ((cf_mysql_proxy_api_password))
+          consul_enabled: true
+          consul_service_name: mysql
+    provides:
+      proxy:
+        as: mysql-proxy
+        shared: true
+  - name: consul_agent
+    release: consul
+    consumes: 
+      consul_common: {from: consul_common_link, deployment: ((cf_deployment))}
+      consul_server: {from: consul_server_link, deployment: ((cf_deployment))}
+      consul_client: {from: consul_client_link, deployment: ((cf_deployment))}
+
+- name: bootstrap-vm
+  instances: 1
+  lifecycle: errand
+  azs: [z1]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - {release: cf-mysql, name: bootstrap}
+
+- name: rejoin-unsafe-vm
+  instances: 1
+  lifecycle: errand
+  azs: [z1]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - {release: cf-mysql, name: rejoin-unsafe}
+
+- name: verify-cluster-schemas-vm
+  instances: 1
+  lifecycle: errand
+  azs: [z1]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - name: verify-cluster-schemas
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+          galera_healthcheck:
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+
+- name: smoke-tests-vm
+  instances: 1
+  lifecycle: errand
+  azs: [z1]
+  networks: [{name: default}]
+  vm_type: default
+  stemcell: default
+  jobs:
+  - name: smoke-tests
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+        proxy:
+          api_password: ((cf_mysql_proxy_api_password))
+        smoke_tests:
+          db_password: ((cf_mysql_smoke_tests_db_password))
+          standalone_tests_only: true
+
 - name: Shared-VMR
   stemcell: default
   instances: 0
@@ -583,6 +733,7 @@ instance_groups:
       solace_vmr_large_vmr: { from: large_vmr_list }
       solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
       solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      database_connection: { from: mysql-proxy }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -609,6 +760,9 @@ instance_groups:
     security:
       password: ((solace_broker_password))
       user: ((solace_broker_user))
+    mysql:
+      user: service_broker
+      password: ((mysql_password))
     solace_messaging:
       app_manifest:
         buildpack: java_buildpack
@@ -782,6 +936,7 @@ instance_groups:
       solace_vmr_large_vmr: { from: large_vmr_list }
       solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
       solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      database_connection: { from: mysql-proxy }
 
 variables:
 - name: vmr_admin_password
@@ -798,3 +953,17 @@ variables:
 - name: solace_vmr_cert
   type: certificate
   options: {ca: example_ca, common_name: solace-vmr-cert, extended_key_usage: [client_auth, server_auth]}
+- name: cf_mysql_mysql_admin_password
+  type: password
+- name: cf_mysql_mysql_cluster_health_password
+  type: password
+- name: cf_mysql_mysql_galera_healthcheck_endpoint_password
+  type: password
+- name: cf_mysql_mysql_galera_healthcheck_db_password
+  type: password
+- name: cf_mysql_mysql_seeded_databases_service_broker_password
+  type: password
+- name: cf_mysql_proxy_api_password
+  type: password
+- name: cf_mysql_smoke_tests_db_password
+  type: password
