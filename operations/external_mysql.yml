@@ -1,0 +1,13 @@
+- type: remove
+  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/mysql_config?/value
+  value: external
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option/external
+  value: 
+    hostname: mydb.cvn5wteupmtt.us-east-1.rds.amazonaws.com
+    port: 13307
+    dbname: service_broker_database
+    user: cmorneau
+    password: Claudine8

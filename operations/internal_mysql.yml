@@ -1,0 +1,149 @@
+- type: remove
+  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/mysql_config?/value
+  value: internal
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option/internal
+  value: 
+    user: service_broker
+    password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+- type: replace
+  path: /instance_groups/name=management?
+  value: 
+    name: management
+    instances: 1
+    networks:
+    - name: default
+    azs: [z1, z2]
+    persistent_disk_type: 5GB
+    update:
+      serial: true
+    vm_type: small
+    stemcell: default
+    jobs:
+    - name: mysql
+      release: cf-mysql
+      properties:
+        cf_mysql:
+          mysql:
+            admin_password: ((cf_mysql_mysql_admin_password))
+            remote_admin_access: false
+            innodb_buffer_pool_size: 128M # https://github.com/cloudfoundry/cf-mysql-deployment/blob/master/operations/bosh-lite.yml
+            # binlog_enabled: false
+            cluster_health:
+              password: ((cf_mysql_mysql_cluster_health_password))
+            galera_healthcheck:
+              db_password: ((cf_mysql_mysql_galera_healthcheck_db_password))
+              endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+              # endpoint_username: galera_healthcheck
+            port: 13306
+            seeded_databases:
+            - name: solace_service_broker
+              username: service_broker
+              password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+    - name: proxy
+      release: cf-mysql
+      properties:
+        cf_mysql:
+          proxy:
+            api_password: ((cf_mysql_proxy_api_password))
+      provides:
+        proxy:
+          as: mysql-proxy
+- type: replace
+  path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/mysql?
+  value: 
+    from: mysql-proxy
+- type: replace
+  path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/mysql?
+  value:
+    from: mysql-proxy
+- type: replace
+  path: /instance_groups/name=bootstrap-vm?
+  value: 
+    name: bootstrap-vm
+    instances: 1
+    lifecycle: errand
+    azs: [z1]
+    networks: [{name: default}]
+    vm_type: default
+    stemcell: default
+    jobs:
+    - {release: cf-mysql, name: bootstrap}
+- type: replace
+  path: /instance_groups/name=rejoin-unsafe-vm?
+  value:
+    name: rejoin-unsafe-vm
+    instances: 1
+    lifecycle: errand
+    azs: [z1]
+    networks: [{name: default}]
+    vm_type: default
+    stemcell: default
+    jobs:
+    - {release: cf-mysql, name: rejoin-unsafe}
+- type: replace
+  path: /instance_groups/name=smoke-tests-vm?
+  value:
+    name: smoke-tests-vm
+    instances: 1
+    lifecycle: errand
+    azs: [z1]
+    networks: [{name: default}]
+    vm_type: default
+    stemcell: default
+    jobs:
+    - name: smoke-tests
+      release: cf-mysql
+      properties:
+        cf_mysql:
+          mysql:
+            admin_password: ((cf_mysql_mysql_admin_password))
+          proxy:
+            api_password: ((cf_mysql_proxy_api_password))
+          smoke_tests:
+            db_password: ((cf_mysql_smoke_tests_db_password))
+            standalone_tests_only: true
+- type: replace
+  path: /releases/name=cf-mysql?
+  value:  
+    name: cf-mysql
+    sha1: 170ed88b80e22ef5274210269eb1adaeed15b55f
+    url: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-mysql-36.12.0-ubuntu-trusty-3541.10-20180404-063922-21489785.tgz
+    version: 36.12.0
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_mysql_admin_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_mysql_cluster_health_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_mysql_galera_healthcheck_endpoint_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_mysql_galera_healthcheck_db_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_mysql_seeded_databases_service_broker_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_proxy_api_password
+    type: password
+- type: replace
+  path: /variables/-
+  value:
+    name: cf_mysql_smoke_tests_db_password
+    type: password
