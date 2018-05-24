@@ -1,11 +1,3 @@
-- type: remove
-  path: /instance_groups/name=Community-VMR
-- type: remove
-  path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/solace_vmr_community_vmr
-- type: remove
-  path: /instance_groups/name=tests/jobs/name=tests/consumes/solace_vmr_community_vmr
-- type: remove
-  path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/solace_vmr_community_vmr
 - type: replace
   path: /instance_groups/name=delete-all/properties/solace_messaging/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true

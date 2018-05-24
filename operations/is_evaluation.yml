@@ -8,9 +8,6 @@
   path: /instance_groups/name=tests/properties/solace_messaging/app_manifest/env/IS_ENTERPRISE_MODE?
   value: false
 - type: replace
-  path: /instance_groups/name=Community-VMR/properties/edition
-  value: 'evaluation'
-- type: replace
   path: /instance_groups/name=Shared-VMR/properties/edition
   value: 'evaluation'
 - type: replace

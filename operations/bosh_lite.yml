@@ -1,12 +1,6 @@
 # Bosh Lite
 # Add memory constraints to the docker containers 
 - type: replace
-  path: /instance_groups/name=Community-VMR/properties/containers/0/memory?
-  value: 4G
-- type: replace
-  path: /instance_groups/name=Community-VMR/properties/containers/0/memory_swap?
-  value: 6G
-- type: replace
   path: /instance_groups/name=Shared-VMR/properties/containers/0/memory?
   value: 4G
 - type: replace
@@ -42,9 +36,6 @@
   path: /instance_groups/name=Shared-VMR/persistent_disk?
   value: 20480
 - type: replace
-  path: /instance_groups/name=Community-VMR/persistent_disk?
-  value: 20480
-- type: replace
   path: /instance_groups/name=Medium-HA-VMR/persistent_disk?
   value: 20480
 - type: replace
@@ -56,9 +47,6 @@
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=Shared-VMR/properties/containers/0/env_vars?/1
-  value: SERVICE_SSH_PORT=3022
-- type: replace
-  path: /instance_groups/name=Community-VMR/properties/containers/0/env_vars?/1
   value: SERVICE_SSH_PORT=3022
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/containers/0/env_vars?/1
@@ -75,9 +63,6 @@
   value: 3022
 - type: replace
   path: /instance_groups/name=Large-VMR/properties/ssh_port?
-  value: 3022
-- type: replace
-  path: /instance_groups/name=Community-VMR/properties/ssh_port?
   value: 3022
 - type: replace
   path: /instance_groups/name=Medium-HA-VMR/properties/ssh_port?
