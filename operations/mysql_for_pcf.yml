@@ -2,18 +2,15 @@
   path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option
 - type: replace
   path: /instance_groups/name=deploy-all/properties/mysql_config?/value
-  value: external
+  value: mysql_for_pcf
 - type: replace
   path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option
   value: 
-    hostname: ((mysql_external_hostname))
-    port: ((mysql_external_port))
-    dbname: ((mysql_external_dbname))
-    user: ((mysql_external_user))
-    password: ((mysql_external_password))
+    service_name: p-mysql
+    service_plan: 100mb
 - type: remove
   path: /instance_groups/name=management
-- type: remove
+- type: remove 
   path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/mysql
 - type: remove
   path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/mysql
