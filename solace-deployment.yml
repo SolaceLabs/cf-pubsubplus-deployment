@@ -6,12 +6,14 @@ releases:
   version: latest
 - name: solace-messaging
   version: latest
+- name: cf-mysql
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
   max_in_flight: 1
   update_watch_time: 30000-600000
-  serial: false
+  serial: true
 stemcells:
 - alias: default
   os: ubuntu-trusty
@@ -61,8 +63,8 @@ instance_groups:
     application_access_auth_scheme:
       value: vmr_internal
     broker_hostname: solace-messaging.((app_domain))
-    broker_password: ((solace_broker_password))
-    broker_user: ((solace_broker_user))
+    broker_password: ((service_broker_password))
+    broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
     cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
@@ -172,8 +174,8 @@ instance_groups:
     application_access_auth_scheme:
       value: vmr_internal
     broker_hostname: solace-messaging.((app_domain))
-    broker_password: ((solace_broker_password))
-    broker_user: ((solace_broker_user))
+    broker_password: ((service_broker_password))
+    broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
     cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
@@ -283,8 +285,8 @@ instance_groups:
     application_access_auth_scheme:
       value: vmr_internal
     broker_hostname: solace-messaging.((app_domain))
-    broker_password: ((solace_broker_password))
-    broker_user: ((solace_broker_user))
+    broker_password: ((service_broker_password))
+    broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
     cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
@@ -394,8 +396,8 @@ instance_groups:
     application_access_auth_scheme:
       value: vmr_internal
     broker_hostname: solace-messaging.((app_domain))
-    broker_password: ((solace_broker_password))
-    broker_user: ((solace_broker_user))
+    broker_password: ((service_broker_password))
+    broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
     cf_client_id: ((solace_router_client_id))
     cf_client_secret: ((solace_router_client_secret))
@@ -471,6 +473,7 @@ instance_groups:
       solace_vmr_large_vmr: { from: large_vmr_list }
       solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
       solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      mysql: { from: mysql-proxy }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -495,8 +498,13 @@ instance_groups:
       value: vmr_internal
     org: ((solace_broker_cf_organization))
     security:
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
+    mysql_config:
+      value: internal
+      internal: 
+        user: service_broker
+        password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
     solace_messaging:
       app_manifest:
         buildpack: java_buildpack
@@ -511,12 +519,9 @@ instance_groups:
         health-check-http-endpoint: /health
         health-check-type: http
         timeout: 180
-      auto_services:
-      - name: p-mysql
-        plan: ((mysql_plan))
       enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
     space: ((solace_broker_cf_space))
     ssl:
       skip_cert_verify: true
@@ -555,8 +560,8 @@ instance_groups:
     application_access_auth_scheme:
       value: vmr_internal
     broker_hostname: solace-messaging.((app_domain))
-    broker_password: ((solace_broker_password))
-    broker_user: ((solace_broker_user))
+    broker_password: ((service_broker_password))
+    broker_user: ((service_broker_user))
     cf:
       admin_password: ((cf_admin_password))
       admin_user: admin
@@ -567,8 +572,8 @@ instance_groups:
       value: vmr_internal
     org: ((solace_broker_cf_organization))
     security:
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
     solace_messaging:
       app_manifest:
         buildpack: java_buildpack
@@ -583,12 +588,9 @@ instance_groups:
         health-check-http-endpoint: /health
         health-check-type: http
         timeout: 180
-      auto_services:
-      - name: p-mysql
-        plan: ((mysql_plan))
       enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
     space: ((solace_broker_cf_space))
     ssl:
       skip_cert_verify: true
@@ -626,8 +628,8 @@ instance_groups:
       value: vmr_internal
     org: ((solace_broker_cf_organization))
     security:
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
     solace_messaging:
       app_manifest:
         buildpack: java_buildpack
@@ -641,12 +643,9 @@ instance_groups:
         path: ((solace_service_broker_jar)) 
         health-check-http-endpoint: /health
         health-check-type: http
-      auto_services:
-      - name: p-mysql
-        plan: ((mysql_plan))
       enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((solace_broker_password))
-      user: ((solace_broker_user))
+      password: ((service_broker_password))
+      user: ((service_broker_user))
     space: ((solace_broker_cf_space))
     ssl:
       skip_cert_verify: true
@@ -668,13 +667,51 @@ instance_groups:
       solace_vmr_large_vmr: { from: large_vmr_list }
       solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
       solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
-
+      mysql: { from: mysql-proxy }
+- name: management
+  instances: 1
+  networks:
+  - name: default
+  azs: [z1, z2]
+  persistent_disk_type: 10GB
+  update:
+    serial: true
+  vm_type: small
+  stemcell: default
+  jobs:
+  - name: mysql
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+          remote_admin_access: false
+          innodb_buffer_pool_size: 128M # https://github.com/cloudfoundry/cf-mysql-deployment/blob/master/operations/bosh-lite.yml
+          cluster_health:
+            password: ((cf_mysql_mysql_cluster_health_password))
+          galera_healthcheck:
+            db_password: ((cf_mysql_mysql_galera_healthcheck_db_password))
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+          port: 13306
+          seeded_databases:
+          - name: solace_service_broker
+            username: service_broker
+            password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+  - name: proxy
+    release: cf-mysql
+    properties:
+      cf_mysql:
+        proxy:
+          api_password: ((cf_mysql_proxy_api_password))
+    provides:
+      proxy:
+        as: mysql-proxy
 variables:
 - name: vmr_admin_password
   type: password
-- name: solace_broker_password
+- name: service_broker_user
   type: password
-- name: solace_broker_user
+- name: service_broker_password
   type: password
 - name: solace_router_client_secret
   type: password
@@ -684,3 +721,17 @@ variables:
 - name: solace_vmr_cert
   type: certificate
   options: {ca: example_ca, common_name: solace-vmr-cert, extended_key_usage: [client_auth, server_auth]}
+- name: cf_mysql_mysql_admin_password
+  type: password
+- name: cf_mysql_mysql_cluster_health_password
+  type: password
+- name: cf_mysql_mysql_galera_healthcheck_endpoint_password
+  type: password
+- name: cf_mysql_mysql_galera_healthcheck_db_password
+  type: password
+- name: cf_mysql_mysql_seeded_databases_service_broker_password
+  type: password
+- name: cf_mysql_proxy_api_password
+  type: password
+- name: cf_mysql_smoke_tests_db_password
+  type: password
