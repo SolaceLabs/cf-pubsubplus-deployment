@@ -89,7 +89,6 @@ Variable controls are provided for:
 | large_plan_instances     | Yes | The number of VMR instances to create supporting the "large" plan |
 | medium_ha_plan_instances | Yes | The number of VMR instances to create supporting the "medium-ha" plan |
 | large_ha_plan_instances  | Yes | The number of VMR instances to create supporting the "large-ha" plan |
-| community_plan_instances | Yes | The number of VMR instances to create supporting the "community" plan. This will have no effect when using an enterprise solace-vmr release. |
 
 Just keep in mind that any __*plan_instances__ are static, and setting them all Zero means there is no inventory to support the solace-messaging plans.
 
