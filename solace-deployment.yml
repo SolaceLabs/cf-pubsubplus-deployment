@@ -19,7 +19,7 @@ stemcells:
   os: ubuntu-trusty
   version: ((bosh_stemcell_version))
 instance_groups:
-- name: Shared-VMR
+- name: Shared
   stemcell: default
   instances: 0
   vm_type: solace.medium
@@ -103,7 +103,7 @@ instance_groups:
       value: disabled
     management_access_auth_scheme:
       value: vmr_internal
-    pool_name: Shared-VMR
+    pool_name: Shared
     plan:
       limit:
         maxVpns: 5
@@ -130,7 +130,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Large-HA-VMR
+- name: Large-HA
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -214,7 +214,7 @@ instance_groups:
       value: disabled
     management_access_auth_scheme:
       value: vmr_internal
-    pool_name: Large-HA-VMR
+    pool_name: Large-HA
     plan:
       limit:
         maxVpns: 1
@@ -241,7 +241,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Large-VMR
+- name: Large
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -325,7 +325,7 @@ instance_groups:
       value: disabled
     management_access_auth_scheme:
       value: vmr_internal
-    pool_name: Large-VMR
+    pool_name: Large
     plan:
       limit:
         maxVpns: 1
@@ -352,7 +352,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Medium-HA-VMR
+- name: Medium-HA
   stemcell: default
   instances: 0
   vm_type: solace.medium
@@ -436,7 +436,7 @@ instance_groups:
       value: disabled
     management_access_auth_scheme:
       value: vmr_internal
-    pool_name: Medium-HA-VMR
+    pool_name: Medium-HA
     plan:
       limit:
         maxVpns: 1

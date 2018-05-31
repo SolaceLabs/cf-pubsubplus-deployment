@@ -1,16 +1,16 @@
 # Disables service broker's certificate validation when communicating with the VMR
 # This adds certificates
 - type: replace
-  path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=Shared/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=Medium-HA/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=Large/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=Large-HA/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/broker_validate_cert_disabled?

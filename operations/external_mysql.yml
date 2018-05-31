@@ -1,5 +1,5 @@
 - type: remove
-  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option
+  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option?
 - type: replace
   path: /instance_groups/name=deploy-all/properties/mysql_config?/value
   value: external
@@ -10,7 +10,7 @@
     port: ((mysql_external_port))
     dbname: ((mysql_external_dbname))
     user: ((mysql_external_user))
-    password: ((mysql_external_password))
+    password: solace_password # ((mysql_external_password))
 - type: remove
   path: /instance_groups/name=management
 - type: remove

@@ -1,12 +1,12 @@
 - type: replace
-  path: /instance_groups/name=Shared-VMR/instances
+  path: /instance_groups/name=Shared/instances
   value: ((shared_plan_instances))
 - type: replace
-  path: /instance_groups/name=Large-VMR/instances
+  path: /instance_groups/name=Large/instances
   value: ((large_plan_instances))
 - type: replace
-  path: /instance_groups/name=Large-HA-VMR/instances
+  path: /instance_groups/name=Large-HA/instances
   value: ((large_ha_plan_instances))
 - type: replace
-  path: /instance_groups/name=Medium-HA-VMR/instances
+  path: /instance_groups/name=Medium-HA/instances
   value: ((medium_ha_plan_instances))
