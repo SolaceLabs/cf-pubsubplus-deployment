@@ -10,7 +10,7 @@
     port: ((mysql_external_port))
     dbname: ((mysql_external_dbname))
     user: ((mysql_external_user))
-    password: solace_password # ((mysql_external_password))
+    password: ((mysql_external_password))
 - type: remove
   path: /instance_groups/name=management
 - type: remove
@@ -31,5 +31,3 @@
   path: /variables/name=cf_mysql_mysql_seeded_databases_service_broker_password
 - type: remove
   path: /variables/name=cf_mysql_proxy_api_password
-- type: remove
-  path: /variables/name=cf_mysql_smoke_tests_db_password

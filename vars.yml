@@ -20,6 +20,10 @@ large_plan_instances: 0
 medium_ha_plan_instances: 0
 large_ha_plan_instances: 0 
 
+# Fill those when using MySQL For PCF tile
+mysql_for_pcf_service_name: p-mysql
+mysql_for_pcf_service_plan: 100mb
+
 # Fill those when using an external MySQL
 mysql_external_hostname: db.cvn5wteupmtt.us-east-1.rds.amazonaws.com
 mysql_external_port: 3306

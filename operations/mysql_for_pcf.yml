@@ -6,8 +6,8 @@
 - type: replace
   path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option
   value: 
-    service_name: p-mysql
-    service_plan: 100mb
+    service_name: ((mysql_for_pcf_service_name))
+    service_plan: ((mysql_for_pcf_service_plan))
 - type: remove
   path: /instance_groups/name=management
 - type: remove 
@@ -28,5 +28,3 @@
   path: /variables/name=cf_mysql_mysql_seeded_databases_service_broker_password
 - type: remove
   path: /variables/name=cf_mysql_proxy_api_password
-- type: remove
-  path: /variables/name=cf_mysql_smoke_tests_db_password

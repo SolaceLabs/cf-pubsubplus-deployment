@@ -733,5 +733,3 @@ variables:
   type: password
 - name: cf_mysql_proxy_api_password
   type: password
-- name: cf_mysql_smoke_tests_db_password
-  type: password
