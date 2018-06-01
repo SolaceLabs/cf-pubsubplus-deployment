@@ -137,11 +137,11 @@ Sample iaas-support:
 
 Assuming the operator has resolved all [prerequisites](#prerequisites), just use the bosh cli to deploy.
 
-This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite with self-signed bosh generated vmr certificates, the deployment is named 'solace_messaging', it depends on 'cf' deployment.
+This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite with self-signed bosh generated vmr certificates, the deployment is named 'solace_pubsub', it depends on 'cf' deployment.
 
 ~~~~
 
-bosh -d solace_messaging \
+bosh -d solace_pubsub \
         deploy solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
         -o operations/bosh_lite.yml \
@@ -166,7 +166,7 @@ Registering the Service Broker is required to access solace-messaging as a servi
 Please use the provided errand 'deploy-all' to install the service broker and add 'solace-messaging' to the marketplace.
 
 ~~~~
-bosh -d solace_messaging run-errand deploy-all
+bosh -d solace_pubsub run-errand deploy-all
 ~~~~
 
 ## Developement and testing

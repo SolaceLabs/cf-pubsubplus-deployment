@@ -1,10 +1,10 @@
-name: solace_messaging
+name: solace_pubsub
 releases:
 - name: docker
   version: latest
 - name: solace-vmr
   version: latest
-- name: solace-messaging
+- name: solace-pubsub-broker
   version: latest
 - name: cf-mysql
   version: latest
@@ -62,7 +62,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((app_domain))
+    broker_hostname: solace-pubsub-broker.((app_domain))
     broker_password: ((service_broker_password))
     broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
@@ -173,7 +173,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((app_domain))
+    broker_hostname: solace-pubsub-broker.((app_domain))
     broker_password: ((service_broker_password))
     broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
@@ -284,7 +284,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((app_domain))
+    broker_hostname: solace-pubsub-broker.((app_domain))
     broker_password: ((service_broker_password))
     broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
@@ -395,7 +395,7 @@ instance_groups:
     admin_user: admin
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((app_domain))
+    broker_hostname: solace-pubsub-broker.((app_domain))
     broker_password: ((service_broker_password))
     broker_user: ((service_broker_user))
     cf_api_host: api.((system_domain))
@@ -466,7 +466,7 @@ instance_groups:
 - name: deploy-all
   jobs:
   - name: deploy-all
-    release: solace-messaging
+    release: solace-pubsub-broker
     provides: {}
     consumes:
       solace_vmr_shared_vmr: { from: shared_vmr_list }
@@ -505,7 +505,7 @@ instance_groups:
       internal: 
         user: service_broker
         password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
-    solace_messaging:
+    solace_pubsub_broker:
       app_manifest:
         buildpack: java_buildpack
         env:
@@ -559,7 +559,7 @@ instance_groups:
     - ((app_domain))
     application_access_auth_scheme:
       value: vmr_internal
-    broker_hostname: solace-messaging.((app_domain))
+    broker_hostname: solace-pubsub-broker.((app_domain))
     broker_password: ((service_broker_password))
     broker_user: ((service_broker_user))
     cf:
@@ -574,7 +574,7 @@ instance_groups:
     security:
       password: ((service_broker_password))
       user: ((service_broker_user))
-    solace_messaging:
+    solace_pubsub_broker:
       app_manifest:
         buildpack: java_buildpack
         env:
@@ -630,7 +630,7 @@ instance_groups:
     security:
       password: ((service_broker_password))
       user: ((service_broker_user))
-    solace_messaging:
+    solace_pubsub_broker:
       app_manifest:
         buildpack: java_buildpack
         env:
@@ -661,7 +661,7 @@ instance_groups:
     vmr_admin_password: ((vmr_admin_password))
   jobs:
   - name: delete-all
-    release: solace-messaging
+    release: solace-pubsub-broker
     consumes:
       solace_vmr_shared_vmr: { from: shared_vmr_list }
       solace_vmr_large_vmr: { from: large_vmr_list }
