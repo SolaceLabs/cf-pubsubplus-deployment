@@ -34,6 +34,9 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
   - name: prepare_pubsub
     release: solace-pubsub
     consumes: {}
@@ -165,6 +168,9 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
   - name: prepare_pubsub
     release: solace-pubsub
     consumes: {}
@@ -273,6 +279,9 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
   - name: prepare_pubsub
     release: solace-pubsub
     consumes: {}
@@ -380,6 +389,9 @@ instance_groups:
   jobs:
   - name: docker
     release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
     consumes: {}
   - name: prepare_pubsub
     release: solace-pubsub
