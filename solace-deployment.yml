@@ -2,7 +2,7 @@ name: solace_messaging
 releases:
 - name: docker
   version: latest
-- name: solace-vmr
+- name: solace-pubsub
   version: latest
 - name: solace-messaging
   version: latest
@@ -34,30 +34,31 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
-  - name: prepare_vmr
-    release: solace-vmr
-    consumes: {}
-  - name: containers
-    release: solace-vmr
+  - name: prepare_pubsub
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: shared_vmr_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   properties:
+    pubsub_agent_job: vmr_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -86,17 +87,18 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
       uts: host
-      volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      volumes: &volumes
+      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
+      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
+      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
+      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
+      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
+      - /var/vcap/store/containers/pubsub/volumes/secrets:/run/secrets
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -130,6 +132,24 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
+    config: &config
+      keys:
+        nodetype: message_routing
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: &service_ssh_port 3022
+        service_semp_port: 8080
+        service_semp_tlsport: 8943
+        service_healthcheck_port: 9090
+        system_scaling_maxconnectioncount: 1000
+      settings:
+        node_role: 'primary'
+        starting_port: ((starting_port))
+        edition: ((vmr_edition))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
 - name: Large-HA
   stemcell: default
   instances: 0
@@ -145,30 +165,31 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
-  - name: prepare_vmr
-    release: solace-vmr
-    consumes: {}
-  - name: containers
-    release: solace-vmr
+  - name: prepare_pubsub
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: large_ha_vmr_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   properties:
+    pubsub_agent_job: vmr_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -197,17 +218,12 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
       uts: host
-      volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      volumes: *volumes
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -241,6 +257,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
+    config: *config
 - name: Large
   stemcell: default
   instances: 0
@@ -256,30 +273,31 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
-  - name: prepare_vmr
-    release: solace-vmr
-    consumes: {}
-  - name: containers
-    release: solace-vmr
+  - name: prepare_pubsub
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: large_vmr_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   properties:
+    pubsub_agent_job: vmr_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -308,17 +326,12 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
       uts: host
-      volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      volumes: *volumes
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -352,6 +365,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
+    config: *config
 - name: Medium-HA
   stemcell: default
   instances: 0
@@ -367,30 +381,31 @@ instance_groups:
   - name: docker
     release: docker
     consumes: {}
-  - name: prepare_vmr
-    release: solace-vmr
-    consumes: {}
-  - name: containers
-    release: solace-vmr
+  - name: prepare_pubsub
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: medium_ha_vmr_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   properties:
+    pubsub_agent_job: vmr_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -419,17 +434,12 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
       uts: host
-      volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      volumes: *volumes
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -463,6 +473,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
+    config: *config
 - name: deploy-all
   jobs:
   - name: deploy-all
@@ -538,7 +549,7 @@ instance_groups:
 - name: tests
   jobs:
   - name: tests
-    release: solace-vmr
+    release: solace-pubsub
     provides: {}
     consumes:
       solace_vmr_shared_vmr: { from: shared_vmr_list }
@@ -707,6 +718,8 @@ instance_groups:
       proxy:
         as: mysql-proxy
 variables:
+- name: mgmt_password
+  type: password
 - name: vmr_admin_password
   type: password
 - name: service_broker_user
@@ -720,7 +733,7 @@ variables:
   options: {is_ca: true, common_name: example-ca}
 - name: solace_vmr_cert
   type: certificate
-  options: {ca: example_ca, common_name: solace-vmr-cert, extended_key_usage: [client_auth, server_auth]}
+  options: {ca: example_ca, common_name: solace-pubsub-cert, extended_key_usage: [client_auth, server_auth]}
 - name: cf_mysql_mysql_admin_password
   type: password
 - name: cf_mysql_mysql_cluster_health_password
