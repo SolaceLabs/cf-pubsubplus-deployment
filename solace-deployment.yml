@@ -2,7 +2,7 @@ name: solace_pubsub
 releases:
 - name: docker
   version: latest
-- name: solace-vmr
+- name: solace-pubsub
   version: latest
 - name: solace-pubsub-broker
   version: latest
@@ -35,24 +35,24 @@ instance_groups:
     release: docker
     consumes: {}
   - name: prepare_vmr
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: containers
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: shared_vmr_list }
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
@@ -146,24 +146,24 @@ instance_groups:
     release: docker
     consumes: {}
   - name: prepare_vmr
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: containers
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: large_ha_vmr_list }
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
@@ -257,24 +257,24 @@ instance_groups:
     release: docker
     consumes: {}
   - name: prepare_vmr
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: containers
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: large_vmr_list }
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
@@ -368,24 +368,24 @@ instance_groups:
     release: docker
     consumes: {}
   - name: prepare_vmr
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: containers
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
     provides:
       vmr_instance: { as: medium_ha_vmr_list }
   - name: vmr_agent
-    release: solace-vmr
+    release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-vmr
+    release: solace-pubsub
     consumes:
       nats_link:
         from: nats
@@ -538,7 +538,7 @@ instance_groups:
 - name: tests
   jobs:
   - name: tests
-    release: solace-vmr
+    release: solace-pubsub
     provides: {}
     consumes:
       solace_vmr_shared_vmr: { from: shared_vmr_list }
