@@ -37,17 +37,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
-  - name: prepare_pubsub
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      vmr_instance: { as: shared_vmr_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: vmr_agent
     release: solace-pubsub
     consumes: {}
+    provides:
+      vmr_instance: { as: shared_vmr_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -165,17 +162,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
-  - name: prepare_pubsub
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      vmr_instance: { as: large_ha_vmr_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: vmr_agent
     release: solace-pubsub
     consumes: {}
+    provides:
+      vmr_instance: { as: large_ha_vmr_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -276,17 +270,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
-  - name: prepare_pubsub
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      vmr_instance: { as: large_vmr_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: vmr_agent
     release: solace-pubsub
     consumes: {}
+    provides:
+      vmr_instance: { as: large_vmr_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -381,17 +372,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
-  - name: prepare_pubsub
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      vmr_instance: { as: medium_ha_vmr_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: vmr_agent
     release: solace-pubsub
     consumes: {}
+    provides:
+      vmr_instance: { as: medium_ha_vmr_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
