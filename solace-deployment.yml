@@ -42,7 +42,7 @@ instance_groups:
     consumes: {}
     provides:
       vmr_instance: { as: shared_vmr_list }
-  - name: vmr_agent
+  - name: broker_agent
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
@@ -153,7 +153,7 @@ instance_groups:
     consumes: {}
     provides:
       vmr_instance: { as: large_ha_vmr_list }
-  - name: vmr_agent
+  - name: broker_agent
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
@@ -264,7 +264,7 @@ instance_groups:
     consumes: {}
     provides:
       vmr_instance: { as: large_vmr_list }
-  - name: vmr_agent
+  - name: broker_agent
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
@@ -375,7 +375,7 @@ instance_groups:
     consumes: {}
     provides:
       vmr_instance: { as: medium_ha_vmr_list }
-  - name: vmr_agent
+  - name: broker_agent
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
