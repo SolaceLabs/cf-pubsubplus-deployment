@@ -51,12 +51,6 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
-  - name: route_registrar_active
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
   properties:
     admin_password: ((vmr_admin_password))
     admin_user: admin
@@ -268,12 +262,6 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  - name: route_registrar_active
     release: solace-pubsub
     consumes:
       nats_link:
