@@ -74,12 +74,7 @@ instance_groups:
                     echo 'exit 0' >> /sbin/dhclient && \
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
-      env_vars:
-      - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
-      - SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
-      - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
-      - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
+      env_file: &env_file /var/vcap/store/pubsub_agent/config/docker_env
       image: solace-bosh
       name: pubsub
       net: host
@@ -126,7 +121,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-    config: &config
+    config:
       keys:
         nodetype: message_routing
         username_admin_globalaccesslevel: admin
@@ -144,6 +139,7 @@ instance_groups:
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
         deployment_name: ((deployment_name))
+
 - name: Large-HA
   stemcell: default
   instances: 0
@@ -205,12 +201,7 @@ instance_groups:
                     echo 'exit 0' >> /sbin/dhclient && \
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
-      env_vars:
-      - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
-      - SYSTEM_SCALING_MAXCONNECTIONCOUNT=10000
-      - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
-      - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
+      env_file: *env_file
       image: solace-bosh
       name: pubsub
       net: host
@@ -251,7 +242,22 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-    config: *config
+    config:
+      keys:
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: &service_ssh_port 3022
+        service_semp_port: 8080
+        service_semp_tlsport: 8943
+        service_healthcheck_port: 9090
+        system_scaling_maxconnectioncount: 10000
+      settings:
+        starting_port: ((starting_port))
+        edition: ((vmr_edition))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
 - name: Large
   stemcell: default
   instances: 0
@@ -307,12 +313,8 @@ instance_groups:
                     echo 'exit 0' >> /sbin/dhclient && \
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
+      env_file: *env_file
       env_vars:
-      - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
-      - SYSTEM_SCALING_MAXCONNECTIONCOUNT=10000
-      - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
-      - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
       name: pubsub
       net: host
@@ -353,7 +355,24 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-    config: *config
+    config:
+      keys:
+        nodetype: message_routing
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: &service_ssh_port 3022
+        service_semp_port: 8080
+        service_semp_tlsport: 8943
+        service_healthcheck_port: 9090
+        system_scaling_maxconnectioncount: 10000
+      settings:
+        node_role: 'primary'
+        starting_port: ((starting_port))
+        edition: ((vmr_edition))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
 - name: Medium-HA
   stemcell: default
   instances: 0
@@ -415,12 +434,7 @@ instance_groups:
                     echo 'exit 0' >> /sbin/dhclient && \
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
-      env_vars:
-      - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
-      - SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
-      - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
-      - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
+      env_file: *env_file
       image: solace-bosh
       name: pubsub
       net: host
@@ -461,7 +475,22 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-    config: *config
+    config:
+      keys:
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: &service_ssh_port 3022
+        service_semp_port: 8080
+        service_semp_tlsport: 8943
+        service_healthcheck_port: 9090
+        system_scaling_maxconnectioncount: 1000
+      settings:
+        starting_port: ((starting_port))
+        edition: ((vmr_edition))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
 - name: deploy-all
   jobs:
   - name: deploy-all
