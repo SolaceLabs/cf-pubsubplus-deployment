@@ -39,7 +39,7 @@ This project takes advantage of new features such as:
 ### The Solace BOSH Releases
 
 These Solace provided BOSH Releases can be obtained from Solace, or extracted from a Solace Pivotal Tile.
-- solace-vmr
+- solace-pubsub
 - solace-messaging
 - docker-bosh, version 30.1.4
 
@@ -66,8 +66,8 @@ unzip -o -d . solace-messaging-1.4.0.pivotal releases/*.tgz
 Example of uploading the Solace provided releases to BOSH.
 ~~~~
 bosh upload-release workspace/releases/docker-30.1.4.tgz
-bosh upload-release workspace/releases/solace-messaging-1.4.0.tgz
-bosh upload-release workspace/releases/solace-vmr-1.4.0.tgz
+bosh upload-release workspace/releases/solace-pubsub-broker-1.4.0.tgz
+bosh upload-release workspace/releases/solace-pubsub-1.4.0.tgz
 ~~~~
 
 <a name="deployment"></a>
@@ -117,15 +117,15 @@ BOSH operator files provide controls for:
 | [set_solace_vmr_cert.yml](operations/set_solace_vmr_cert.yml) | Adds a server certificate to the VMR.solace_vmr_cert TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml)  , if no solace_vmr_cert is provided as a property, a self signed certificate will be generate by bosh. |
 | [add_vmr_trusted_certs.yml](operations/add_vmr_trusted_certs.yml) | Adds trusted root certificates to the VMR.trusted_root_certificates TLS Configuration. See the example [var file](operations/example-vars-files/certs.yml) There can be several certificates assigned to the solace_trusted_root_cert.certificate property, as shown in that example.
 | [disable_service_broker_certificate_validation.yml](operations/disable_service_broker_certificate_validation.yml) | Disables certificate validation on the service broker when it communicates with the VMR. This should only be considered for non production test certificates. |
-| [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-vmr bosh release containing an enterprise VMR |
-| [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-vmr bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
+| [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise VMR settings. Can only be used with an enterprise edition of solace-pubsub bosh release containing an enterprise VMR |
+| [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation VMR settings. Can only be used with an evaluation edition of solace-pubsub bosh release containing an evaluation VMR, which can be downloaded [here](https://network.pivotal.io/products/solace-messaging/). |
 | [enable_tcp_routes.yml](operations/enable_tcp_routes.yml) | Adds tcp route configuration, see [tcp_routes_config.yml](operations/example-vars-files/tcp_routes_config.yml) file. 
 | [enable_ldap.yml](operations/enable_ldap/yml) | Adds ldap configuration, see this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
 | [set_management_access_ldap.yml](operations/set_management_access_ldap.yml) | Adds ldap authorization for management access. Configuration is found in the same ldap [vars.yml](operations/example-vars-files/ldap_config.yml) file.
 | [set_application_access_ldap.yml](operations/set_application_access_ldap.yml) | Adds ldap authorization for application access. 
 | [enable_syslog.yml](operations/enable_syslog.yml) | Addes syslog configuration, see [syslog_config.yml](operations/example-vars-files/syslog_config.yml) file. 
 
-Only one of these required files can be used and should only be applied as the last operator file, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-vmr bosh release.
+Only one of these required files can be used and should only be applied as the last operator file, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-pubsub bosh release.
 
 Sample iaas-support:
 - [bosh-lite](iaas-support/bosh-lite/)
@@ -137,11 +137,11 @@ Sample iaas-support:
 
 Assuming the operator has resolved all [prerequisites](#prerequisites), just use the bosh cli to deploy.
 
-This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite with self-signed bosh generated vmr certificates, the deployment is named 'solace_messaging', it depends on 'cf' deployment.
+This is a sample of a deployment of an evaluation edition of Solace Message on bosh-lite with self-signed bosh generated vmr certificates, the deployment is named 'solace_pubsub', it depends on 'cf' deployment.
 
 ~~~~
 
-bosh -d solace_messaging \
+bosh -d solace_pubsub \
         deploy solace-deployment.yml \
         -o operations/set_plan_inventory.yml \
         -o operations/bosh_lite.yml \
@@ -166,7 +166,7 @@ Registering the Service Broker is required to access solace-messaging as a servi
 Please use the provided errand 'deploy-all' to install the service broker and add 'solace-messaging' to the marketplace.
 
 ~~~~
-bosh -d solace_messaging run-errand deploy-all
+bosh -d solace_pubsub run-errand deploy-all
 ~~~~
 
 ## Developement and testing
