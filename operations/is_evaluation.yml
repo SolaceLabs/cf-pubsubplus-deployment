@@ -19,3 +19,16 @@
 - type: replace
   path: /instance_groups/name=Medium-HA/properties/edition
   value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=Shared/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=Large/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=Large-HA/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=Medium-HA/properties/config/settings/edition
+  value: 'evaluation'
+
