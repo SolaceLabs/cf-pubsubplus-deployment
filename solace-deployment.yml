@@ -40,8 +40,6 @@ instance_groups:
   - name: containers
     release: solace-pubsub
     consumes: {}
-    provides:
-      vmr_instance: { as: shared_vmr_list }
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
@@ -54,7 +52,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: vmr_agent
+    pubsub_agent_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -163,8 +161,6 @@ instance_groups:
   - name: containers
     release: solace-pubsub
     consumes: {}
-    provides:
-      vmr_instance: { as: large_ha_vmr_list }
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
@@ -183,7 +179,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: vmr_agent
+    pubsub_agent_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -283,8 +279,6 @@ instance_groups:
   - name: containers
     release: solace-pubsub
     consumes: {}
-    provides:
-      vmr_instance: { as: large_vmr_list }
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
@@ -297,7 +291,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: vmr_agent
+    pubsub_agent_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -400,8 +394,6 @@ instance_groups:
   - name: containers
     release: solace-pubsub
     consumes: {}
-    provides:
-      vmr_instance: { as: medium_ha_vmr_list }
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
@@ -420,7 +412,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: vmr_agent
+    pubsub_agent_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
