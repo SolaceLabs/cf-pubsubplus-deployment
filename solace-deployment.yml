@@ -44,7 +44,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      vmr_instance: { as: shared_vmr_list }
+      solace_pubsub_instance: { as: shared_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -52,7 +52,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: broker_agent
+    pubsub_config_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -74,7 +74,7 @@ instance_groups:
                     echo 'exit 0' >> /sbin/dhclient && \
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
-      env_file: &env_file /var/vcap/store/pubsub_agent/config/docker_env
+      env_file: &env_file /var/vcap/store/pubsub_config/docker_env
       image: solace-bosh
       name: pubsub
       net: host
@@ -165,7 +165,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      vmr_instance: { as: large_ha_vmr_list }
+      solace_pubsub_instance: { as: large_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -179,7 +179,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: broker_agent
+    pubsub_config_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -283,7 +283,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      vmr_instance: { as: large_vmr_list }
+      solace_pubsub_instance: { as: large_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -291,7 +291,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: broker_agent
+    pubsub_config_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -398,7 +398,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      vmr_instance: { as: medium_ha_vmr_list }
+      solace_pubsub_instance: { as: medium_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -412,7 +412,7 @@ instance_groups:
         from: nats
         deployment: ((cf_deployment))
   properties:
-    pubsub_agent_job: broker_agent
+    pubsub_config_job: broker_agent
     admin_password: ((vmr_admin_password))
     admin_user: admin
     application_access_auth_scheme:
@@ -497,10 +497,10 @@ instance_groups:
     release: solace-pubsub-broker
     provides: {}
     consumes:
-      solace_vmr_shared_vmr: { from: shared_vmr_list }
-      solace_vmr_large_vmr: { from: large_vmr_list }
-      solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
-      solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
       mysql: { from: mysql-proxy }
   instances: 1
   vm_type: minimal
@@ -569,10 +569,10 @@ instance_groups:
     release: solace-pubsub
     provides: {}
     consumes:
-      solace_vmr_shared_vmr: { from: shared_vmr_list }
-      solace_vmr_large_vmr: { from: large_vmr_list }
-      solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
-      solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -691,10 +691,10 @@ instance_groups:
   - name: delete-all
     release: solace-pubsub-broker
     consumes:
-      solace_vmr_shared_vmr: { from: shared_vmr_list }
-      solace_vmr_large_vmr: { from: large_vmr_list }
-      solace_vmr_medium_ha_vmr: { from: medium_ha_vmr_list }
-      solace_vmr_large_ha_vmr: { from: large_ha_vmr_list }
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
       mysql: { from: mysql-proxy }
 - name: management
   instances: 1
