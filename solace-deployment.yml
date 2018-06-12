@@ -53,18 +53,6 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    admin_password: ((vmr_admin_password))
-    admin_user: admin
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf_api_host: api.((system_domain))
-    cf_client_id: ((solace_router_client_id))
-    cf_client_secret: ((solace_router_client_secret))
-    cf_organization: ((solace_broker_cf_organization))
-    cf_space: ((solace_broker_cf_space))
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
@@ -88,13 +76,6 @@ instance_groups:
       - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
       - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
       - /var/vcap/store/containers/pubsub/volumes/secrets:/run/secrets
-    edition: ((vmr_edition))
-    heartbeat_rate: 15000
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    pool_name: Shared
     plan:
       limit:
         maxVpns: 5
@@ -105,22 +86,6 @@ instance_groups:
         maxTransactedSessions: 200
         maxTransactions: 1000
         maxEndpoints: 200
-    semp_port: 8080
-    semp_ssl_port: 943
-    ssh_port: 2222
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    system_domain: ((system_domain))
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tcp_routes_enabled: disabled
-    tls_config:
-      value: disabled
-    vmr_agent_port: 18080
-    vmr_debug_logs: disabled
     config:
       keys:
         nodetype: message_routing
@@ -134,11 +99,38 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
+        pool_name: Shared
+        broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
         deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
 
 - name: Large-HA
   stemcell: default
@@ -180,18 +172,6 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    admin_password: ((vmr_admin_password))
-    admin_user: admin
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf_api_host: api.((system_domain))
-    cf_client_id: ((solace_router_client_id))
-    cf_client_secret: ((solace_router_client_secret))
-    cf_organization: ((solace_broker_cf_organization))
-    cf_space: ((solace_broker_cf_space))
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
@@ -209,13 +189,6 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes: *volumes
-    edition: ((vmr_edition))
-    heartbeat_rate: 15000
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    pool_name: Large-HA
     plan:
       limit:
         maxVpns: 1
@@ -226,22 +199,6 @@ instance_groups:
         maxTransactedSessions: 1000
         maxTransactions: 5000
         maxEndpoints: 1000
-    semp_port: 8080
-    semp_ssl_port: 943
-    ssh_port: 2222
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    system_domain: ((system_domain))
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tcp_routes_enabled: disabled
-    tls_config:
-      value: disabled
-    vmr_agent_port: 18080
-    vmr_debug_logs: disabled
     config:
       keys:
         username_admin_globalaccesslevel: admin
@@ -254,10 +211,38 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
+        pool_name: Large-HA
+        broker_agent_port: 18080
+        node_role: 'primary'
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
         deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
 - name: Large
   stemcell: default
   instances: 0
@@ -292,18 +277,6 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    admin_password: ((vmr_admin_password))
-    admin_user: admin
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf_api_host: api.((system_domain))
-    cf_client_id: ((solace_router_client_id))
-    cf_client_secret: ((solace_router_client_secret))
-    cf_organization: ((solace_broker_cf_organization))
-    cf_space: ((solace_broker_cf_space))
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
@@ -322,13 +295,6 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes: *volumes
-    edition: ((vmr_edition))
-    heartbeat_rate: 15000
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    pool_name: Large
     plan:
       limit:
         maxVpns: 1
@@ -339,22 +305,6 @@ instance_groups:
         maxTransactedSessions: 1000
         maxTransactions: 5000
         maxEndpoints: 1000
-    semp_port: 8080
-    semp_ssl_port: 943
-    ssh_port: 2222
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    system_domain: ((system_domain))
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tcp_routes_enabled: disabled
-    tls_config:
-      value: disabled
-    vmr_agent_port: 18080
-    vmr_debug_logs: disabled
     config:
       keys:
         nodetype: message_routing
@@ -368,11 +318,38 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
+        pool_name: Large
+        broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
         deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
 - name: Medium-HA
   stemcell: default
   instances: 0
@@ -413,18 +390,6 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    admin_password: ((vmr_admin_password))
-    admin_user: admin
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf_api_host: api.((system_domain))
-    cf_client_id: ((solace_router_client_id))
-    cf_client_secret: ((solace_router_client_secret))
-    cf_organization: ((solace_broker_cf_organization))
-    cf_space: ((solace_broker_cf_space))
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
@@ -442,13 +407,6 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes: *volumes
-    edition: ((vmr_edition))
-    heartbeat_rate: 15000
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    pool_name: Medium-HA
     plan:
       limit:
         maxVpns: 1
@@ -459,22 +417,6 @@ instance_groups:
         maxTransactedSessions: 1000
         maxTransactions: 5000
         maxEndpoints: 1000
-    semp_port: 8080
-    semp_ssl_port: 943
-    ssh_port: 2222
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    system_domain: ((system_domain))
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tcp_routes_enabled: disabled
-    tls_config:
-      value: disabled
-    vmr_agent_port: 18080
-    vmr_debug_logs: disabled
     config:
       keys:
         username_admin_globalaccesslevel: admin
@@ -487,10 +429,38 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
+        pool_name: Medium-HA
+        broker_agent_port: 18080
+        node_role: 'primary'
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
         deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
 - name: deploy-all
   jobs:
   - name: deploy-all
