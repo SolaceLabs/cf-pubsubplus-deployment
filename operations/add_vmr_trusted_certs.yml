@@ -5,11 +5,24 @@
   path: /instance_groups/name=Shared/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
+  path: /instance_groups/name=Shared/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
   path: /instance_groups/name=Medium-HA/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=Medium-HA/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
   path: /instance_groups/name=Large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
+  path: /instance_groups/name=Large/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
   path: /instance_groups/name=Large-HA/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=Large-HA/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+
