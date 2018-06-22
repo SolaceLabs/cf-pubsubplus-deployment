@@ -3,10 +3,10 @@
   path: /instance_groups/name=Shared/properties/config/settings/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -24,10 +24,10 @@
   path: /instance_groups/name=Shared/properties/config/settings/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
-  path: /instance_groups/name=Shared/properties/config/settings/ldap_admin_password?
+  path: /instance_groups/name=Shared/properties/config/settings/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Shared/properties/config/settings/ldap_admin_username?
+  path: /instance_groups/name=Shared/properties/config/settings/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Shared/properties/config/settings/ldap_group_membership_attribute_name?
@@ -54,10 +54,10 @@
   path: /instance_groups/name=Large/properties/config/settings/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -75,10 +75,10 @@
   path: /instance_groups/name=Large/properties/config/settings/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
-  path: /instance_groups/name=Large/properties/config/settings/ldap_admin_password?
+  path: /instance_groups/name=Large/properties/config/settings/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Large/properties/config/settings/ldap_admin_username?
+  path: /instance_groups/name=Large/properties/config/settings/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large/properties/config/settings/ldap_group_membership_attribute_name?
@@ -105,10 +105,10 @@
   path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -126,10 +126,10 @@
   path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_admin_password?
+  path: /instance_groups/name=Medium-HA/properties/config/settings/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_admin_username?
+  path: /instance_groups/name=Medium-HA/properties/config/settings/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Medium-HA/properties/config/settings/ldap_group_membership_attribute_name?
@@ -156,10 +156,10 @@
   path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -177,10 +177,10 @@
   path: /instance_groups/name=Large-HA/properties/config/settings/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_admin_password?
+  path: /instance_groups/name=Large-HA/properties/config/settings/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/settings/ldap_admin_username?
+  path: /instance_groups/name=Large-HA/properties/config/settings/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=Large-HA/properties/config/settings/ldap_group_membership_attribute_name?
@@ -207,10 +207,10 @@
   path: /instance_groups/name=deploy-all/properties/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -231,10 +231,10 @@
   path: /instance_groups/name=tests/properties/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=tests/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
@@ -255,10 +255,10 @@
   path: /instance_groups/name=delete-all/properties/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_password?
+  path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_credentials?/password?
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_credentials?/ldap_admin_username?
+  path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_credentials?/identity?
   value: ((ldap.username))
 - type: replace
   path: /instance_groups/name=delete-all/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
