@@ -55,7 +55,7 @@
   path: /instance_groups/name=enterprise-shared/properties/config/settings/tcp_routes_config/selected_option?/web_messaging_tls_tcp_route_enabled?
   value: ((tcp_routes_config.web_messaging_tls_tcp_route_enabled))
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/tcp_routes_enabled?
+  path: /instance_groups/name=enterprise-shared/properties/config/settings/tcp_routes_enabled?
   value: enabled
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/config/settings/tcp_routes_config/value
@@ -114,7 +114,7 @@
   path: /instance_groups/name=enterprise-large/properties/config/settings/tcp_routes_config/selected_option?/web_messaging_tls_tcp_route_enabled?
   value: ((tcp_routes_config.web_messaging_tls_tcp_route_enabled))
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/tcp_routes_enabled?
+  path: /instance_groups/name=enterprise-large/properties/config/settings/tcp_routes_enabled?
   value: enabled
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/tcp_routes_config/value
@@ -173,7 +173,7 @@
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/tcp_routes_config/selected_option?/web_messaging_tls_tcp_route_enabled?
   value: ((tcp_routes_config.web_messaging_tls_tcp_route_enabled))
 - type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/tcp_routes_enabled?
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/tcp_routes_enabled?
   value: enabled
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/config/settings/tcp_routes_config/value
@@ -232,7 +232,7 @@
   path: /instance_groups/name=enterprise-large-ha/properties/config/settings/tcp_routes_config/selected_option?/web_messaging_tls_tcp_route_enabled?
   value: ((tcp_routes_config.web_messaging_tls_tcp_route_enabled))
 - type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/tcp_routes_enabled?
+  path: /instance_groups/name=enterprise-large-ha/properties/config/settings/tcp_routes_enabled?
   value: enabled
 - type: replace
   path: /instance_groups/name=deploy-all/properties/tcp_routes_config/value
