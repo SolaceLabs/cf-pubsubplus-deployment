@@ -1,14 +1,14 @@
 - type: replace
-  path: /instance_groups/name=Shared/properties/application_access_auth_scheme/value
+  path: /instance_groups/name=enterprise-shared/properties/application_access_auth_scheme/value
   value: ldap_server
 - type: replace
-  path: /instance_groups/name=Large/properties/application_access_auth_scheme/value
+  path: /instance_groups/name=enterprise-large/properties/application_access_auth_scheme/value
   value: ldap_server
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/application_access_auth_scheme/value
+  path: /instance_groups/name=enterprise-medium-ha/properties/application_access_auth_scheme/value
   value: ldap_server
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/application_access_auth_scheme/value
+  path: /instance_groups/name=enterprise-large-ha/properties/application_access_auth_scheme/value
   value: ldap_server
 - type: replace
   path: /instance_groups/name=deploy-all/properties/application_access_auth_scheme/value

@@ -19,7 +19,7 @@ stemcells:
   os: ubuntu-trusty
   version: ((bosh_stemcell_version))
 instance_groups:
-- name: Shared
+- name: enterprise-shared
   stemcell: default
   instances: 0
   vm_type: solace.medium
@@ -124,7 +124,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Large-HA
+- name: enterprise-large-ha
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -235,7 +235,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Large
+- name: enterprise-large
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -340,7 +340,7 @@ instance_groups:
       value: disabled
     vmr_agent_port: 18080
     vmr_debug_logs: disabled
-- name: Medium-HA
+- name: enterprise-medium-ha
   stemcell: default
   instances: 0
   vm_type: solace.medium
