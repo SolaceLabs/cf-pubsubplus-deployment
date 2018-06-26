@@ -1,12 +1,12 @@
 - type: replace
-  path: /instance_groups/name=Shared/instances
+  path: /instance_groups/name=enterprise-shared/instances
   value: ((shared_plan_instances))
 - type: replace
-  path: /instance_groups/name=Large/instances
+  path: /instance_groups/name=enterprise-large/instances
   value: ((large_plan_instances))
 - type: replace
-  path: /instance_groups/name=Large-HA/instances
+  path: /instance_groups/name=enterprise-large-ha/instances
   value: ((large_ha_plan_instances))
 - type: replace
-  path: /instance_groups/name=Medium-HA/instances
+  path: /instance_groups/name=enterprise-medium-ha/instances
   value: ((medium_ha_plan_instances))

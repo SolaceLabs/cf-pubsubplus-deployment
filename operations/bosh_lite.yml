@@ -1,73 +1,73 @@
 # Bosh Lite
 # Add memory constraints to the docker containers 
 - type: replace
-  path: /instance_groups/name=Shared/properties/containers/0/memory?
+  path: /instance_groups/name=enterprise-shared/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=Shared/properties/containers/0/memory_swap?
+  path: /instance_groups/name=enterprise-shared/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/containers/0/memory?
+  path: /instance_groups/name=enterprise-medium-ha/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/containers/0/memory_swap?
+  path: /instance_groups/name=enterprise-medium-ha/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=Large/properties/containers/0/memory?
+  path: /instance_groups/name=enterprise-large/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=Large/properties/containers/0/memory_swap?
+  path: /instance_groups/name=enterprise-large/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/containers/0/memory?
+  path: /instance_groups/name=enterprise-large-ha/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/containers/0/memory_swap?
+  path: /instance_groups/name=enterprise-large-ha/properties/containers/0/memory_swap?
   value: 6G
 ##
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/keys/system_scaling_maxconnectioncount?
+  path: /instance_groups/name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
   value: 1000
 - type: replace
-  path: /instance_groups/name=Large/properties/config/keys/system_scaling_maxconnectioncount?
+  path: /instance_groups/name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
   value: 1000
 # Should also set a smaller persistent disk for all VMs
 #
 - type: replace
-  path: /instance_groups/name=Shared/persistent_disk?
+  path: /instance_groups/name=enterprise-shared/persistent_disk?
   value: 20480
 - type: replace
-  path: /instance_groups/name=Medium-HA/persistent_disk?
+  path: /instance_groups/name=enterprise-medium-ha/persistent_disk?
   value: 20480
 - type: replace
-  path: /instance_groups/name=Large-HA/persistent_disk?
+  path: /instance_groups/name=enterprise-large-ha/persistent_disk?
   value: 20480
 - type: replace
-  path: /instance_groups/name=Large/persistent_disk?
+  path: /instance_groups/name=enterprise-large/persistent_disk?
   value: 20480
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
-  path: /instance_groups/name=Shared/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=enterprise-shared/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=enterprise-large-ha/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Large/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=enterprise-large/properties/config/keys/service_ssh_port?
   value: 3022
 ## Fix SSH : 
 - type: replace
-  path: /instance_groups/name=Shared/properties/ssh_port?
+  path: /instance_groups/name=enterprise-shared/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Large/properties/ssh_port?
+  path: /instance_groups/name=enterprise-large/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Medium-HA/properties/ssh_port?
+  path: /instance_groups/name=enterprise-medium-ha/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=Large-HA/properties/ssh_port?
+  path: /instance_groups/name=enterprise-large-ha/properties/ssh_port?
   value: 3022
