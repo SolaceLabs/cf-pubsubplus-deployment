@@ -25,4 +25,6 @@
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
-
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
