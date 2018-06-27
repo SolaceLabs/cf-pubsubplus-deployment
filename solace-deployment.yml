@@ -19,7 +19,7 @@ stemcells:
   os: ubuntu-trusty
   version: ((bosh_stemcell_version))
 instance_groups:
-- name: Shared
+- name: enterprise-shared
   stemcell: default
   instances: 0
   vm_type: solace.medium
@@ -99,7 +99,7 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
-        pool_name: Shared
+        pool_name: enterprise-shared
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
@@ -132,7 +132,7 @@ instance_groups:
         cf_space: ((solace_broker_cf_space))
         system_domain: ((system_domain))
 
-- name: Large-HA
+- name: enterprise-large-ha
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -211,7 +211,7 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
-        pool_name: Large-HA
+        pool_name: enterprise-large-ha
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
@@ -243,7 +243,7 @@ instance_groups:
         cf_organization: ((solace_broker_cf_organization))
         cf_space: ((solace_broker_cf_space))
         system_domain: ((system_domain))
-- name: Large
+- name: enterprise-large
   stemcell: default
   instances: 0
   vm_type: solace.large
@@ -318,7 +318,7 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
-        pool_name: Large
+        pool_name: enterprise-large
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
@@ -350,7 +350,7 @@ instance_groups:
         cf_organization: ((solace_broker_cf_organization))
         cf_space: ((solace_broker_cf_space))
         system_domain: ((system_domain))
-- name: Medium-HA
+- name: enterprise-medium-ha
   stemcell: default
   instances: 0
   vm_type: solace.medium
@@ -429,7 +429,7 @@ instance_groups:
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
-        pool_name: Medium-HA
+        pool_name: enterprise-medium-ha
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
