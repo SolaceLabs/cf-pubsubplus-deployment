@@ -493,6 +493,98 @@ instance_groups:
       internal: 
         user: service_broker
         password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+    service_catalog:
+      id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
+      service_name: solace-pubsub
+      service_description: __EDITION_DESC__
+      bindable: true
+      plan_updatable: true
+      metadata:
+        display_name: Solace PubSub+
+        imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+        providerDisplayName: Solace Corporation
+        longDescription: __EDITION_DESC__
+        documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
+        supportUrl: http://dev.solace.com
+      tags:
+        - solace
+        - pubsub 
+        - solace-pubsub
+        - rest
+        - mqtt
+        - mq
+        - queue
+        - event-streaming
+        - amqp
+        - jms
+        - messaging
+        - publish-subscribe
+        - message-queuing
+        - request-reply
+      global_properties:
+        allocate_ahead: true
+        persistence: true
+      plans:
+      - planName: shared
+        maxVpns: 5
+        credentialsPerVpn: 100
+        credentialsPerVpnForEnterprise: 190
+        poolName: Shared
+        id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
+        pointFormDescription:
+          - A Message VPN  on a shared Solace Message Router
+          - Up to 100 Service Instance Bindings
+          - Up to 200 durable Endpoints
+          - Maximum of 4 GB Message Spool
+          - Maximum of 100K subscriptions
+          - One Message VPN Scoped Admin account
+        isHA: false                  
+      - planName: large
+        maxVpns: 1
+        credentialsPerVpn: 500
+        credentialsPerVpnForEnterprise: 9990
+        poolName: Large
+        id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+        description: A single message VPN on a dedicated Solace Message Router
+        pointFormDescription:
+          - A Message VPN on a dedicated Solace Message Router
+          - Up to 500 Service Instance Bindings
+          - Up to 1000 durable Endpoints
+          - Maximum of 20 GB Message Spool
+          - Maximum of 500K subscriptions"
+          - One Message VPN Scoped Admin account
+        isHA: false
+      - planName: medium-ha
+        maxVpns: 1
+        credentialsPerVpn: 500
+        credentialsPerVpnForEnterprise: 990
+        poolName: Medium-HA
+        id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+        description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
+        pointFormDescription:
+          - A Message VPN on a Medium Solace Message Router in an HA Cluster
+          - Up to 500 Service Instance Bindings
+          - Up to 1000 durable Endpoints
+          - Maximum of 4 GB Message Spool
+          - Maximum of 500K subscriptions
+          - One Message VPN Scoped Admin account
+        isHA: true
+      - planName: large-ha
+        maxVpns: 1
+        credentialsPerVpn: 500
+        credentialsPerVpnForEnterprise: 9990
+        poolName: Large-HA
+        id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+        description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
+        pointFormDescription:
+          - A Message VPN on dedicated Solace Message Router in an HA Cluster
+          - Up to 500 Service Instance Bindings
+          - Up to 1000 durable Endpoints
+          - Maximum of 20 GB Message Spool
+          - Maximum of 500K subscriptions
+          - One Message VPN Scoped Admin account
+        isHA: true
     solace_pubsub_broker:
       app_manifest:
         buildpack: java_buildpack
