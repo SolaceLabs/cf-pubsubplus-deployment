@@ -525,8 +525,8 @@ instance_groups:
         allocate_ahead: true
         persistence: true
       plans:
-      - planName: shared
-        poolName: Shared
+      - planName: enterprise-shared
+        poolName: enterprise-shared
         id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
         description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
         pointFormDescription:
@@ -555,8 +555,8 @@ instance_groups:
           maxTransactions: 1000
           maxTransactedSessions: 200
           maxEndpoints: 200
-      - planName: large
-        poolName: Large
+      - planName: enterprise-large
+        poolName: enterprise-large
         id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
         description: A single message VPN on a dedicated Solace Message Router
         pointFormDescription:
@@ -585,8 +585,8 @@ instance_groups:
           maxTransactions: 50000
           maxTransactedSessions: 10000
           maxEndpoints: 10000
-      - planName: medium-ha
-        poolName: Medium-HA
+      - planName: enterprise-medium-ha
+        poolName: enterprise-medium-ha
         id: b3a25384-eedb-4b4c-af00-610ee4dce76c
         description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
         pointFormDescription:
@@ -615,8 +615,8 @@ instance_groups:
           maxTransactions: 5000
           maxTransactedSessions: 1000
           maxEndpoints: 1000
-      - planName: large-ha
-        poolName: Large-HA
+      - planName: enterprise-large-ha
+        poolName: enterprise-large-ha
         id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
         description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
         pointFormDescription:
