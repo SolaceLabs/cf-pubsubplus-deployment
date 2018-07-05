@@ -526,24 +526,36 @@ instance_groups:
         persistence: true
       plans:
       - planName: shared
-        maxVpns: 5
-        credentialsPerVpn: 100
-        credentialsPerVpnForEnterprise: 190
         poolName: Shared
         id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
         description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
         pointFormDescription:
-          - A Message VPN  on a shared Solace Message Router
+          - A Message VPN on a shared Solace Message Router
           - Up to 100 Service Instance Bindings
           - Up to 200 durable Endpoints
           - Maximum of 4 GB Message Spool
           - Maximum of 100K subscriptions
           - One Message VPN Scoped Admin account
-        isHA: false                  
+        isHA: false
+        evaluationLimits:
+          maxVpns: 5
+          credentialsPerVpn: 100
+          maxConnections: 200
+          maxOutgoingRestConnections: 200
+          maxSubscriptions: 100000
+          maxTransactions: 1000
+          maxTransactedSessions: 200
+          maxEndpoints: 200
+        enterpriseLimits:
+          maxVpns: 5
+          credentialsPerVpn: 190
+          maxConnections: 200
+          maxOutgoingRestConnections: 200
+          maxSubscriptions: 100000
+          maxTransactions: 1000
+          maxTransactedSessions: 200
+          maxEndpoints: 200
       - planName: large
-        maxVpns: 1
-        credentialsPerVpn: 500
-        credentialsPerVpnForEnterprise: 9990
         poolName: Large
         id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
         description: A single message VPN on a dedicated Solace Message Router
@@ -552,13 +564,28 @@ instance_groups:
           - Up to 500 Service Instance Bindings
           - Up to 1000 durable Endpoints
           - Maximum of 20 GB Message Spool
-          - Maximum of 500K subscriptions"
+          - Maximum of 500K subscriptions
           - One Message VPN Scoped Admin account
         isHA: false
+        evaluationLimits:
+          maxVpns: 1
+          credentialsPerVpn: 500
+          maxConnections: 1000
+          maxOutgoingRestConnections: 1000
+          maxSubscriptions: 500000
+          maxTransactions: 5000
+          maxTransactedSessions: 1000
+          maxEndpoints: 1000
+        enterpriseLimits:
+          maxVpns: 1
+          credentialsPerVpn: 9990
+          maxConnections: 10000
+          maxOutgoingRestConnections: 6000
+          maxSubscriptions: 500000
+          maxTransactions: 50000
+          maxTransactedSessions: 10000
+          maxEndpoints: 10000
       - planName: medium-ha
-        maxVpns: 1
-        credentialsPerVpn: 500
-        credentialsPerVpnForEnterprise: 990
         poolName: Medium-HA
         id: b3a25384-eedb-4b4c-af00-610ee4dce76c
         description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
@@ -570,10 +597,25 @@ instance_groups:
           - Maximum of 500K subscriptions
           - One Message VPN Scoped Admin account
         isHA: true
+        evaluationLimits:
+          maxVpns: 1
+          credentialsPerVpn: 500
+          maxConnections: 1000
+          maxOutgoingRestConnections: 1000
+          maxSubscriptions: 500000
+          maxTransactions: 5000
+          maxTransactedSessions: 1000
+          maxEndpoints: 1000
+        enterpriseLimits:
+          maxVpns: 1
+          credentialsPerVpn: 990
+          maxConnections: 1000
+          maxOutgoingRestConnections: 1000
+          maxSubscriptions: 500000
+          maxTransactions: 5000
+          maxTransactedSessions: 1000
+          maxEndpoints: 1000
       - planName: large-ha
-        maxVpns: 1
-        credentialsPerVpn: 500
-        credentialsPerVpnForEnterprise: 9990
         poolName: Large-HA
         id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
         description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
@@ -585,6 +627,24 @@ instance_groups:
           - Maximum of 500K subscriptions
           - One Message VPN Scoped Admin account
         isHA: true
+        evaluationLimits:
+          maxVpns: 1
+          credentialsPerVpn: 500
+          maxConnections: 1000
+          maxOutgoingRestConnections: 1000
+          maxSubscriptions: 500000
+          maxTransactions: 5000
+          maxTransactedSessions: 1000
+          maxEndpoints: 1000
+        enterpriseLimits:
+          maxVpns: 1
+          credentialsPerVpn: 9990
+          maxConnections: 10000
+          maxOutgoingRestConnections: 6000
+          maxSubscriptions: 500000
+          maxTransactions: 50000
+          maxTransactedSessions: 10000
+          maxEndpoints: 10000
     solace_pubsub_broker:
       app_manifest:
         buildpack: java_buildpack
