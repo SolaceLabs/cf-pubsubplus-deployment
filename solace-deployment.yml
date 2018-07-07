@@ -80,7 +80,7 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
@@ -191,7 +191,7 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub 
       net: host
       privileged: true
       shm_size: 2G
@@ -296,7 +296,7 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
@@ -407,7 +407,7 @@ instance_groups:
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
       image: solace-bosh
-      name: solace
+      name: pubsub
       net: host
       privileged: true
       shm_size: 2G
