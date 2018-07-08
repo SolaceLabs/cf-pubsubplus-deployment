@@ -86,11 +86,11 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
+      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
+      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
+      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
+      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -197,11 +197,11 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
+      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
+      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
+      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
+      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -302,11 +302,11 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
+      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
+      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
+      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
+      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
@@ -413,11 +413,11 @@ instance_groups:
       shm_size: 2G
       uts: host
       volumes:
-      - /var/vcap/store/prepare_vmr/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/prepare_vmr/volumes/var:/usr/sw/var
-      - /var/vcap/store/prepare_vmr/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/prepare_vmr/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/prepare_vmr/volumes/adb:/usr/sw/internalSpool/softAdb
+      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
+      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
+      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
+      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
+      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
     edition: ((vmr_edition))
     heartbeat_rate: 15000
     ldap_config:
