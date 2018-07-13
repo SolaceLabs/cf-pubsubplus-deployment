@@ -193,7 +193,7 @@ This project is licensed under the Apache License, Version 2.0. - See the [LICEN
 ## Resources
 
 For more information about Bosh, Cloud Foundry and the Solace Messaging service these resources:
-- [Solace PubSub+ for Pivotal Cloud Foundry](http://docs.pivotal.io/solace-pubsub/)
+- [Solace PubSub+ for Pivotal Cloud Foundry](http://docs.pivotal.io/partners/solace-pubsub/)
 - [Solace PubSub+ tutorials and sample application for Cloud Foundry](http://dev.solace.com/get-started/pcf-tutorials/)
 - [Cloud Foundry Documentation](http://docs.cloudfoundry.org/)
 - [Bosh Documentation](http://bosh.io/docs)
