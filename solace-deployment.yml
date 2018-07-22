@@ -16,7 +16,7 @@ update:
   serial: true
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ((bosh_stemcell))
   version: ((bosh_stemcell_version))
 instance_groups:
 - name: enterprise-shared
