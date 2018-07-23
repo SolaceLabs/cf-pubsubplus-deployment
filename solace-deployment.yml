@@ -95,7 +95,7 @@ instance_groups:
         username_mgmt_password: ((mgmt_password))
         service_ssh_port: &service_ssh_port 3022
         service_semp_port: 8080
-        service_semp_tlsport: 8943
+        service_semp_tlsport: 943
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
@@ -207,7 +207,7 @@ instance_groups:
         username_mgmt_password: ((mgmt_password))
         service_ssh_port: &service_ssh_port 3022
         service_semp_port: 8080
-        service_semp_tlsport: 8943
+        service_semp_tlsport: 943
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
@@ -314,7 +314,7 @@ instance_groups:
         username_mgmt_password: ((mgmt_password))
         service_ssh_port: &service_ssh_port 3022
         service_semp_port: 8080
-        service_semp_tlsport: 8943
+        service_semp_tlsport: 943
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 10000
       settings:
@@ -425,7 +425,7 @@ instance_groups:
         username_mgmt_password: ((mgmt_password))
         service_ssh_port: &service_ssh_port 3022
         service_semp_port: 8080
-        service_semp_tlsport: 8943
+        service_semp_tlsport: 943
         service_healthcheck_port: 9090
         system_scaling_maxconnectioncount: 1000
       settings:
