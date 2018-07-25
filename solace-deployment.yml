@@ -75,7 +75,7 @@ instance_groups:
                     chmod +x /sbin/dhclient
       env_vars:
       - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
+      - SERVICE_SSH_PORT=3022
       - SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
@@ -110,7 +110,7 @@ instance_groups:
         maxEndpoints: 200
     semp_port: 8080
     semp_ssl_port: 943
-    ssh_port: 2222
+    ssh_port: 3022
     starting_port: ((starting_port))
     syslog_config:
       value: disabled
@@ -186,7 +186,7 @@ instance_groups:
                     chmod +x /sbin/dhclient
       env_vars:
       - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
+      - SERVICE_SSH_PORT=3022
       - SYSTEM_SCALING_MAXCONNECTIONCOUNT=10000
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
@@ -221,7 +221,7 @@ instance_groups:
         maxEndpoints: 1000
     semp_port: 8080
     semp_ssl_port: 943
-    ssh_port: 2222
+    ssh_port: 3022
     starting_port: ((starting_port))
     syslog_config:
       value: disabled
@@ -291,7 +291,7 @@ instance_groups:
                     chmod +x /sbin/dhclient
       env_vars:
       - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
+      - SERVICE_SSH_PORT=3022
       - SYSTEM_SCALING_MAXCONNECTIONCOUNT=10000
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
@@ -326,7 +326,7 @@ instance_groups:
         maxEndpoints: 1000
     semp_port: 8080
     semp_ssl_port: 943
-    ssh_port: 2222
+    ssh_port: 3022
     starting_port: ((starting_port))
     syslog_config:
       value: disabled
@@ -402,7 +402,7 @@ instance_groups:
                     chmod +x /sbin/dhclient
       env_vars:
       - NODE_TYPE=MESSAGE_ROUTING_NODE
-      - SERVICE_SSH_PORT=2222
+      - SERVICE_SSH_PORT=3022
       - SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
       - USERNAME_ADMIN_GLOBALACCESSLEVEL=admin
       - USERNAME_ADMIN_PASSWORD=((vmr_admin_password))
@@ -437,7 +437,7 @@ instance_groups:
         maxEndpoints: 1000
     semp_port: 8080
     semp_ssl_port: 943
-    ssh_port: 2222
+    ssh_port: 3022
     starting_port: ((starting_port))
     syslog_config:
       value: disabled
