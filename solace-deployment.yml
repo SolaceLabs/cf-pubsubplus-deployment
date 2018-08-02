@@ -1031,7 +1031,7 @@ instance_groups:
           maxEndpoints: 1000
       - planName: standard-large-ha
         poolName: standard-large-ha
-        id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+        id: 90b92ff3-7311-42e5-8adf-5bd07932aa00
         description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
         pointFormDescription:
           - None
