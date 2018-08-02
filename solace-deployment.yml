@@ -1008,7 +1008,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1024,7 +1024,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1040,7 +1040,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1062,7 +1062,7 @@ instance_groups:
           maxVpns: 5
           credentialsPerVpn: 100
           maxConnections: 200
-          maxOutgoingRestConnections: 200
+          maxRestConnections: 200
           maxSubscriptions: 100000
           maxTransactions: 1000
           maxTransactedSessions: 200
@@ -1071,7 +1071,7 @@ instance_groups:
           maxVpns: 5
           credentialsPerVpn: 190
           maxConnections: 200
-          maxOutgoingRestConnections: 200
+          maxRestConnections: 200
           maxSubscriptions: 100000
           maxTransactions: 1000
           maxTransactedSessions: 200
@@ -1092,7 +1092,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1101,7 +1101,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 9990
           maxConnections: 10000
-          maxOutgoingRestConnections: 6000
+          maxRestConnections: 6000
           maxSubscriptions: 500000
           maxTransactions: 50000
           maxTransactedSessions: 10000
@@ -1122,7 +1122,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1131,7 +1131,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 990
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1152,7 +1152,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
-          maxOutgoingRestConnections: 1000
+          maxRestConnections: 1000
           maxSubscriptions: 500000
           maxTransactions: 5000
           maxTransactedSessions: 1000
@@ -1161,7 +1161,7 @@ instance_groups:
           maxVpns: 1
           credentialsPerVpn: 9990
           maxConnections: 10000
-          maxOutgoingRestConnections: 6000
+          maxRestConnections: 6000
           maxSubscriptions: 500000
           maxTransactions: 50000
           maxTransactedSessions: 10000
