@@ -651,7 +651,7 @@ instance_groups:
         service_semp_port: 8080
         service_semp_tlsport: 943
         service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 10000
+        system_scaling_maxconnectioncount: 1000
       settings:
         pool_name: standard-large-ha
         broker_agent_port: 18080
@@ -758,7 +758,7 @@ instance_groups:
         service_semp_port: 8080
         service_semp_tlsport: 943
         service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 10000
+        system_scaling_maxconnectioncount: 1000
       settings:
         pool_name: standard-large
         broker_agent_port: 18080
@@ -983,10 +983,10 @@ instance_groups:
       plans:
       - planName: standard-medium
         poolName: standard-medium
-        id:
-        description:
+        id: e5b905d0-965a-11e8-9eb6-529269fb1459
+        description: A single Message VPN in a medium Standard Solace Message Router
         pointFormDescription:
-          - 
+          - None
         isHA: false
         evaluationLimits:
           maxVpns: 1
@@ -999,10 +999,10 @@ instance_groups:
           maxEndpoints: 200
       - planName: standard-large
         poolName: standard-large
-        id:
-        description:
+        id: 1d664f9c-965b-11e8-9eb6-529269fb1459
+        description: A single Message VPN in a large Standard Solace Message Router
         pointFormDescription:
-          - 
+          - None
         isHA: false
         evaluationLimits:
           maxVpns: 1
@@ -1015,10 +1015,10 @@ instance_groups:
           maxEndpoints: 1000
       - planName: standard-medium-ha
         poolName: standard-medium-ha
-        id:
-        description:
+        id: 2286ba52-965b-11e8-9eb6-529269fb1459
+        description: A single Message VPN in a medium HA Standard Solace Message Router
         pointFormDescription:
-          - 
+          - None
         isHA: true
         evaluationLimits:
           maxVpns: 1
@@ -1031,10 +1031,10 @@ instance_groups:
           maxEndpoints: 1000
       - planName: standard-large-ha
         poolName: standard-large-ha
-        id:
-        description:
+        id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
         pointFormDescription:
-          - 
+          - None
         isHA: true
         evaluationLimits:
           maxVpns: 1
