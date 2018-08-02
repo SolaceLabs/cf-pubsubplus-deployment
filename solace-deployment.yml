@@ -521,13 +521,13 @@ instance_groups:
     plan:
       limit:
         maxVpns: 1
-        credentialsPerVpn: 100
-        maxConnections: 200
-        maxRestConnections: 200
-        maxSubscriptions: 100000
-        maxTransactedSessions: 200
-        maxTransactions: 1000
-        maxEndpoints: 200
+        credentialsPerVpn: 500
+        maxConnections: 1000
+        maxRestConnections: 1000
+        maxSubscriptions: 500000
+        maxTransactedSessions: 1000
+        maxTransactions: 5000
+        maxEndpoints: 1000
     config:
       keys:
         nodetype: message_routing
@@ -990,13 +990,13 @@ instance_groups:
         isHA: false
         evaluationLimits:
           maxVpns: 1
-          credentialsPerVpn: 100
-          maxConnections: 200
-          maxOutgoingRestConnections: 200
-          maxSubscriptions: 100000
-          maxTransactions: 1000
-          maxTransactedSessions: 200
-          maxEndpoints: 200
+          credentialsPerVpn: 500
+          maxConnections: 1000
+          maxRestConnections: 1000
+          maxSubscriptions: 500000
+          maxTransactedSessions: 1000
+          maxTransactions: 5000
+          maxEndpoints: 1000
       - planName: standard-large
         poolName: standard-large
         id: 1d664f9c-965b-11e8-9eb6-529269fb1459
