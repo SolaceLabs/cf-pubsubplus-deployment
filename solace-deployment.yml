@@ -952,14 +952,14 @@ instance_groups:
     service_catalog:
       id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
       service_name: solace-pubsub
-      service_description: __EDITION_LONG_DESCRIPTION__
+      service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
       bindable: true
       plan_updatable: true
       metadata:
         display_name: Solace PubSub+
         imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
         providerDisplayName: Solace Corporation
-        longDescription: __EDITION_LONG_DESCRIPTION__
+        longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
         documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
         supportUrl: http://dev.solace.com
       tags:
