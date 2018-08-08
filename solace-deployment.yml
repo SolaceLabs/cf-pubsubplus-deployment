@@ -956,7 +956,7 @@ instance_groups:
       bindable: true
       plan_updatable: true
       metadata:
-        display_name: Solace PubSub+
+        displayName: Solace PubSub+
         imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
         providerDisplayName: Solace Corporation
         longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
