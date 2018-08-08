@@ -949,6 +949,7 @@ instance_groups:
       internal: 
         user: service_broker
         password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+    default_orphaned_resource_policy: Abort
     service_catalog:
       id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
       service_name: solace-pubsub
