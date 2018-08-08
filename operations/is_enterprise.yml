@@ -5,6 +5,12 @@
   path: /instance_groups/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
+  path: /instance_groups/name=deploy-all/properties/service_catalog/service_description
+  value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/service_catalog/metadata/longDescription
+  value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
+- type: replace
   path: /instance_groups/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
@@ -18,6 +24,18 @@
   value: 'enterprise'
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
+  path: /instance_groups/name=standard-large/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
+  path: /instance_groups/name=standard-large-ha/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/plan/limit/credentialsPerVpn
