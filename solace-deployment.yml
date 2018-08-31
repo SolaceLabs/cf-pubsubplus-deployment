@@ -106,7 +106,7 @@ instance_groups:
         releases:
         - name: solace-pubsub
           version: 2.1.0-vagrant49
-          jobs: [ containers, pubsub_common, pubsub_config, broker_agent ]
+          jobs: [ containers, route_registrar, route_registrar_active, pubsub_common, pubsub_config, broker_agent ]
         - name: docker
           version: 30.1.4
           jobs: [ docker ]
