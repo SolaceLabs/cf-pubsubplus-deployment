@@ -37,14 +37,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: shared_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: shared_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -150,14 +150,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: large_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: large_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -261,14 +261,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: large_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: large_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -368,14 +368,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: medium_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: medium_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -479,14 +479,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_medium_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_medium_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -592,14 +592,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_large_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -703,14 +703,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_large_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
@@ -810,14 +810,14 @@ instance_groups:
   - name: pubsub_common
     release: solace-pubsub
     consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_medium_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
   - name: broker_agent
     release: solace-pubsub
     consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_medium_ha_list }
   - name: route_registrar
     release: solace-pubsub
     consumes:
