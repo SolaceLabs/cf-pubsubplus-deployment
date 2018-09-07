@@ -1115,6 +1115,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: enterprise-shared
               env:
                 <<: *config_env
             plan:
@@ -1151,6 +1152,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 10000
               settings:
                 <<: *config_settings
+                pool_name: enterprise-large
               env:
                 <<: *config_env
             plan:
@@ -1223,6 +1225,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: enterprise-medium-ha
               env:
                 <<: *config_env
         - name: enterprise-large-ha
@@ -1261,6 +1264,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: enterprise-large-ha
               env:
                 <<: *config_env
         - name: standard-medium
@@ -1281,6 +1285,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: standard_medium
               env:
                 <<: *config_env
             plan:
@@ -1309,6 +1314,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: standard-large
               env:
                 <<: *config_env
             plan:
@@ -1346,6 +1352,7 @@ instance_groups:
                 <<: *config_keys
                 system_scaling_maxconnectioncount: 1000
               settings:
+                pool_name: standard-medium-ha
                 <<: *config_settings
               env:
                 <<: *config_env
@@ -1377,6 +1384,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
+                pool_name: standard-large-ha
               env:
                 <<: *config_env
 variables:
