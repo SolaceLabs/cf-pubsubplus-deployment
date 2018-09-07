@@ -1061,10 +1061,10 @@ instance_groups:
       service_deployment:
         releases:
         - name: solace-pubsub
-          version: 2.1.0-vagrant49
+          version: ((solace_pubsub_version))
           jobs: [ containers, route_registrar, route_registrar_active, pubsub_common, pubsub_config, broker_agent ]
         - name: docker
-          version: 30.1.4
+          version: ((docker_version))
           jobs: [ docker ]
         stemcell:
           os: ((bosh_stemcell))
@@ -1349,7 +1349,7 @@ instance_groups:
                 <<: *config_settings
               env:
                 <<: *config_env
-        - name: enterprise-large-ha
+        - name: standard-large-ha
           plan_id: c4e216b8-b2b0-11e8-96f8-529269fb1459
           description: A High Availability Deployment of Solace PubSub+ Software
           metadata:
