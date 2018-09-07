@@ -55,14 +55,16 @@ instance_groups:
       broker_name: od_solace_pubsub
     jobs: []
   - name: broker
+    provides:
+      broker: { as: solace_pubsub_od_broker }
     release: on-demand-service-broker
     properties:
       disable_ssl_cert_verification: true
       expose_operational_errors: false
       startup_banner: true
       port: 8080
-      username: broker
-      password: broker
+      username: ((service_broker_user))
+      password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
       bosh:
         url: 192.168.50.4
