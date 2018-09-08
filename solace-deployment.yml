@@ -335,7 +335,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: shared_list }
+      solace_pubsub_instance: { as: shared_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -447,7 +447,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: large_list }
+      solace_pubsub_instance: { as: large_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -501,7 +501,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: medium_ha_list }
+      solace_pubsub_instance: { as: medium_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -561,7 +561,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: large_ha_list }
+      solace_pubsub_instance: { as: large_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -621,7 +621,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: standard_medium_list }
+      solace_pubsub_instance: { as: standard_medium_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -667,7 +667,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: standard_large_list }
+      solace_pubsub_instance: { as: standard_large_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -713,7 +713,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: standard_medium_ha_list }
+      solace_pubsub_instance: { as: standard_medium_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
@@ -765,7 +765,7 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
     provides:
-      self: { as: standard_large_ha_list }
+      solace_pubsub_instance: { as: standard_large_ha_list }
   - name: containers
     release: solace-pubsub
     consumes: {}
