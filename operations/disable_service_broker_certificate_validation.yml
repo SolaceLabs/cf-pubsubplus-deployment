@@ -25,9 +25,3 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true

@@ -93,9 +93,7 @@ Variable controls are provided for:
 | medium_ha_plan_instances | Yes | The number of PubSub instances to create supporting the "enterprise-medium-ha" plan |
 | large_ha_plan_instances  | Yes | The number of PubSub instances to create supporting the "enterprise-large-ha" plan |
 | standard_medium_plan_instances    | Yes | The number of PubSub instances to create supporting the "standard-medium" plan |
-| standard_large_plan_instances     | Yes | The number of PubSub instances to create supporting the "standard-large" plan |
 | standard_medium_ha_plan_instances | Yes | The number of PubSub instances to create supporting the "standard-medium-ha" plan |
-| standard_large_ha_plan_instances  | Yes | The number of PubSub instances to create supporting the "standard-large-ha" plan |
 
 Just keep in mind that any __*plan_instances__ are static, and setting them all Zero means there is no inventory to support the solace-messaging plans.
 

@@ -783,22 +783,6 @@ instance_groups:
           maxTransactedSessions: 1000
           maxTransactions: 5000
           maxEndpoints: 1000
-      - planName: standard-large
-        poolName: standard-large
-        id: 1d664f9c-965b-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a large Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: false
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
       - planName: standard-medium-ha
         poolName: standard-medium-ha
         id: 2286ba52-965b-11e8-9eb6-529269fb1459
@@ -815,23 +799,6 @@ instance_groups:
           maxTransactions: 5000
           maxTransactedSessions: 1000
           maxEndpoints: 1000
-      - planName: standard-large-ha
-        poolName: standard-large-ha
-        id: 90b92ff3-7311-42e5-8adf-5bd07932aa00
-        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
-        pointFormDescription:
-          - None
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-          
       - planName: enterprise-shared
         poolName: enterprise-shared
         id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75

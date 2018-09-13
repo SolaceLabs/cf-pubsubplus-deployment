@@ -86,25 +86,7 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/containers/0/memory_swap?
   value: 6G
-- type: replace
-  path: /instance_groups/name=standard-large/properties/containers/0/memory?
-  value: 4G
-- type: replace
-  path: /instance_groups/name=standard-large/properties/containers/0/memory_swap?
-  value: 6G
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/containers/0/memory?
-  value: 4G
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/containers/0/memory_swap?
-  value: 6G
 ##
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
-  value: 1000
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/keys/system_scaling_maxconnectioncount?
-  value: 1000
 # Should also set a smaller persistent disk for all VMs
 #
 - type: replace
@@ -113,12 +95,6 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/persistent_disk?
   value: 20480
-- type: replace
-  path: /instance_groups/name=standard-large-ha/persistent_disk?
-  value: 20480
-- type: replace
-  path: /instance_groups/name=standard-large/persistent_disk?
-  value: 20480
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=standard-medium/properties/config/keys/service_ssh_port?
@@ -126,23 +102,11 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/keys/service_ssh_port?
   value: 3022
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/keys/service_ssh_port?
-  value: 3022
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/keys/service_ssh_port?
-  value: 3022
 ## Fix SSH : 
 - type: replace
   path: /instance_groups/name=standard-medium/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=standard-large/properties/ssh_port?
-  value: 3022
-- type: replace
   path: /instance_groups/name=standard-medium-ha/properties/ssh_port?
-  value: 3022
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/ssh_port?
   value: 3022
   
