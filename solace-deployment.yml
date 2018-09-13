@@ -574,224 +574,6 @@ instance_groups:
         cf_space: ((solace_broker_cf_space))
         system_domain: ((system_domain))
 
-- name: standard-large-ha
-  stemcell: default
-  instances: 0
-  vm_type: solace.large
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  persistent_disk: 40960
-  jobs:
-  - name: docker
-    release: docker
-    consumes: {}
-  - name: pubsub_common
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_ha_list }
-  - name: containers
-    release: solace-pubsub
-    consumes: {}
-  - name: broker_agent
-    release: solace-pubsub
-    consumes: {}
-  - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  - name: route_registrar_active
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  properties:
-    pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
-    config:
-      keys:
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
-      settings:
-        pool_name: standard-large-ha
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
-      env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
-- name: standard-large
-  stemcell: default
-  instances: 0
-  vm_type: solace.large
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  persistent_disk: 40960
-  jobs:
-  - name: docker
-    release: docker
-    consumes: {}
-  - name: pubsub_common
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_list }
-  - name: containers
-    release: solace-pubsub
-    consumes: {}
-  - name: broker_agent
-    release: solace-pubsub
-    consumes: {}
-  - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  properties:
-    pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      env_vars:
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
-    config:
-      keys:
-        nodetype: message_routing
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
-      settings:
-        pool_name: standard-large
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
-      env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
 - name: standard-medium-ha
   stemcell: default
   instances: 0
@@ -914,9 +696,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
       mysql: { from: mysql-proxy }
       credhub: { from: credhub, deployment: ((cf_deployment)) }
   instances: 1
@@ -1213,9 +993,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -1339,9 +1117,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
       mysql: { from: mysql-proxy }
 - name: management
   instances: 1
