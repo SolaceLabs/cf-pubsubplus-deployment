@@ -14,11 +14,5 @@
   path: /instance_groups/name=standard-medium/instances
   value: ((standard_medium_plan_instances))
 - type: replace
-  path: /instance_groups/name=standard-large/instances
-  value: ((standard_large_plan_instances))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/instances
-  value: ((standard_large_ha_plan_instances))
-- type: replace
   path: /instance_groups/name=standard-medium-ha/instances
   value: ((standard_medium_ha_plan_instances))
