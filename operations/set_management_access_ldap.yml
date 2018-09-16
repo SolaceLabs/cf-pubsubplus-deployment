@@ -105,27 +105,6 @@
   path: /instance_groups/name=standard-medium/properties/config/settings/ldap_mgmt_read_write_groups?
   value: ((management_access_auth_scheme.mgmt_read_write_groups))
 - type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/management_access_auth_scheme/value
-  value: ldap_server
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/management_access_auth_scheme/value
   value: ldap_server
 - type: replace
@@ -145,27 +124,6 @@
   value: ((management_access_auth_scheme.mgmt_read_only_groups))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/value
-  value: ldap_server
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/ldap_mgmt_read_write_groups?
   value: ((management_access_auth_scheme.mgmt_read_write_groups))
   
 # On demand catalog
@@ -276,27 +234,6 @@
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/ldap_mgmt_read_write_groups?
   value: ((management_access_auth_scheme.mgmt_read_write_groups))
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/management_access_auth_scheme/value
-  value: ldap_server
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/management_access_auth_scheme/value
   value: ldap_server
 - type: replace
@@ -316,27 +253,6 @@
   value: ((management_access_auth_scheme.mgmt_read_only_groups))
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/value
-  value: ldap_server
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/management_access_auth_scheme/selected_option?/ldap_mgmt_read_write_groups?
-  value: ((management_access_auth_scheme.mgmt_read_write_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/ldap_mgmt_admin_groups?
-  value: ((management_access_auth_scheme.mgmt_admin_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/ldap_mgmt_read_only_groups?
-  value: ((management_access_auth_scheme.mgmt_read_only_groups))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/ldap_mgmt_read_write_groups?
   value: ((management_access_auth_scheme.mgmt_read_write_groups))
 
 - type: replace

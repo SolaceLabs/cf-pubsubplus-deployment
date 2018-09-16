@@ -42,18 +42,6 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
 
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
@@ -92,16 +80,3 @@
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-  

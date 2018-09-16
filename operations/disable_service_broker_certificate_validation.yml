@@ -25,12 +25,6 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
-- type: replace
-  path: /instance_groups/name=standard-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true
-- type: replace
-  path: /instance_groups/name=standard-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true
 
 # On demand service catalog  
 # Disables service broker's certificate validation when communicating with the VMR
@@ -53,10 +47,4 @@
   value: true
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
-  value: true
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true

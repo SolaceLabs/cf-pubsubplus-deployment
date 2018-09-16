@@ -9,7 +9,7 @@ releases:
 - name: solace-pubsub-broker
   version: latest
 - name: cf-mysql
-  version: latest
+  version: 36.14.0
 - name: solace-service-adapter
   version: latest
 update:
@@ -36,6 +36,7 @@ instance_groups:
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
       mysql: { from: mysql-proxy }
+      credhub: { from: credhub, deployment: ((cf_deployment)) }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -53,6 +54,9 @@ instance_groups:
     cf:
       admin_password: ((cf_admin_password))
       admin_user: admin
+    uaa:
+      admin_client: admin
+      admin_client_secret: ((uaa_admin_client_secret))
     domain: ((system_domain))
     ldap_config:
       value: disabled
@@ -67,6 +71,7 @@ instance_groups:
       internal: 
         user: service_broker
         password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+    secure_service_credentials: ((secure_service_credentials))
     default_orphaned_resource_policy: Abort
     service_catalog:
       id: 9b629341-3e08-47f1-bd56-aa05e78a47f3

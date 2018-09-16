@@ -18,12 +18,6 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/vm_type
   value: medium.disk
-- type: replace
-  path: /instance_groups/name=standard-large/vm_type
-  value: xlarge
-- type: replace
-  path: /instance_groups/name=standard-large-ha/vm_type
-  value: xlarge
 
 # On demand catalog  
 - type: replace
@@ -62,18 +56,6 @@
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/instance_groups/name=Monitor/vm_type
   value: medium.disk
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/instance_groups/name=Primary/vm_type
-  value: xlarge
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/instance_groups/name=Primary/vm_type
-  value: xlarge
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/instance_groups/name=Backup/vm_type
-  value: xlarge
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/instance_groups/name=Monitor/vm_type
-  value: xlarge
   
 - type: replace
   path: /instance_groups/name=deploy-all/vm_type
