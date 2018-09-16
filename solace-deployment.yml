@@ -34,9 +34,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
       mysql: { from: mysql-proxy }
   instances: 1
   vm_type: minimal
@@ -118,22 +116,6 @@ instance_groups:
           maxTransactedSessions: 1000
           maxTransactions: 5000
           maxEndpoints: 1000
-      - planName: standard-large
-        poolName: standard-large
-        id: 1d664f9c-965b-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a large Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: false
-        evaluationLimits: &standard_large_limits
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactedSessions: 1000
-          maxTransactions: 5000
-          maxEndpoints: 1000
       - planName: standard-medium-ha
         poolName: standard-medium-ha
         id: 2286ba52-965b-11e8-9eb6-529269fb1459
@@ -142,22 +124,6 @@ instance_groups:
           - None
         isHA: true
         evaluationLimits: &standard_medium_ha_limits
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactedSessions: 1000
-          maxTransactions: 5000
-          maxEndpoints: 1000
-      - planName: standard-large-ha
-        poolName: standard-large-ha
-        id: 90b92ff3-7311-42e5-8adf-5bd07932aa00
-        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
-        pointFormDescription:
-          - None
-        isHA: true
-        evaluationLimits: &standard_large_ha_limits
           maxVpns: 1
           credentialsPerVpn: 500
           maxConnections: 1000
@@ -648,52 +614,6 @@ instance_groups:
         pool_name: standard-medium
       env:
         <<: *config_env
-- name: standard-large
-  stemcell: default
-  instances: 0
-  vm_type: solace.large
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  persistent_disk: 40960
-  jobs:
-  - name: docker
-    release: docker
-    consumes: {}
-  - name: pubsub_common
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_list }
-  - name: containers
-    release: solace-pubsub
-    consumes: {}
-  - name: broker_agent
-    release: solace-pubsub
-    consumes: {}
-  - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  properties:
-    pubsub_config_job: broker_agent
-    containers: *containers
-    plan:
-      limit: *standard_large_limits
-    config:
-      keys:
-        <<: *config_keys
-        system_scaling_maxconnectioncount: 1000
-      settings:
-        <<: *config_settings
-        pool_name: standard-large
-      env:
-        <<: *config_env
 - name: standard-medium-ha
   stemcell: default
   instances: 0
@@ -746,58 +666,6 @@ instance_groups:
         pool_name: standard-medium-ha
       env:
         <<: *config_env
-- name: standard-large-ha
-  stemcell: default
-  instances: 0
-  vm_type: solace.large
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  persistent_disk: 40960
-  jobs:
-  - name: docker
-    release: docker
-    consumes: {}
-  - name: pubsub_common
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      solace_pubsub_instance: { as: standard_large_ha_list }
-  - name: containers
-    release: solace-pubsub
-    consumes: {}
-  - name: broker_agent
-    release: solace-pubsub
-    consumes: {}
-  - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  - name: route_registrar_active
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  properties:
-    pubsub_config_job: broker_agent
-    containers: *containers
-    plan:
-      limit: *standard_large_ha_limits
-    config:
-      keys:
-        <<: *config_keys
-        system_scaling_maxconnectioncount: 1000
-      settings:
-        <<: *config_settings
-        pool_name: standard-large-ha
-      env:
-        <<: *config_env
 - name: tests
   jobs:
   - name: tests
@@ -809,9 +677,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
   instances: 1
   vm_type: minimal
   stemcell: default
@@ -935,9 +801,7 @@ instance_groups:
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_large: { from: standard_large_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      solace_pubsub_standard_large_ha: { from: standard_large_ha_list }
       mysql: { from: mysql-proxy }
 - name: management
   instances: 1
@@ -1274,35 +1138,6 @@ instance_groups:
               - config.keys.*
               - config.settings.*
               - config.env.*
-        - name: standard-large
-          plan_id: 7997be60-b2b0-11e8-96f8-529269fb1459
-          description: A Standalone Solace PubSub+ Software
-          metadata:
-            display_name: A standalone instance of Solace PubSub+ Software
-            bullets: []
-          quotas: *quotas
-          instance_groups: *standalone_instance_groups
-          updates: *updates
-          properties:
-            cf_api_host: api.((system_domain))
-            containers: *containers
-            config:
-              keys:
-                <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
-              settings:
-                <<: *config_settings
-                pool_name: standard-large
-              env:
-                <<: *config_env
-            plan:
-              limit: *standard_large_limits
-              resources:
-                shm_size_message_routing: 2G
-              allowed_overrides:
-              - config.keys.*
-              - config.settings.*
-              - config.env.*
         - name: standard-medium-ha
           plan_id: 850eedd6-b2b0-11e8-96f8-529269fb1459
           description: A High Availability Deployment of Solace PubSub+ Software
@@ -1332,37 +1167,6 @@ instance_groups:
               settings:
                 pool_name: standard-medium-ha
                 <<: *config_settings
-              env:
-                <<: *config_env
-        - name: standard-large-ha
-          plan_id: c4e216b8-b2b0-11e8-96f8-529269fb1459
-          description: A High Availability Deployment of Solace PubSub+ Software
-          metadata:
-            display_name: A High Availability Deployment of Solace PubSub+ Software
-            bullets: []
-          quotas: *quotas
-          instance_groups: *ha_instance_groups
-          update:  *updates
-          properties:
-            cf_api_host: api.((system_domain))
-            containers: *containers
-            plan:
-              limit: *standard_large_ha_limits
-              resources:
-                shm_size_primary: 2G
-                shm_size_backup: 2G
-                shm_size_monitor: 1G
-              allowed_overrides:
-              - config.keys.*
-              - config.settings.*
-              - config.env.*
-            config:
-              keys:
-                <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
-              settings:
-                <<: *config_settings
-                pool_name: standard-large-ha
               env:
                 <<: *config_env
 variables:
