@@ -49,12 +49,6 @@
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large/properties/config/settings/edition
-  value: 'enterprise'
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-large-ha/properties/config/settings/edition
-  value: 'enterprise'
-- type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/edition
   value: 'enterprise'
   
