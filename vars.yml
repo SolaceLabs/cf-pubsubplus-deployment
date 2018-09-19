@@ -9,6 +9,9 @@ solace_router_client_id: solace_router
 # The start port seed from which all ports allocation are based.
 starting_port: 7000
 
+# Increase security by hiding service instance credentials from VCAP services
+secure_service_credentials: false
+
 # This is the password set for the "admin" user on the VMR
 vmr_admin_password: admin1
 ##
@@ -19,6 +22,8 @@ shared_plan_instances: 1
 large_plan_instances: 0 
 medium_ha_plan_instances: 0
 large_ha_plan_instances: 0 
+standard_medium_plan_instances: 0
+standard_medium_ha_plan_instances: 0
 
 # Fill those when using MySQL For PCF tile
 mysql_for_pcf_service_name: p-mysql

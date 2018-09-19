@@ -10,3 +10,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/instances
   value: ((medium_ha_plan_instances))
+- type: replace
+  path: /instance_groups/name=standard-medium/instances
+  value: ((standard_medium_plan_instances))
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/instances
+  value: ((standard_medium_ha_plan_instances))

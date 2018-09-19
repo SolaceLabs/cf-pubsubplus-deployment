@@ -13,6 +13,12 @@
   path: /instance_groups/name=enterprise-large-ha/vm_type
   value: xlarge
 - type: replace
+  path: /instance_groups/name=standard-medium/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/vm_type
+  value: medium.disk
+- type: replace
   path: /instance_groups/name=deploy-all/vm_type
   value: micro
 - type: replace

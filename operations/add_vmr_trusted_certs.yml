@@ -2,14 +2,42 @@
 # Note that if the certificates are self signed or untrusted:
 #  the broker_validate_cert_disabled should be set to true, please use -o operations/disable_service_broker_certificate_validation.yml
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=enterprise-shared/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-large/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-large-ha/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))

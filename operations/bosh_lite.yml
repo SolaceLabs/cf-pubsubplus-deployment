@@ -24,12 +24,13 @@
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/containers/0/memory_swap?
   value: 6G
+##
 - type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/containers/0/env_vars?/2
-  value: SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
+  path: /instance_groups/name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
+  value: 1000
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/containers/0/env_vars?/2
-  value: SYSTEM_SCALING_MAXCONNECTIONCOUNT=1000
+  path: /instance_groups/name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
+  value: 1000
 # Should also set a smaller persistent disk for all VMs
 #
 - type: replace
@@ -46,17 +47,17 @@
   value: 20480
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/containers/0/env_vars?/1
-  value: SERVICE_SSH_PORT=3022
+  path: /instance_groups/name=enterprise-shared/properties/config/keys/service_ssh_port?
+  value: 3022
 - type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/containers/0/env_vars?/1
-  value: SERVICE_SSH_PORT=3022
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/keys/service_ssh_port?
+  value: 3022
 - type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/containers/0/env_vars?/1
-  value: SERVICE_SSH_PORT=3022
+  path: /instance_groups/name=enterprise-large-ha/properties/config/keys/service_ssh_port?
+  value: 3022
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/containers/0/env_vars?/1
-  value: SERVICE_SSH_PORT=3022
+  path: /instance_groups/name=enterprise-large/properties/config/keys/service_ssh_port?
+  value: 3022
 ## Fix SSH : 
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/ssh_port?
@@ -70,3 +71,42 @@
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/ssh_port?
   value: 3022
+
+# Standard Plans
+# Add memory constraints to the docker containers 
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/containers/0/memory_swap?
+  value: 6G
+##
+# Should also set a smaller persistent disk for all VMs
+#
+- type: replace
+  path: /instance_groups/name=standard-medium/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/persistent_disk?
+  value: 20480
+## Fix SSH : SERVICE_SSH_PORT
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/config/keys/service_ssh_port?
+  value: 3022
+## Fix SSH : 
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/ssh_port?
+  value: 3022
+  
