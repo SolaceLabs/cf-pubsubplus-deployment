@@ -287,7 +287,6 @@ instance_groups:
                     echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
                     chmod +x /sbin/dhclient
       env_file: *env_file
-      env_vars:
       image: solace-bosh
       name: pubsub
       net: host
