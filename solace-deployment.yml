@@ -846,6 +846,36 @@ instance_groups:
     provides:
       proxy:
         as: mysql-proxy
+- name: delete-all-od-service-instances
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: delete-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      polling_interval_seconds: 10
+  vm_type: minimal
+  stemcell: default
+  azs:
+  - z1
+  networks:
+  - name: default
+- name: upgrade-all-od-service-instances
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: upgrade-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      max_in_flight: 1
+      polling_interval_seconds: 10
+      canaries: 1
+  vm_type: minimal
+  stemcell: default
+  azs:
+  - z1
+  networks:
+  - name: default
 - name: solace-od-service-adapter
   stemcell: default
   instances: 1
@@ -862,21 +892,6 @@ instance_groups:
     properties:
       solace_instance_group_name: SolacePubSub+
       cf_deployment: cf
-  - name: register-broker
-    release: on-demand-service-broker
-    properties:
-      broker_name: od_solace_pubsub
-      broker_uri: https://od_solace_pubsub.((system_domain))
-      disable_ssl_cert_verification: true
-      cf:
-        api_url: api.((system_domain))
-        admin_username: admin
-        admin_password: ((cf_admin_password))
-  - name: deregister-broker
-    release: on-demand-service-broker
-    properties:
-      broker_name: od_solace_pubsub
-    jobs: []
   - name: broker
     provides:
       broker: { as: solace_pubsub_od_broker }
