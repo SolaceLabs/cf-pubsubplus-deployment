@@ -907,9 +907,10 @@ instance_groups:
       bosh:
         url: ((bosh_host))
         authentication:
-          basic:
-            username: admin
-            password: ((bosh_admin_password))
+          uaa:
+            url: ((bosh_host))
+            client_id: admin
+            client_secret: ((bosh_admin_password))
         root_ca_cert: ((bosh_root_ca_cert))
         disable_ssl_cert_verification: ((bosh_disable_ssl_cert_verification))
       cf:
