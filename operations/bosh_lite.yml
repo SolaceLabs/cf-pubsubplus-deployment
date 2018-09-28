@@ -144,20 +144,7 @@
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
   value: 1000
-# Should also set a smaller persistent disk for all VMs
-#
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/persistent_disk?
-  value: 20480
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/persistent_disk?
-  value: 20480
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/persistent_disk?
-  value: 20480
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/persistent_disk?
-  value: 20480
+
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/keys/service_ssh_port?
@@ -200,14 +187,7 @@
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory_swap?
   value: 6G
   value: 1000
-# Should also set a smaller persistent disk for all VMs
-#
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/persistent_disk?
-  value: 20480
-- type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/persistent_disk?
-  value: 20480
+
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/keys/service_ssh_port?

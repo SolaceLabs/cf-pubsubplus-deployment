@@ -959,7 +959,7 @@ instance_groups:
           instance_groups: &standalone_instance_groups
             - name: SolacePubSub+
               vm_type: default
-              persistent_disk_type: 10GB
+              persistent_disk_type: 20GB
               instances: 1
               networks: [default]
               azs: [z1]
@@ -1044,19 +1044,19 @@ instance_groups:
           instance_groups: &ha_instance_groups
             - name: Primary
               vm_type: default
-              persistent_disk_type: 10GB
+              persistent_disk_type: 20GB
               instances: 1
               networks: [default]
               azs: [z1]
             - name: Backup
               vm_type: default
-              persistent_disk_type: 10GB
+              persistent_disk_type: 20GB
               instances: 1
               networks: [default]
               azs: [z2]
             - name: Monitor
               vm_type: minimal
-              persistent_disk_type: 10GB
+              persistent_disk_type: 20GB
               instances: 1
               networks: [default]
               azs: [z3]
