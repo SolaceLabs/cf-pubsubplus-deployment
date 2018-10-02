@@ -34,22 +34,22 @@
   value: 'enterprise'
   
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/edition
   value: 'enterprise'
   
 - type: replace
@@ -138,86 +138,86 @@
   value: 10000
   
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/credentialsPerVpn
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/credentialsPerVpn
   value: 190
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxConnections
   value: 200
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxRestConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxRestConnections
   value: 200
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxSubscriptions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxSubscriptions
   value: 100000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxTransactedSessions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxTransactedSessions
   value: 200
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxTransactions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxTransactions
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxEndpoints
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/plan/limit/maxEndpoints
   value: 200
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/credentialsPerVpn
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/credentialsPerVpn
   value: 9990
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxConnections
   value: 10000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxRestConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxRestConnections
   value: 6000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxSubscriptions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxSubscriptions
   value: 500000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxTransactedSessions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxTransactedSessions
   value: 10000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxTransactions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxTransactions
   value: 50000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxEndpoints
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/plan/limit/maxEndpoints
   value: 10000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/credentialsPerVpn
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/credentialsPerVpn
   value: 990
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxConnections
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxRestConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxRestConnections
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxSubscriptions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxSubscriptions
   value: 500000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxTransactedSessions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxTransactedSessions
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxTransactions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxTransactions
   value: 5000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxEndpoints
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/plan/limit/maxEndpoints
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/credentialsPerVpn
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/credentialsPerVpn
   value: 9990
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxConnections
   value: 10000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxRestConnections
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxRestConnections
   value: 6000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxSubscriptions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxSubscriptions
   value: 500000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxTransactedSessions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxTransactedSessions
   value: 10000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxTransactions
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxTransactions
   value: 50000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxEndpoints
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/plan/limit/maxEndpoints
   value: 10000

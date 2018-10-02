@@ -30,21 +30,21 @@
 # Disables service broker's certificate validation when communicating with the VMR
 # This adds certificates
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true

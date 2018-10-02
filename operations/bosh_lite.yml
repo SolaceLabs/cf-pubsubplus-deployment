@@ -114,90 +114,90 @@
 # Bosh Lite
 # Add memory constraints to the docker containers 
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/containers/0/memory_swap?
   value: 6G
 ##
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
   value: 1000
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
   value: 1000
 
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/keys/service_ssh_port?
   value: 3022
 ## Fix SSH : 
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/ssh_port?
   value: 3022
 
 # Standard Plans
 # Add memory constraints to the docker containers 
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/containers/0/memory_swap?
   value: 6G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory?
   value: 4G
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory_swap?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory_swap?
   value: 6G
 
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/keys/service_ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/keys/service_ssh_port?
   value: 3022
 ## Fix SSH : 
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/ssh_port?
   value: 3022
 - type: replace
-  path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/ssh_port?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/ssh_port?
   value: 3022

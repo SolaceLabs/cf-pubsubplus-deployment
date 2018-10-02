@@ -846,47 +846,6 @@ instance_groups:
     provides:
       proxy:
         as: mysql-proxy
-- name: delete-all-od-service-instances
-  lifecycle: errand
-  instances: 1
-  jobs:
-  - name: delete-all-service-instances
-    release: on-demand-service-broker
-    properties:
-      polling_interval_seconds: 10
-  vm_type: minimal
-  stemcell: default
-  azs:
-  - z1
-  networks:
-  - name: default
-- name: upgrade-all-od-service-instances
-  lifecycle: errand
-  instances: 1
-  jobs:
-  - name: upgrade-all-service-instances
-    release: on-demand-service-broker
-    properties:
-      max_in_flight: 1
-      polling_interval_seconds: 10
-      canaries: 1
-  vm_type: minimal
-  stemcell: default
-  azs:
-  - z1
-  networks:
-  - name: default
-- name: solace-od-service-adapter
-  stemcell: default
-  instances: 1
-  vm_type: solace.medium
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  jobs:
   - name: service-adapter
     release: solace-service-adapter
     properties:
@@ -900,7 +859,7 @@ instance_groups:
       disable_ssl_cert_verification: true
       expose_operational_errors: false
       startup_banner: true
-      port: 8080
+      port: 7979
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
@@ -935,11 +894,11 @@ instance_groups:
       service_catalog:
         id: 05e81eec-762e-415c-b840-a804fc526ac2
         service_name: solace-pubsub-od
-        service_description: Service Description
+        service_description: Solace PubSub+ Message Broker
         bindable: true
         plan_updatable: true
         metadata:
-          displayName: OD Service Broker
+          displayName: Solace PubSub+ Message Broker
         tags:
         - solace
         - pubsub
@@ -1043,13 +1002,13 @@ instance_groups:
           quotas: *quotas
           instance_groups: &ha_instance_groups
             - name: Primary
-              vm_type: default
+              vm_type: solace.medium
               persistent_disk_type: 20GB
               instances: 1
               networks: [default]
               azs: [z1]
             - name: Backup
-              vm_type: default
+              vm_type: solace.medium
               persistent_disk_type: 20GB
               instances: 1
               networks: [default]
@@ -1190,6 +1149,37 @@ instance_groups:
                 <<: *config_settings
               env:
                 <<: *config_env
+- name: delete-all-od-service-instances
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: delete-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      polling_interval_seconds: 10
+  vm_type: minimal
+  stemcell: default
+  azs:
+  - z1
+  networks:
+  - name: default
+- name: upgrade-all-od-service-instances
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: upgrade-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      max_in_flight: 1
+      polling_interval_seconds: 10
+      canaries: 1
+  vm_type: minimal
+  stemcell: default
+  azs:
+  - z1
+  networks:
+  - name: default
+
 variables:
 - name: mgmt_password
   type: password
