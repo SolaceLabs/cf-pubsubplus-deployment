@@ -186,7 +186,6 @@
 - type: replace
   path: /instance_groups/name=solace-od-service-adapter/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/containers/0/memory_swap?
   value: 6G
-  value: 1000
 
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
