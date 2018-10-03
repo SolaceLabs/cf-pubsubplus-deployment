@@ -2,13 +2,13 @@
   path: /instance_groups/name=management/jobs/name=delete-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/service_catalog/service_description
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog/service_description
   value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/service_catalog/metadata/longDescription
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog/metadata/longDescription
   value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
 - type: replace
   path: /instance_groups/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?

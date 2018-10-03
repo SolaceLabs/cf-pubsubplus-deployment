@@ -617,28 +617,28 @@
   value: vmr_internal
 
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/value
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/password
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/password
   value: ((ldap.password))
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/identity
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_credentials?/identity
   value: ((ldap.username))
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_group_membership_attribute_name?
   value: memberOf
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_server_url?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_server_url?
   value: ((ldap.server_url))
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_start_tls?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_start_tls?
   value: disabled
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_base?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_base?
   value: ((ldap.user_search_base))
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_filter?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/ldap_config/selected_option?/ldap_user_search_filter?
   value: '(cn=$CLIENT_USERNAME)'
 - type: replace
   path: /instance_groups/name=tests/properties/ldap_config/value

@@ -58,7 +58,7 @@
   value: medium.disk
   
 - type: replace
-  path: /instance_groups/name=deploy-all/vm_type
+  path: /instance_groups/name=management/jobs/name=deploy-all/vm_type
   value: micro
 - type: replace
   path: /instance_groups/name=tests/vm_type

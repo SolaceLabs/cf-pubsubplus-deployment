@@ -23,270 +23,6 @@ stemcells:
   os: ((bosh_stemcell))
   version: ((bosh_stemcell_version))
 instance_groups:
-- name: deploy-all
-  jobs:
-  - name: deploy-all
-    release: solace-pubsub-broker
-    provides: {}
-    consumes:
-      solace_pubsub_shared: { from: shared_list }
-      solace_pubsub_large: { from: large_list }
-      solace_pubsub_medium_ha: { from: medium_ha_list }
-      solace_pubsub_large_ha: { from: large_ha_list }
-      solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      mysql: { from: mysql-proxy }
-      credhub: { from: credhub, deployment: ((cf_deployment)) }
-  instances: 1
-  vm_type: minimal
-  stemcell: default
-  lifecycle: errand
-  azs:
-  - z1
-  networks:
-  - name: default
-  properties:
-    apply_open_security_group: true
-    app_domains:
-    - ((app_domain))
-    application_access_auth_scheme:
-      value: vmr_internal
-    cf:
-      admin_password: ((cf_admin_password))
-      admin_user: admin
-    uaa:
-      admin_client: admin
-      admin_client_secret: ((uaa_admin_client_secret))
-    domain: ((system_domain))
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    org: ((solace_broker_cf_organization))
-    security:
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    mysql_config:
-      value: internal
-      internal: 
-        user: service_broker
-        password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
-    secure_service_credentials: ((secure_service_credentials))
-    default_orphaned_resource_policy: Abort
-    service_catalog:
-      id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
-      service_name: solace-pubsub
-      service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
-      bindable: true
-      plan_updatable: true
-      metadata:
-        displayName: Solace PubSub+
-        imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
-        providerDisplayName: Solace Corporation
-        longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
-        documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
-        supportUrl: http://dev.solace.com
-      tags:
-        - solace
-        - pubsub 
-        - solace-pubsub
-        - rest
-        - mqtt
-        - mq
-        - queue
-        - event-streaming
-        - amqp
-        - jms
-        - messaging
-        - publish-subscribe
-        - message-queuing
-        - request-reply
-      global_properties:
-        allocate_ahead: true
-        persistence: true
-      plans:
-      - planName: standard-medium
-        poolName: standard-medium
-        id: e5b905d0-965a-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a medium Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: false
-        evaluationLimits: &standard_medium_limits
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactedSessions: 1000
-          maxTransactions: 5000
-          maxEndpoints: 1000
-      - planName: standard-medium-ha
-        poolName: standard-medium-ha
-        id: 2286ba52-965b-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a medium HA Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: true
-        evaluationLimits: &standard_medium_ha_limits
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactedSessions: 1000
-          maxTransactions: 5000
-          maxEndpoints: 1000
-      - planName: enterprise-shared
-        poolName: enterprise-shared
-        id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
-        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
-        pointFormDescription:
-          - A Message VPN on a shared Solace Message Router
-          - Up to 100 Service Instance Bindings
-          - Up to 200 durable Endpoints
-          - Maximum of 4 GB Message Spool
-          - Maximum of 100K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: false
-        evaluationLimits:
-          maxVpns: 5
-          credentialsPerVpn: 100
-          maxConnections: 200
-          maxRestConnections: 200
-          maxSubscriptions: 100000
-          maxTransactions: 1000
-          maxTransactedSessions: 200
-          maxEndpoints: 200
-        enterpriseLimits:
-          maxVpns: 5
-          credentialsPerVpn: 190
-          maxConnections: 200
-          maxRestConnections: 200
-          maxSubscriptions: 100000
-          maxTransactions: 1000
-          maxTransactedSessions: 200
-          maxEndpoints: 200
-      - planName: enterprise-large
-        poolName: enterprise-large
-        id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
-        description: A single message VPN on a dedicated Solace Message Router
-        pointFormDescription:
-          - A Message VPN on a dedicated Solace Message Router
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 20 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: false
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 9990
-          maxConnections: 10000
-          maxRestConnections: 6000
-          maxSubscriptions: 500000
-          maxTransactions: 50000
-          maxTransactedSessions: 10000
-          maxEndpoints: 10000
-      - planName: enterprise-medium-ha
-        poolName: enterprise-medium-ha
-        id: b3a25384-eedb-4b4c-af00-610ee4dce76c
-        description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
-        pointFormDescription:
-          - A Message VPN on a Medium Solace Message Router in an HA Cluster
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 4 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 990
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-      - planName: enterprise-large-ha
-        poolName: enterprise-large-ha
-        id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
-        description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
-        pointFormDescription:
-          - A Message VPN on dedicated Solace Message Router in an HA Cluster
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 20 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 9990
-          maxConnections: 10000
-          maxRestConnections: 6000
-          maxSubscriptions: 500000
-          maxTransactions: 50000
-          maxTransactedSessions: 10000
-          maxEndpoints: 10000
-    solace_pubsub_broker:
-      app_manifest:
-        buildpack: java_buildpack
-        env:
-          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-        memory: 1024M
-        path: ((solace_service_broker_jar))
-        health-check-http-endpoint: /health
-        health-check-type: http
-        timeout: 180
-      enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    space: ((solace_broker_cf_space))
-    ssl:
-      skip_cert_verify: true
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tls_config:
-      value: disabled
-    vmr_admin_password: ((vmr_admin_password))
 - name: enterprise-shared
   stemcell: default
   instances: 0
@@ -1149,6 +885,260 @@ instance_groups:
       max_in_flight: 1
       polling_interval_seconds: 10
       canaries: 1
+  - name: deploy-all
+    release: solace-pubsub-broker
+    provides: {}
+    consumes:
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_standard_medium: { from: standard_medium_list }
+      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      mysql: { from: mysql-proxy }
+      credhub: { from: credhub, deployment: ((cf_deployment)) }
+    properties:
+      apply_open_security_group: true
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+      uaa:
+        admin_client: admin
+        admin_client_secret: ((uaa_admin_client_secret))
+      domain: ((system_domain))
+      ldap_config:
+        value: disabled
+      management_access_auth_scheme:
+        value: vmr_internal
+      org: ((solace_broker_cf_organization))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      mysql_config:
+        value: internal
+        internal: 
+          user: service_broker
+          password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+      secure_service_credentials: ((secure_service_credentials))
+      default_orphaned_resource_policy: Abort
+      service_catalog:
+        id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
+        service_name: solace-pubsub
+        service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+        bindable: true
+        plan_updatable: true
+        metadata:
+          displayName: Solace PubSub+
+          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          providerDisplayName: Solace Corporation
+          longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+          documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
+          supportUrl: http://dev.solace.com
+        tags:
+          - solace
+          - pubsub 
+          - solace-pubsub
+          - rest
+          - mqtt
+          - mq
+          - queue
+          - event-streaming
+          - amqp
+          - jms
+          - messaging
+          - publish-subscribe
+          - message-queuing
+          - request-reply
+        global_properties:
+          allocate_ahead: true
+          persistence: true
+        plans:
+        - planName: standard-medium
+          poolName: standard-medium
+          id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          description: A single Message VPN in a medium Standard Solace Message Router
+          pointFormDescription:
+            - None
+          isHA: false
+          evaluationLimits: &standard_medium_limits
+            maxVpns: 1
+            credentialsPerVpn: 500
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactedSessions: 1000
+            maxTransactions: 5000
+            maxEndpoints: 1000
+        - planName: standard-medium-ha
+          poolName: standard-medium-ha
+          id: 2286ba52-965b-11e8-9eb6-529269fb1459
+          description: A single Message VPN in a medium HA Standard Solace Message Router
+          pointFormDescription:
+            - None
+          isHA: true
+          evaluationLimits: &standard_medium_ha_limits
+            maxVpns: 1
+            credentialsPerVpn: 500
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactedSessions: 1000
+            maxTransactions: 5000
+            maxEndpoints: 1000
+        - planName: enterprise-shared
+          poolName: enterprise-shared
+          id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
+          pointFormDescription:
+            - A Message VPN on a shared Solace Message Router
+            - Up to 100 Service Instance Bindings
+            - Up to 200 durable Endpoints
+            - Maximum of 4 GB Message Spool
+            - Maximum of 100K subscriptions
+            - One Message VPN Scoped Admin account
+          isHA: false
+          evaluationLimits:
+            maxVpns: 5
+            credentialsPerVpn: 100
+            maxConnections: 200
+            maxRestConnections: 200
+            maxSubscriptions: 100000
+            maxTransactions: 1000
+            maxTransactedSessions: 200
+            maxEndpoints: 200
+          enterpriseLimits:
+            maxVpns: 5
+            credentialsPerVpn: 190
+            maxConnections: 200
+            maxRestConnections: 200
+            maxSubscriptions: 100000
+            maxTransactions: 1000
+            maxTransactedSessions: 200
+            maxEndpoints: 200
+        - planName: enterprise-large
+          poolName: enterprise-large
+          id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          description: A single message VPN on a dedicated Solace Message Router
+          pointFormDescription:
+            - A Message VPN on a dedicated Solace Message Router
+            - Up to 500 Service Instance Bindings
+            - Up to 1000 durable Endpoints
+            - Maximum of 20 GB Message Spool
+            - Maximum of 500K subscriptions
+            - One Message VPN Scoped Admin account
+          isHA: false
+          evaluationLimits:
+            maxVpns: 1
+            credentialsPerVpn: 500
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactions: 5000
+            maxTransactedSessions: 1000
+            maxEndpoints: 1000
+          enterpriseLimits:
+            maxVpns: 1
+            credentialsPerVpn: 9990
+            maxConnections: 10000
+            maxRestConnections: 6000
+            maxSubscriptions: 500000
+            maxTransactions: 50000
+            maxTransactedSessions: 10000
+            maxEndpoints: 10000
+        - planName: enterprise-medium-ha
+          poolName: enterprise-medium-ha
+          id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
+          pointFormDescription:
+            - A Message VPN on a Medium Solace Message Router in an HA Cluster
+            - Up to 500 Service Instance Bindings
+            - Up to 1000 durable Endpoints
+            - Maximum of 4 GB Message Spool
+            - Maximum of 500K subscriptions
+            - One Message VPN Scoped Admin account
+          isHA: true
+          evaluationLimits:
+            maxVpns: 1
+            credentialsPerVpn: 500
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactions: 5000
+            maxTransactedSessions: 1000
+            maxEndpoints: 1000
+          enterpriseLimits:
+            maxVpns: 1
+            credentialsPerVpn: 990
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactions: 5000
+            maxTransactedSessions: 1000
+            maxEndpoints: 1000
+        - planName: enterprise-large-ha
+          poolName: enterprise-large-ha
+          id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
+          pointFormDescription:
+            - A Message VPN on dedicated Solace Message Router in an HA Cluster
+            - Up to 500 Service Instance Bindings
+            - Up to 1000 durable Endpoints
+            - Maximum of 20 GB Message Spool
+            - Maximum of 500K subscriptions
+            - One Message VPN Scoped Admin account
+          isHA: true
+          evaluationLimits:
+            maxVpns: 1
+            credentialsPerVpn: 500
+            maxConnections: 1000
+            maxRestConnections: 1000
+            maxSubscriptions: 500000
+            maxTransactions: 5000
+            maxTransactedSessions: 1000
+            maxEndpoints: 1000
+          enterpriseLimits:
+            maxVpns: 1
+            credentialsPerVpn: 9990
+            maxConnections: 10000
+            maxRestConnections: 6000
+            maxSubscriptions: 500000
+            maxTransactions: 50000
+            maxTransactedSessions: 10000
+            maxEndpoints: 10000
+      solace_pubsub_broker:
+        app_manifest:
+          buildpack: java_buildpack
+          env:
+            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+            SOLACE_LOAD_VERSION: ((solace_load_version))
+            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+          memory: 1024M
+          path: ((solace_service_broker_jar))
+          health-check-http-endpoint: /health
+          health-check-type: http
+          timeout: 180
+        enable_global_access_to_plans: ((enable_global_access_to_plans))
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      space: ((solace_broker_cf_space))
+      ssl:
+        skip_cert_verify: true
+      starting_port: ((starting_port))
+      syslog_config:
+        value: disabled
+      tcp_routes_config:
+        selected_option:
+          tcp_route_enabled: not_allowed
+        value: disabled
+      tls_config:
+        value: disabled
+      vmr_admin_password: ((vmr_admin_password))
 
 variables:
 - name: mgmt_password

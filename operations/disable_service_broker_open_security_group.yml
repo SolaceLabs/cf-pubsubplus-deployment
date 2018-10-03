@@ -1,5 +1,5 @@
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/apply_open_security_group?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/apply_open_security_group?
   value: false
 - type: replace
   path: /instance_groups/name=tests/properties/apply_open_security_group?
