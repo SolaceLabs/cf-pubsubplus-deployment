@@ -599,26 +599,26 @@
   path: /instance_groups/name=tests/properties/syslog_config/selected_option?/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/value
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/value
   value: enabled
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_hostname?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_hostname?
   value: ((syslog.hostname))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_port?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_port?
   value: ((syslog.port))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_protocol?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_protocol?
   value: ((syslog.protocol))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_command_logs?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_command_logs?
   value: ((syslog.vmr_command_logs))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_event_logs?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_event_logs?
   value: ((syslog.vmr_event_logs))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_system_logs?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_vmr_system_logs?
   value: ((syslog.vmr_system_logs))
 - type: replace
-  path: /instance_groups/name=delete-all/properties/syslog_config/selected_option?/syslog_broker_and_agent_logs?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/selected_option?/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))

@@ -64,5 +64,5 @@
   path: /instance_groups/name=tests/vm_type
   value: micro
 - type: replace
-  path: /instance_groups/name=delete-all/vm_type
+  path: /instance_groups/name=management/jobs/name=delete-all/vm_type
   value: micro

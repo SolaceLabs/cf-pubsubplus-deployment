@@ -16,7 +16,7 @@
 - type: remove
   path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/mysql
 - type: remove
-  path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/mysql
+  path: /instance_groups/name=management/jobs/name=delete-all/jobs/name=management/jobs/name=delete-all/consumes/mysql
 - type: remove
   path: /releases/name=cf-mysql
 - type: remove

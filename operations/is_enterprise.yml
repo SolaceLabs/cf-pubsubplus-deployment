@@ -1,5 +1,5 @@
 - type: replace
-  path: /instance_groups/name=delete-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
   path: /instance_groups/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?

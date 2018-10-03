@@ -44,6 +44,6 @@
   path: /instance_groups/name=tests/properties/application_access_auth_scheme/value
   value: ldap_server
 - type: replace
-  path: /instance_groups/name=delete-all/properties/application_access_auth_scheme/value
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/application_access_auth_scheme/value
   value: ldap_server
 
