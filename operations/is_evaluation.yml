@@ -5,7 +5,7 @@
   path: /instance_groups/name=management/jobs/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: false
 - type: replace
-  path: /instance_groups/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: false
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/config/settings/edition

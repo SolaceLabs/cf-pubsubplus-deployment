@@ -407,77 +407,6 @@ instance_groups:
         pool_name: standard-medium-ha
       env:
         <<: *config_env
-- name: tests
-  jobs:
-  - name: tests
-    release: solace-pubsub
-    provides: {}
-    consumes:
-      solace_pubsub_shared: { from: shared_list }
-      solace_pubsub_large: { from: large_list }
-      solace_pubsub_medium_ha: { from: medium_ha_list }
-      solace_pubsub_large_ha: { from: large_ha_list }
-      solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-  instances: 1
-  vm_type: minimal
-  stemcell: default
-  lifecycle: errand
-  azs:
-  - z1
-  networks:
-  - name: default
-  properties:
-    apply_open_security_group: true
-    app_domains:
-    - ((app_domain))
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf:
-      admin_password: ((cf_admin_password))
-      admin_user: admin
-    domain: ((system_domain))
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    org: ((solace_broker_cf_organization))
-    security:
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    solace_pubsub_broker:
-      app_manifest:
-        buildpack: java_buildpack
-        env:
-          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-        memory: 1024M
-        path: ((solace_service_broker_jar))
-        health-check-http-endpoint: /health
-        health-check-type: http
-        timeout: 180
-      enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    space: ((solace_broker_cf_space))
-    ssl:
-      skip_cert_verify: true
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tls_config:
-      value: disabled
-    vmr_admin_password: ((vmr_admin_password))
 - name: management
   instances: 1
   networks:
@@ -1109,6 +1038,67 @@ instance_groups:
             maxTransactions: 50000
             maxTransactedSessions: 10000
             maxEndpoints: 10000
+      solace_pubsub_broker:
+        app_manifest:
+          buildpack: java_buildpack
+          env:
+            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+            SOLACE_LOAD_VERSION: ((solace_load_version))
+            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+          memory: 1024M
+          path: ((solace_service_broker_jar))
+          health-check-http-endpoint: /health
+          health-check-type: http
+          timeout: 180
+        enable_global_access_to_plans: ((enable_global_access_to_plans))
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      space: ((solace_broker_cf_space))
+      ssl:
+        skip_cert_verify: true
+      starting_port: ((starting_port))
+      syslog_config:
+        value: disabled
+      tcp_routes_config:
+        selected_option:
+          tcp_route_enabled: not_allowed
+        value: disabled
+      tls_config:
+        value: disabled
+      vmr_admin_password: ((vmr_admin_password))
+  - name: tests
+    release: solace-pubsub
+    provides: {}
+    consumes:
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_standard_medium: { from: standard_medium_list }
+      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+    properties:
+      apply_open_security_group: true
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      broker_hostname: solace-pubsub-broker.((app_domain))
+      broker_password: ((service_broker_password))
+      broker_user: ((service_broker_user))
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+      domain: ((system_domain))
+      ldap_config:
+        value: disabled
+      management_access_auth_scheme:
+        value: vmr_internal
+      org: ((solace_broker_cf_organization))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
       solace_pubsub_broker:
         app_manifest:
           buildpack: java_buildpack
