@@ -528,7 +528,8 @@ instance_groups:
         root_ca_cert: ((bosh_root_ca_cert))
         disable_ssl_cert_verification: ((bosh_disable_ssl_cert_verification))
       cf:
-        disable_ssl_cert_verification: true
+        root_ca_cert: ((uaa_ca.certificate))
+        disable_ssl_cert_verification: false
         url: https://api.((system_domain))
         authentication:
           url: https://uaa.((system_domain))
