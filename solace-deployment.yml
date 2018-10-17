@@ -733,6 +733,7 @@ instance_groups:
         user: service_broker
         password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
     secure_service_credentials: ((secure_service_credentials))
+    application_security_groups: ((application_security_groups))
     default_orphaned_resource_policy: Abort
     service_catalog:
       id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
