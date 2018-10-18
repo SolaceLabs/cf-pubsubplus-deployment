@@ -9,7 +9,7 @@ releases:
 - name: solace-pubsub-broker
   version: latest
 - name: cf-mysql
-  version: 36.14.0
+  version: ((cf_mysql_version))
 - name: solace-service-adapter
   version: latest
 update:
