@@ -7,7 +7,7 @@ releases:
 - name: solace-pubsub-broker
   version: latest
 - name: cf-mysql
-  version: 36.14.0
+  version: ((cf_mysql_version))
 update:
   canaries: 1
   canary_watch_time: 30000-240000
