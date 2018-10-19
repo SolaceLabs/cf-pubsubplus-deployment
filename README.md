@@ -66,6 +66,7 @@ unzip -o -d . solace-pubsub-2.1.0.pivotal releases/*.tgz
 
 Example of uploading the Solace provided releases to BOSH.
 ~~~~
+bosh upload-release workspace/releases/cf-mysql-36.14.0.tgz
 bosh upload-release workspace/releases/docker-30.1.4.tgz
 bosh upload-release workspace/releases/solace-pubsub-broker-2.1.0.tgz
 bosh upload-release workspace/releases/solace-pubsub-2.1.0.tgz
@@ -105,7 +106,7 @@ Variable controls are provided for:
 | standard_medium_plan_instances    | Yes | The number of Solace Pubsub message broker instances to create supporting the "standard-medium" plan |
 | standard_medium_ha_plan_instances | Yes | The number of Solace Pubsub message broker instances to create supporting the "standard-medium-ha" plan |
 
-Just keep in mind that any __*plan_instances__ are static, and setting them all Zero means there is no inventory to support the solace-messaging plans.
+Just keep in mind that any __*plan_instances__ are static, and setting them all Zero means there is no inventory to support the solace-pubsub plans.
 
 The manifest contains many properties which are not variable controlled, but may be adjusted if necessary.
 
