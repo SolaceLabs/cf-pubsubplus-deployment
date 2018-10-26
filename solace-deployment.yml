@@ -1131,6 +1131,40 @@ instance_groups:
       tls_config:
         value: disabled
       vmr_admin_password: ((vmr_admin_password))
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: internal_pubsub }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: pubsub_internal_config
+    release: solace-pubsub
+    consumes:
+      primary: { from: internal_pubsub }
+      backup: { from: internal_pubsub }
+      monitor: { from: internal_pubsub }
+  properties:
+    pubsub_config_job: pubsub_internal_config
+    containers: *containers
+    plan:
+      limit: *standard_medium_limits
+    config:
+      keys:
+        <<: *config_keys
+        system_scaling_maxconnectioncount: 100
+        service_semp_port: 38080
+        service_semp_tlsport: 3943
+        service_healthcheck_port: 39090
+      settings:
+        <<: *config_settings
+        pool_name: standard-medium
+      env:
+        <<: *config_env
 
 variables:
 - name: mgmt_password
