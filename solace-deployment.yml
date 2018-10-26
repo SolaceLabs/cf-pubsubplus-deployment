@@ -837,6 +837,12 @@ instance_groups:
       max_in_flight: 1
       polling_interval_seconds: 10
       canaries: 1
+      service_instances_api: 
+        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        authentication:
+          basic:
+            username: ((service_broker_user))
+            password: ((service_broker_password))
   - name: deploy-all
     release: solace-pubsub-broker
     provides: {}
@@ -879,6 +885,7 @@ instance_groups:
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
       service_catalog_static_inventory:
+      user_controlled_upgrade_on_demand_instances: false
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
         service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
