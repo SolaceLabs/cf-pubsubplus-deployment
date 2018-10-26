@@ -1,3 +1,25 @@
+
+
+standard_medium_limits: &standard_medium_limits
+  maxVpns: 1
+  credentialsPerVpn: 500
+  maxConnections: 1000
+  maxRestConnections: 1000
+  maxSubscriptions: 500000
+  maxTransactedSessions: 1000
+  maxTransactions: 5000
+  maxEndpoints: 1000
+
+standard_medium_ha_limits: &standard_medium_ha_limits
+  maxVpns: 1
+  credentialsPerVpn: 500
+  maxConnections: 1000
+  maxRestConnections: 1000
+  maxSubscriptions: 500000
+  maxTransactedSessions: 1000
+  maxTransactions: 5000
+  maxEndpoints: 1000
+
 name: solace_pubsub
 releases:
 - name: docker
@@ -815,6 +837,12 @@ instance_groups:
       max_in_flight: 1
       polling_interval_seconds: 10
       canaries: 1
+      service_instances_api: 
+        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        authentication:
+          basic:
+            username: ((service_broker_user))
+            password: ((service_broker_password))
   - name: deploy-all
     release: solace-pubsub-broker
     provides: {}
@@ -856,7 +884,8 @@ instance_groups:
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
-      service_catalog:
+      user_controlled_upgrade_on_demand_instances: false
+      service_catalog_static_inventory:
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
         service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
@@ -895,15 +924,7 @@ instance_groups:
           pointFormDescription:
             - None
           isHA: false
-          evaluationLimits: &standard_medium_limits
-            maxVpns: 1
-            credentialsPerVpn: 500
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactedSessions: 1000
-            maxTransactions: 5000
-            maxEndpoints: 1000
+          evaluationLimits: *standard_medium_limits
         - planName: standard-medium-ha
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
@@ -911,15 +932,7 @@ instance_groups:
           pointFormDescription:
             - None
           isHA: true
-          evaluationLimits: &standard_medium_ha_limits
-            maxVpns: 1
-            credentialsPerVpn: 500
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactedSessions: 1000
-            maxTransactions: 5000
-            maxEndpoints: 1000
+          evaluationLimits: *standard_medium_ha_limits
         - planName: enterprise-shared
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
