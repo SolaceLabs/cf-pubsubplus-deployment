@@ -853,6 +853,7 @@ instance_groups:
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      internal_message_broker: { from: internal_pubsub }
       mysql: { from: mysql-proxy }
       credhub: { from: credhub, deployment: ((cf_deployment)) }
     properties:
@@ -1093,6 +1094,7 @@ instance_groups:
       solace_pubsub_large_ha: { from: large_ha_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      internal_message_broker: { from: internal_pubsub }
     properties:
       apply_open_security_group: true
       app_domains:
