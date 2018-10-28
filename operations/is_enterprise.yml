@@ -32,10 +32,6 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/edition
   value: 'enterprise'
-
-- type: replace
-  path: /instance_groups/name=management/properties/config/settings/edition
-  value: 'standard'
   
 - type: replace
   path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/edition

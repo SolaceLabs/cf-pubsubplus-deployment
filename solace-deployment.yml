@@ -1158,28 +1158,188 @@ instance_groups:
   - name: pubsub_internal_config
     release: solace-pubsub
     consumes:
-      primary: { from: internal_pubsub }
-      backup: { from: internal_pubsub }
-      monitor: { from: internal_pubsub }
+      message_broker: { from: internal_pubsub }
+      monitor: { from: internal_monitor }
   properties:
     pubsub_config_job: pubsub_internal_config
-    containers: *containers
+    containers:
+    - dockerfile: |2-
+                  FROM solace-app:latest
+
+                  RUN \
+                    echo '#!/bin/bash' > /sbin/dhclient && \
+                    echo 'exit 0' >> /sbin/dhclient && \
+                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
+                    chmod +x /sbin/dhclient
+      env_file: *env_file
+      image: solace-bosh
+      name: pubsub
+      net: host
+      privileged: true
+      shm_size: 1G
+      memory: 1G
+      memory_swap: 2G
+      uts: host
+      volumes: *volumes
     plan:
-      limit: *standard_medium_limits
+      limit:
+        unlimited: true
     config:
       keys:
-        <<: *config_keys
-        system_scaling_maxconnectioncount: 100
+        nodetype: message_routing
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: *service_ssh_port
         service_semp_port: 38080
         service_semp_tlsport: 3943
         service_healthcheck_port: 39090
+        system_scaling_maxconnectioncount: 100
       settings:
-        <<: *config_settings
-        pool_name: standard-medium
+        edition: 'standard'
+        pool_name: standard-internal
+        broker_agent_port: 18080
+        node_role: 'primary'
+        starting_port: ((starting_port))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
       env:
-        <<: *config_env
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
+        redundancy_group_password: ((internal_redundancy_group_password))
+
+- name: arbitrator
+  instances: 0
+  persistent_disk_type: 10GB
+  networks:
+  - name: default
+  azs: [z3]
+  update:
+    serial: true
+  vm_type: default
+  stemcell: default
+  jobs:
+  - release: cf-mysql
+    name: arbitrator
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+          galera_healthcheck:
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: internal_monitor }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: pubsub_internal_config
+    release: solace-pubsub
+    consumes:
+      message_broker: { from: internal_pubsub }
+      monitor: { from: internal_monitor }
+  properties:
+    pubsub_config_job: pubsub_internal_config
+    containers:
+    - dockerfile: |2-
+                  FROM solace-app:latest
+
+                  RUN \
+                    echo '#!/bin/bash' > /sbin/dhclient && \
+                    echo 'exit 0' >> /sbin/dhclient && \
+                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
+                    chmod +x /sbin/dhclient
+      env_file: *env_file
+      image: solace-bosh
+      name: pubsub
+      net: host
+      privileged: true
+      shm_size: 1G
+      memory: 1G
+      memory_swap: 2G
+      uts: host
+      volumes: *volumes
+    plan:
+      limit:
+        unlimited: true
+    config:
+      keys:
+        nodetype: monitoring
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: *service_ssh_port
+        service_semp_port: 38080
+        service_semp_tlsport: 3943
+        service_healthcheck_port: 39090
+        system_scaling_maxconnectioncount: 100
+      settings:
+        edition: 'standard'
+        pool_name: standard-internal
+        broker_agent_port: 18080
+        node_role: 'monitor'
+        starting_port: ((starting_port))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
+        redundancy_group_password: ((internal_redundancy_group_password))
 
 variables:
+- name: internal_redundancy_group_password
+  type: password
 - name: mgmt_password
   type: password
 - name: vmr_admin_password
