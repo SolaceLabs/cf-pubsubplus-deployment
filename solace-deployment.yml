@@ -785,7 +785,7 @@ instance_groups:
                 system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
-                pool_name: standard_medium
+                pool_name: standard-medium
               env:
                 <<: *config_env
             plan:
@@ -926,6 +926,7 @@ instance_groups:
             - None
           isHA: false
           evaluationLimits: *standard_medium_limits
+          enterpriseLimits: *standard_medium_limits
         - planName: standard-medium-ha
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
@@ -934,6 +935,7 @@ instance_groups:
             - None
           isHA: true
           evaluationLimits: *standard_medium_ha_limits
+          enterpriseLimits: *standard_medium_ha_limits
         - planName: enterprise-shared
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
