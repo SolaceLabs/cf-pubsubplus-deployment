@@ -823,8 +823,8 @@ instance_groups:
                 <<: *config_keys
                 system_scaling_maxconnectioncount: 1000
               settings:
-                pool_name: standard-medium-ha
                 <<: *config_settings
+                pool_name: standard-medium-ha
               env:
                 <<: *config_env
   - name: delete-all-service-instances
