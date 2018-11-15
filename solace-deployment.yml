@@ -123,7 +123,6 @@ instance_groups:
         service_semp_port: 8080
         service_semp_tlsport: 943
         service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
       settings: &config_settings
         pool_name: enterprise-shared
         broker_agent_port: 18080
@@ -205,7 +204,6 @@ instance_groups:
     config:
       keys:
         <<: *config_keys
-        system_scaling_maxconnectioncount: 10000
       settings:
         <<: *config_settings
         pool_name: enterprise-large
@@ -265,7 +263,6 @@ instance_groups:
     config:
       keys:
         <<: *config_keys
-        system_scaling_maxconnectioncount: 1000
       settings:
         <<: *config_settings
         pool_name: enterprise-medium-ha
@@ -325,7 +322,6 @@ instance_groups:
     config:
       keys:
         <<: *config_keys
-        system_scaling_maxconnectioncount: 10000
       settings:
         <<: *config_settings
         pool_name: enterprise-large-ha
@@ -371,7 +367,6 @@ instance_groups:
     config:
       keys:
         <<: *config_keys
-        system_scaling_maxconnectioncount: 1000
       settings:
         <<: *config_settings
         pool_name: standard-medium
@@ -423,7 +418,6 @@ instance_groups:
     config:
       keys:
         <<: *config_keys
-        system_scaling_maxconnectioncount: 1000
       settings:
         <<: *config_settings
         pool_name: standard-medium-ha
@@ -476,6 +470,7 @@ instance_groups:
             SOLACE_LOAD_VERSION: ((solace_load_version))
             SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
             SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+
           memory: 1024M
           path: ((solace_service_broker_jar)) 
           health-check-http-endpoint: /health
@@ -585,15 +580,15 @@ instance_groups:
           allocate_ahead: true
           persistence: true
         plans:
-        - name: enterprise-shared
-          plan_id: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+        - name: standard-medium
+          plan_id: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
           description: A Standalone Solace PubSub+ Software
           metadata:
             display_name: A standalone instance of Solace PubSub+ Software
             bullets: []
-          quotas: &quotas
+          quotas: 
             service_instance_limit: 3
-          instance_groups: &standalone_instance_groups
+          instance_groups: 
             - name: SolacePubSub+
               vm_type: default
               persistent_disk_type: 20GB
@@ -605,80 +600,35 @@ instance_groups:
             canary_watch_time: 30000-240000
             update_watch_time: 30000-600000
             max_in_flight: 1
-            serial: true
+            serial: true 
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
               keys:
                 <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
-                pool_name: enterprise-shared
+                pool_name: standard_medium
               env:
                 <<: *config_env
             plan:
-              limit:
-                maxVpns: 5
-                credentialsPerVpn: 100
-                maxConnections: 200
-                maxRestConnections: 200
-                maxSubscriptions: 100000
-                maxTransactedSessions: 200
-                maxTransactions: 1000
-                maxEndpoints: 200
+              maxVpns: 1
               resources:
                 shm_size_message_routing: 2G
               allowed_overrides:
               - config.keys.*
               - config.settings.*
               - config.env.*
-        - name: enterprise-large
-          plan_id: da3f5706-b2af-11e8-96f8-529269fb1459
-          description: A Standalone Solace PubSub+ Software
-          metadata:
-            display_name: A standalone instance of Solace PubSub+ Software
-            bullets: []
-          quotas: *quotas
-          instance_groups: *standalone_instance_groups
-          updates: *updates
-          properties:
-            cf_api_host: api.((system_domain))
-            containers: *containers
-            config:
-              keys:
-                <<: *config_keys
-                system_scaling_maxconnectioncount: 10000
-              settings:
-                <<: *config_settings
-                pool_name: enterprise-large
-              env:
-                <<: *config_env
-            plan:
-              limit:
-                maxVpns: 1
-                credentialsPerVpn: 500
-                maxConnections: 1000
-                maxRestConnections: 1000
-                maxSubscriptions: 500000
-                maxTransactions: 5000
-                maxTransactedSessions: 1000
-                maxEndpoints: 1000
-              resources:
-                shm_size_message_routing: 2G
-              allowed_overrides:
-              - config.keys.*
-              - config.settings.*
-              - config.env.*
-        - name: enterprise-medium-ha
-          plan_id: 8bc308f1-caaf-7782-837b-91871924712e
+        - name: standard-medium-ha
+          plan_id: 850eedd6-b2b0-11e8-96f8-529269fb1459
           description: A High Availability Deployment of Solace PubSub+ Software
           metadata:
             display_name: A High Availability Deployment of Solace PubSub+ Software
             bullets: []
-          quotas: *quotas
-          instance_groups: &ha_instance_groups
+          quotas: 
+            service_instance_limit: 3
+          instance_groups: 
             - name: Primary
               vm_type: solace.medium
               persistent_disk_type: 20GB
@@ -702,15 +652,7 @@ instance_groups:
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
-              limit:
-                maxVpns: 5
-                credentialsPerVpn: 100
-                maxConnections: 200
-                maxRestConnections: 200
-                maxSubscriptions: 100000
-                maxTransactedSessions: 200
-                maxTransactions: 1000
-                maxEndpoints: 200
+              maxVpns: 1
               resources:
                 shm_size_primary: 2G
                 shm_size_backup: 2G
@@ -722,7 +664,125 @@ instance_groups:
             config:
               keys:
                 <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
+              settings:
+                pool_name: standard-medium-ha
+                <<: *config_settings
+              env:
+                <<: *config_env
+        - name: enterprise-shared
+          plan_id: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+          description: A Standalone Solace PubSub+ Software
+          metadata:
+            display_name: A standalone instance of Solace PubSub+ Software
+            bullets: []
+          quotas: 
+            service_instance_limit: 3
+          instance_groups: 
+            - name: SolacePubSub+
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-shared
+              env:
+                <<: *config_env
+            plan:
+              maxVpns: 5
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: enterprise-large
+          plan_id: da3f5706-b2af-11e8-96f8-529269fb1459
+          description: A Standalone Solace PubSub+ Software
+          metadata:
+            display_name: A standalone instance of Solace PubSub+ Software
+            bullets: []
+          quotas: 
+            service_instance_limit: 3
+          instance_groups: 
+            - name: SolacePubSub+
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          updates: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-large
+              env:
+                <<: *config_env
+            plan:
+              maxVpns: 1
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: enterprise-medium-ha
+          plan_id: 8bc308f1-caaf-7782-837b-91871924712e
+          description: A High Availability Deployment of Solace PubSub+ Software
+          metadata:
+            display_name: A High Availability Deployment of Solace PubSub+ Software
+            bullets: []
+          quotas: 
+            service_instance_limit: 3
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
+          update:  *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              maxVpns: 5
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
               settings:
                 <<: *config_settings
                 pool_name: enterprise-medium-ha
@@ -734,22 +794,33 @@ instance_groups:
           metadata:
             display_name: A High Availability Deployment of Solace PubSub+ Software
             bullets: []
-          quotas: *quotas
-          instance_groups: *ha_instance_groups
+          quotas: 
+            service_instance_limit: 3
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
           update:  *updates
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
-              limit:
-                maxVpns: 1
-                credentialsPerVpn: 500
-                maxConnections: 1000
-                maxRestConnections: 1000
-                maxSubscriptions: 500000
-                maxTransactions: 5000
-                maxTransactedSessions: 1000
-                maxEndpoints: 1000
+              maxVpns: 1
               resources:
                 shm_size_primary: 2G
                 shm_size_backup: 2G
@@ -761,72 +832,12 @@ instance_groups:
             config:
               keys:
                 <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
               settings:
                 <<: *config_settings
                 pool_name: enterprise-large-ha
               env:
                 <<: *config_env
-        - name: standard-medium
-          plan_id: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
-          description: A Standalone Solace PubSub+ Software
-          metadata:
-            display_name: A standalone instance of Solace PubSub+ Software
-            bullets: []
-          quotas: *quotas
-          instance_groups: *standalone_instance_groups
-          update: *updates
-          properties:
-            cf_api_host: api.((system_domain))
-            containers: *containers
-            config:
-              keys:
-                <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
-              settings:
-                <<: *config_settings
-                pool_name: standard-medium
-              env:
-                <<: *config_env
-            plan:
-              limit: *standard_medium_limits
-              resources:
-                shm_size_message_routing: 2G
-              allowed_overrides:
-              - config.keys.*
-              - config.settings.*
-              - config.env.*
-        - name: standard-medium-ha
-          plan_id: 850eedd6-b2b0-11e8-96f8-529269fb1459
-          description: A High Availability Deployment of Solace PubSub+ Software
-          metadata:
-            display_name: A High Availability Deployment of Solace PubSub+ Software
-            bullets: []
-          quotas: *quotas
-          instance_groups: *ha_instance_groups
-          update:  *updates
-          properties:
-            cf_api_host: api.((system_domain))
-            containers: *containers
-            plan:
-              limit: *standard_medium_ha_limits
-              resources:
-                shm_size_primary: 2G
-                shm_size_backup: 2G
-                shm_size_monitor: 1G
-              allowed_overrides:
-              - config.keys.*
-              - config.settings.*
-              - config.env.*
-            config:
-              keys:
-                <<: *config_keys
-                system_scaling_maxconnectioncount: 1000
-              settings:
-                <<: *config_settings
-                pool_name: standard-medium-ha
-              env:
-                <<: *config_env
+
   - name: delete-all-service-instances
     release: on-demand-service-broker
     properties:
@@ -926,8 +937,7 @@ instance_groups:
           pointFormDescription:
             - None
           isHA: false
-          evaluationLimits: *standard_medium_limits
-          enterpriseLimits: *standard_medium_limits
+          maxVpns: 1
         - planName: standard-medium-ha
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
@@ -935,8 +945,7 @@ instance_groups:
           pointFormDescription:
             - None
           isHA: true
-          evaluationLimits: *standard_medium_ha_limits
-          enterpriseLimits: *standard_medium_ha_limits
+          maxVpns: 1
         - planName: enterprise-shared
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
@@ -949,24 +958,7 @@ instance_groups:
             - Maximum of 100K subscriptions
             - One Message VPN Scoped Admin account
           isHA: false
-          evaluationLimits:
-            maxVpns: 5
-            credentialsPerVpn: 100
-            maxConnections: 200
-            maxRestConnections: 200
-            maxSubscriptions: 100000
-            maxTransactions: 1000
-            maxTransactedSessions: 200
-            maxEndpoints: 200
-          enterpriseLimits:
-            maxVpns: 5
-            credentialsPerVpn: 190
-            maxConnections: 200
-            maxRestConnections: 200
-            maxSubscriptions: 100000
-            maxTransactions: 1000
-            maxTransactedSessions: 200
-            maxEndpoints: 200
+          maxVpns: 5
         - planName: enterprise-large
           poolName: enterprise-large
           id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
@@ -979,24 +971,7 @@ instance_groups:
             - Maximum of 500K subscriptions
             - One Message VPN Scoped Admin account
           isHA: false
-          evaluationLimits:
-            maxVpns: 1
-            credentialsPerVpn: 500
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactions: 5000
-            maxTransactedSessions: 1000
-            maxEndpoints: 1000
-          enterpriseLimits:
-            maxVpns: 1
-            credentialsPerVpn: 9990
-            maxConnections: 10000
-            maxRestConnections: 6000
-            maxSubscriptions: 500000
-            maxTransactions: 50000
-            maxTransactedSessions: 10000
-            maxEndpoints: 10000
+          maxVpns: 1
         - planName: enterprise-medium-ha
           poolName: enterprise-medium-ha
           id: b3a25384-eedb-4b4c-af00-610ee4dce76c
@@ -1009,24 +984,7 @@ instance_groups:
             - Maximum of 500K subscriptions
             - One Message VPN Scoped Admin account
           isHA: true
-          evaluationLimits:
-            maxVpns: 1
-            credentialsPerVpn: 500
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactions: 5000
-            maxTransactedSessions: 1000
-            maxEndpoints: 1000
-          enterpriseLimits:
-            maxVpns: 1
-            credentialsPerVpn: 990
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactions: 5000
-            maxTransactedSessions: 1000
-            maxEndpoints: 1000
+          maxVpns: 1
         - planName: enterprise-large-ha
           poolName: enterprise-large-ha
           id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
@@ -1039,24 +997,7 @@ instance_groups:
             - Maximum of 500K subscriptions
             - One Message VPN Scoped Admin account
           isHA: true
-          evaluationLimits:
-            maxVpns: 1
-            credentialsPerVpn: 500
-            maxConnections: 1000
-            maxRestConnections: 1000
-            maxSubscriptions: 500000
-            maxTransactions: 5000
-            maxTransactedSessions: 1000
-            maxEndpoints: 1000
-          enterpriseLimits:
-            maxVpns: 1
-            credentialsPerVpn: 9990
-            maxConnections: 10000
-            maxRestConnections: 6000
-            maxSubscriptions: 500000
-            maxTransactions: 50000
-            maxTransactedSessions: 10000
-            maxEndpoints: 10000
+          maxVpns: 1
       solace_pubsub_broker:
         app_manifest:
           buildpack: java_buildpack
@@ -1066,6 +1007,12 @@ instance_groups:
             SOLACE_LOAD_VERSION: ((solace_load_version))
             SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
             SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+            SCALING_TABLE_EXAMPLE: |
+              [
+              [ "first", "second", "third"],
+              [  1     ,  2      ,  3     ],  
+              [  10    ,  20     ,  30    ]  
+              ]
           memory: 1024M
           path: ((solace_service_broker_jar))
           health-check-http-endpoint: /health
@@ -1200,7 +1147,6 @@ instance_groups:
         service_semp_port: 38080
         service_semp_tlsport: 3943
         service_healthcheck_port: 39090
-        system_scaling_maxconnectioncount: 100
       settings:
         edition: 'standard'
         pool_name: standard-internal
@@ -1306,7 +1252,6 @@ instance_groups:
         service_semp_port: 38080
         service_semp_tlsport: 3943
         service_healthcheck_port: 39090
-        system_scaling_maxconnectioncount: 100
       settings:
         edition: 'standard'
         pool_name: standard-internal
