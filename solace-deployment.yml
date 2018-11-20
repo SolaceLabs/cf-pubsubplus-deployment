@@ -1,25 +1,4 @@
 
-
-standard_medium_limits: &standard_medium_limits
-  maxVpns: 1
-  credentialsPerVpn: 500
-  maxConnections: 1000
-  maxRestConnections: 1000
-  maxSubscriptions: 500000
-  maxTransactedSessions: 1000
-  maxTransactions: 5000
-  maxEndpoints: 1000
-
-standard_medium_ha_limits: &standard_medium_ha_limits
-  maxVpns: 1
-  credentialsPerVpn: 500
-  maxConnections: 1000
-  maxRestConnections: 1000
-  maxSubscriptions: 500000
-  maxTransactedSessions: 1000
-  maxTransactions: 5000
-  maxEndpoints: 1000
-
 name: solace_pubsub
 releases:
 - name: docker
@@ -102,16 +81,6 @@ instance_groups:
       - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
       - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
       - /var/vcap/store/containers/pubsub/volumes/secrets:/run/secrets
-    plan:
-      limit:
-        maxVpns: 5
-        credentialsPerVpn: 100
-        maxConnections: 200
-        maxRestConnections: 200
-        maxSubscriptions: 100000
-        maxTransactions: 1000
-        maxTransactedSessions: 200
-        maxEndpoints: 200
     config:
       keys: &config_keys
         nodetype: message_routing
@@ -191,16 +160,6 @@ instance_groups:
   properties:
     pubsub_config_job: broker_agent
     containers: *containers
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactions: 5000
-        maxTransactedSessions: 1000
-        maxEndpoints: 1000
     config:
       keys:
         <<: *config_keys
@@ -250,16 +209,6 @@ instance_groups:
   properties:
     pubsub_config_job: broker_agent
     containers: *containers
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
     config:
       keys:
         <<: *config_keys
@@ -309,16 +258,6 @@ instance_groups:
   properties:
     pubsub_config_job: broker_agent
     containers: *containers
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
     config:
       keys:
         <<: *config_keys
@@ -362,8 +301,6 @@ instance_groups:
   properties:
     pubsub_config_job: broker_agent
     containers: *containers
-    plan:
-      limit: *standard_medium_limits
     config:
       keys:
         <<: *config_keys
@@ -413,8 +350,6 @@ instance_groups:
   properties:
     pubsub_config_job: broker_agent
     containers: *containers
-    plan:
-      limit: *standard_medium_ha_limits
     config:
       keys:
         <<: *config_keys
