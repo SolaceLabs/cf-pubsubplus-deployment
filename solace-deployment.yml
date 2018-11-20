@@ -544,7 +544,7 @@ instance_groups:
                 <<: *config_keys
               settings:
                 <<: *config_settings
-                pool_name: standard_medium
+                pool_name: standard-medium
               env:
                 <<: *config_env
             plan:
@@ -600,8 +600,8 @@ instance_groups:
               keys:
                 <<: *config_keys
               settings:
-                pool_name: standard-medium-ha
                 <<: *config_settings
+                pool_name: standard-medium-ha
               env:
                 <<: *config_env
         - name: enterprise-shared
