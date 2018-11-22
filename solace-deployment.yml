@@ -569,19 +569,19 @@ instance_groups:
               persistent_disk_type: 20GB
               instances: 1
               networks: [default]
-              azs: [z1]
+              azs: [z1,z2,z3]
             - name: Backup
               vm_type: solace.medium
               persistent_disk_type: 20GB
               instances: 1
               networks: [default]
-              azs: [z2]
+              azs: [z1,z2,z3]
             - name: Monitor
               vm_type: minimal
               persistent_disk_type: 20GB
               instances: 1
               networks: [default]
-              azs: [z3]
+              azs: [z1,z2,z3]
           update:  *updates
           properties:
             cf_api_host: api.((system_domain))
