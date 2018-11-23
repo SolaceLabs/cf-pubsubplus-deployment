@@ -470,6 +470,12 @@ instance_groups:
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
+      service_instances_api: 
+        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        authentication:
+          basic:
+            username: ((service_broker_user))
+            password: ((service_broker_password))
       bosh:
         url: ((bosh_host))
         authentication:
@@ -783,12 +789,6 @@ instance_groups:
       max_in_flight: 1
       polling_interval_seconds: 10
       canaries: 1
-      service_instances_api: 
-        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
-        authentication:
-          basic:
-            username: ((service_broker_user))
-            password: ((service_broker_password))
   - name: deploy-all
     release: solace-pubsub-broker
     provides: {}
