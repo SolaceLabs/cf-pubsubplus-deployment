@@ -1,5 +1,6 @@
-solace_load_version: soltr_8.12.0.1007
-bosh_stemcell: "ubuntu-trusty"
-bosh_stemcell_version: "3586.26"
+solace_load_version: soltr_8.13.1.30
+bosh_stemcell: "ubuntu-xenial"
+bosh_stemcell_version: "97.32"
 solace_service_broker_jar: solace-service-broker-0.0.1135.jar
 cf_mysql_version: "36.14.0"
+docker_version: "33.0.0"

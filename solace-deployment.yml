@@ -2,7 +2,7 @@
 name: solace_pubsub
 releases:
 - name: docker
-  version: latest
+  version: ((docker_version))
 - name: solace-pubsub
   version: latest
 - name: on-demand-service-broker
