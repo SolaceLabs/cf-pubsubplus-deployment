@@ -460,7 +460,7 @@ instance_groups:
       cf_deployment: cf
   - name: broker
     provides:
-      broker: { as: solace_pubsub_od_broker }
+      broker: { as: solace_pubsub_deployment_odb_broker }
     release: on-demand-service-broker
     properties:
       disable_ssl_cert_verification: true
@@ -508,11 +508,11 @@ instance_groups:
       service_catalog:
         id: 05e81eec-762e-415c-b840-a804fc526ac2
         service_name: solace-pubsub-od
-        service_description: Solace PubSub+ Message Broker
+        service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
         metadata:
-          displayName: Solace PubSub+ Message Broker
+          displayName: Solace PubSub+ Message Broker BOSH Deployment
         tags:
         - solace
         - pubsub
@@ -1059,6 +1059,12 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+  - name: route_internal
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
   properties:
     pubsub_config_job: pubsub_internal_config
     containers:
