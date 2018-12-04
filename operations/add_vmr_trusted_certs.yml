@@ -27,6 +27,18 @@
   path: /instance_groups/name=enterprise-large-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
   path: /instance_groups/name=management/jobs/name=deploy-all/properties/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 
@@ -42,41 +54,77 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
-
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=standard-plan-3/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/trusted_root_certificates?
+  path: /instance_groups/name=standard-plan-3/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=standard-plan-4/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
-  value: ((solace_trusted_root_cert.certificate))
-- type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/trusted_root_certificates?
+  path: /instance_groups/name=standard-plan-4/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/trusted_root_certificates?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/settings/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/tls_config/selected_option?/trusted_root_certificates?
+  value: ((solace_trusted_root_cert.certificate))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/trusted_root_certificates?
   value: ((solace_trusted_root_cert.certificate))

@@ -20,28 +20,52 @@
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/edition
   value: 'evaluation'
 - type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
   path: /instance_groups/name=standard-medium/properties/config/settings/edition
   value: 'evaluation'
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/edition
   value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/config/settings/edition
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/config/settings/edition
+  value: 'evaluation'
 
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-shared/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/edition 
   value: 'evaluation'
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/edition 
   value: 'evaluation'
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-large-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/settings/edition 
   value: 'evaluation'
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=enterprise-medium-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/settings/edition 
   value: 'evaluation'
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/settings/edition 
   value: 'evaluation'
 - type: replace
-  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/name=standard-medium-ha/properties/config/settings/edition
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/settings/edition 
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/settings/edition 
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/settings/edition 
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/settings/edition 
+  value: 'evaluation'
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/edition 
   value: 'evaluation'
 

@@ -266,6 +266,98 @@ instance_groups:
         pool_name: enterprise-large-ha
       env:
         <<: *config_env
+- name: enterprise-plan-5
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 30720
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: enterprise_plan_5_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: enterprise-plan-5
+      env:
+        <<: *config_env
+- name: enterprise-plan-6
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 20480
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: enterprise_plan_6_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: enterprise-plan-6
+      env:
+        <<: *config_env
 - name: standard-medium
   stemcell: default
   instances: 0
@@ -358,6 +450,98 @@ instance_groups:
         pool_name: standard-medium-ha
       env:
         <<: *config_env
+- name: standard-plan-3
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 20480
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_plan_3_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: standard-plan-3
+      env:
+        <<: *config_env
+- name: standard-plan-4
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 20480
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_plan_4_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: standard-plan-4
+      env:
+        <<: *config_env
 - name: management
   instances: 1
   networks:
@@ -376,8 +560,12 @@ instance_groups:
       solace_pubsub_large: { from: large_list }
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
       mysql: { from: mysql-proxy }
     properties:
       app_domains:
@@ -521,15 +709,16 @@ instance_groups:
           allocate_ahead: true
           persistence: true
         plans:
-        - name: standard-medium
+        - name: ((plans.standard_medium.name))
+          pool_name: standard-medium # Only used to improve ops file readability
           plan_id: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
-          description: A Standalone Solace PubSub+ Software
+          description: ((plans.standard_medium.description))
           metadata:
             display_name: A standalone instance of Solace PubSub+ Software
             bullets: []
-          quotas: 
-            service_instance_limit: 3
-          instance_groups: 
+          quotas:
+            service_instance_limit: ((plans.standard_medium.quota))
+          instance_groups:
             - name: SolacePubSub+
               vm_type: default
               persistent_disk_type: 20GB
@@ -541,7 +730,7 @@ instance_groups:
             canary_watch_time: 30000-240000
             update_watch_time: 30000-600000
             max_in_flight: 1
-            serial: true 
+            serial: true
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
@@ -554,21 +743,21 @@ instance_groups:
               env:
                 <<: *config_env
             plan:
-              maxVpns: 1
               resources:
                 shm_size_message_routing: 2G
               allowed_overrides:
               - config.keys.*
               - config.settings.*
               - config.env.*
-        - name: standard-medium-ha
+        - name: ((plans.standard_medium_ha.name))
+          pool_name: standard-medium-ha # Only used to improve ops file readability
           plan_id: 850eedd6-b2b0-11e8-96f8-529269fb1459
-          description: A High Availability Deployment of Solace PubSub+ Software
+          description: ((plans.standard_medium_ha.description))
           metadata:
-            display_name: A High Availability Deployment of Solace PubSub+ Software
+            display_name: ((plans.standard_medium_ha.description))
             bullets: []
           quotas: 
-            service_instance_limit: 3
+            service_instance_limit: ((plans.standard_medium_ha.quota))
           instance_groups: 
             - name: Primary
               vm_type: solace.medium
@@ -588,12 +777,16 @@ instance_groups:
               instances: 1
               networks: [default]
               azs: [z1,z2,z3]
-          update:  *updates
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
-              maxVpns: 1
               resources:
                 shm_size_primary: 2G
                 shm_size_backup: 2G
@@ -610,14 +803,111 @@ instance_groups:
                 pool_name: standard-medium-ha
               env:
                 <<: *config_env
-        - name: enterprise-shared
-          plan_id: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
-          description: A Standalone Solace PubSub+ Software
+        - name: ((plans.standard_plan_3.name))
+          pool_name: standard-plan-3 # Only used to improve ops file readability
+          plan_id: 2387c133-9ca3-4a91-bafa-e4e221b17685
+          description: ((plans.standard_plan_3.description))
           metadata:
-            display_name: A standalone instance of Solace PubSub+ Software
+            display_name: ((plans.standard_plan_3.description))
             bullets: []
           quotas: 
-            service_instance_limit: 3
+            service_instance_limit: ((plans.standard_plan_3.quota))
+          instance_groups: 
+            - name: SolacePubSub+
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-plan-3
+              env:
+                <<: *config_env
+        - name: ((plans.standard_plan_4.name))
+          pool_name: standard-plan-4 # Only used to improve ops file readability
+          plan_id: 4fb7bffb-caad-4956-84a3-94616871d109
+          description: ((plans.standard_plan_4.description))
+          metadata:
+            display_name: ((plans.standard_plan_4.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.standard_plan_4.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-plan-4
+              env:
+                <<: *config_env
+        - name: ((plans.enterprise_shared.name)) 
+          pool_name: enterprise-shared # Only used to improve ops file readability
+          plan_id: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+          description: ((plans.enterprise_shared.description)) 
+          metadata:
+            display_name: ((plans.enterprise_shared.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_shared.quota))
           instance_groups: 
             - name: SolacePubSub+
               vm_type: default
@@ -638,21 +928,21 @@ instance_groups:
               env:
                 <<: *config_env
             plan:
-              maxVpns: 5
               resources:
                 shm_size_message_routing: 2G
               allowed_overrides:
               - config.keys.*
               - config.settings.*
               - config.env.*
-        - name: enterprise-large
+        - name: ((plans.enterprise_large.name))
+          pool_name: enterprise-large # Only used to improve ops file readability
           plan_id: da3f5706-b2af-11e8-96f8-529269fb1459
-          description: A Standalone Solace PubSub+ Software
+          description: ((plans.enterprise_large.description))
           metadata:
-            display_name: A standalone instance of Solace PubSub+ Software
+            display_name: ((plans.enterprise_large.description))
             bullets: []
           quotas: 
-            service_instance_limit: 3
+            service_instance_limit: ((plans.enterprise_large.quota))
           instance_groups: 
             - name: SolacePubSub+
               vm_type: default
@@ -673,21 +963,21 @@ instance_groups:
               env:
                 <<: *config_env
             plan:
-              maxVpns: 1
               resources:
                 shm_size_message_routing: 2G
               allowed_overrides:
               - config.keys.*
               - config.settings.*
               - config.env.*
-        - name: enterprise-medium-ha
+        - name: ((plans.enterprise_medium_ha.name))
+          pool_name: enterprise-medium-ha # Only used to improve ops file readability
           plan_id: 8bc308f1-caaf-7782-837b-91871924712e
-          description: A High Availability Deployment of Solace PubSub+ Software
+          description: ((plans.enterprise_medium_ha.description))
           metadata:
-            display_name: A High Availability Deployment of Solace PubSub+ Software
+            display_name: ((plans.enterprise_medium_ha.description))
             bullets: []
           quotas: 
-            service_instance_limit: 3
+            service_instance_limit: ((plans.enterprise_medium_ha.quota))
           instance_groups: 
             - name: Primary
               vm_type: solace.medium
@@ -712,7 +1002,6 @@ instance_groups:
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
-              maxVpns: 5
               resources:
                 shm_size_primary: 2G
                 shm_size_backup: 2G
@@ -729,14 +1018,15 @@ instance_groups:
                 pool_name: enterprise-medium-ha
               env:
                 <<: *config_env
-        - name: enterprise-large-ha
+        - name: ((plans.enterprise_large_ha.name)) 
+          pool_name: enterprise-large-ha # Only used to improve ops file readability
           plan_id: 5abbd06c-b2b0-11e8-96f8-529269fb1459
-          description: A High Availability Deployment of Solace PubSub+ Software
+          description: ((plans.enterprise_large_ha.description))
           metadata:
-            display_name: A High Availability Deployment of Solace PubSub+ Software
+            display_name: ((plans.enterprise_large_ha.description))
             bullets: []
           quotas: 
-            service_instance_limit: 3
+            service_instance_limit: ((plans.enterprise_large_ha.quota))
           instance_groups: 
             - name: Primary
               vm_type: solace.medium
@@ -761,7 +1051,6 @@ instance_groups:
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
-              maxVpns: 1
               resources:
                 shm_size_primary: 2G
                 shm_size_backup: 2G
@@ -776,6 +1065,90 @@ instance_groups:
               settings:
                 <<: *config_settings
                 pool_name: enterprise-large-ha
+              env:
+                <<: *config_env
+        - name: ((plans.enterprise_plan_5.name)) 
+          pool_name: enterprise-plan-5 # Only used to improve ops file readability
+          plan_id: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
+          description: ((plans.enterprise_plan_5.description)) 
+          metadata:
+            display_name: ((plans.enterprise_plan_5.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_plan_5.quota))
+          instance_groups: 
+            - name: SolacePubSub+
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-plan-5
+              env:
+                <<: *config_env
+            plan:
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: ((plans.enterprise_plan_6.name)) 
+          pool_name: enterprise-plan-6 # Only used to improve ops file readability
+          plan_id: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
+          description: ((plans.enterprise_plan_6.description))
+          metadata:
+            display_name: ((plans.enterprise_plan_6.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_plan_6.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
+          update:  *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-plan-6
               env:
                 <<: *config_env
 
@@ -793,13 +1166,17 @@ instance_groups:
     release: solace-pubsub-broker
     provides: {}
     consumes:
+      internal_message_broker: { from: internal_pubsub }
       solace_pubsub_shared: { from: shared_list }
       solace_pubsub_large: { from: large_list }
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      internal_message_broker: { from: internal_pubsub }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
       mysql: { from: mysql-proxy }
       credhub: { from: credhub, deployment: ((cf_deployment)) }
     properties:
@@ -865,86 +1242,98 @@ instance_groups:
           allocate_ahead: true
           persistence: true
         plans:
-        - planName: standard-medium
+        - planName: ((plans.standard_medium.name))
           poolName: standard-medium
           id: e5b905d0-965a-11e8-9eb6-529269fb1459
-          active: true
-          description: A single Message VPN in a medium Standard Solace Message Router
+          status: active
+          description: ((plans.standard_medium.description))
           pointFormDescription:
             - None
-          quota: 5
-          isHA: false
-          maxVpns: 1
-        - planName: standard-medium-ha
+          quota: ((plans.standard_medium.quota))
+          isHA: ((plans.standard_medium.isHA))
+          maxVpns: ((plans.standard_medium.maxVpns))
+        - planName: ((plans.standard_medium_ha.name))
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
-          active: true
-          description: A single Message VPN in a medium HA Standard Solace Message Router
+          status: active
+          description: ((plans.standard_medium_ha.description))
           pointFormDescription:
             - None
-          quota: 5
-          isHA: true
-          maxVpns: 1
-        - planName: enterprise-shared
+          quota: ((plans.standard_medium_ha.quota))
+          isHA: ((plans.standard_medium_ha.isHA))
+          maxVpns: ((plans.standard_medium_ha.maxVpns))
+        - planName: ((plans.standard_plan_3.name))
+          poolName: standard-plan-3
+          id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          status: active 
+          description: ((plans.standard_plan_3.description))
+          pointFormDescription: ((plans.standard_plan_3.point_form_description))
+          quota: ((plans.standard_plan_3.quota))
+          isHA: ((plans.standard_plan_3.isHA))
+          maxVpns: ((plans.standard_plan_3.maxVpns))
+        - planName: ((plans.standard_plan_4.name))
+          poolName: standard-plan-4
+          id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          status: active 
+          description: ((plans.standard_plan_4.description))
+          pointFormDescription: ((plans.standard_plan_4.point_form_description))
+          quota: ((plans.standard_plan_4.quota))
+          isHA: ((plans.standard_plan_4.isHA))
+          maxVpns: ((plans.standard_plan_4.maxVpns))
+        - planName: ((plans.enterprise_shared.name)) 
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
-          active: true
-          description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
-          pointFormDescription:
-            - A Message VPN on a shared Solace Message Router
-            - Up to 100 Service Instance Bindings
-            - Up to 200 durable Endpoints
-            - Maximum of 4 GB Message Spool
-            - Maximum of 100K subscriptions
-            - One Message VPN Scoped Admin account
-          quota: 5
-          isHA: false
-          maxVpns: 5
-        - planName: enterprise-large
+          status: active
+          description: ((plans.enterprise_shared.description))
+          pointFormDescription: ((plans.enterprise_shared.point_form_description))
+          quota: ((plans.enterprise_shared.quota))
+          isHA: ((plans.enterprise_shared.isHA))
+          maxVpns: ((plans.enterprise_shared.maxVpns))
+        - planName: ((plans.enterprise_large.name)) 
           poolName: enterprise-large
           id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
-          active: true
-          description: A single message VPN on a dedicated Solace Message Router
-          pointFormDescription:
-            - A Message VPN on a dedicated Solace Message Router
-            - Up to 500 Service Instance Bindings
-            - Up to 1000 durable Endpoints
-            - Maximum of 20 GB Message Spool
-            - Maximum of 500K subscriptions
-            - One Message VPN Scoped Admin account
-          quota: 5
-          isHA: false
-          maxVpns: 1
-        - planName: enterprise-medium-ha
+          status: active
+          description: ((plans.enterprise_large.description))
+          pointFormDescription: ((plans.enterprise_large.point_form_description))
+          quota: ((plans.enterprise_large.quota))
+          isHA: ((plans.enterprise_large.isHA))
+          maxVpns: ((plans.enterprise_large.maxVpns))
+        - planName: ((plans.enterprise_medium_ha.name))
           poolName: enterprise-medium-ha
           id: b3a25384-eedb-4b4c-af00-610ee4dce76c
-          active: true
-          description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
-          pointFormDescription:
-            - A Message VPN on a Medium Solace Message Router in an HA Cluster
-            - Up to 500 Service Instance Bindings
-            - Up to 1000 durable Endpoints
-            - Maximum of 4 GB Message Spool
-            - Maximum of 500K subscriptions
-            - One Message VPN Scoped Admin account
-          quota: 5
-          isHA: true
-          maxVpns: 1
-        - planName: enterprise-large-ha
+          status: active
+          description: ((plans.enterprise_medium_ha.description))
+          pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
+          quota: ((plans.enterprise_medium_ha.quota))
+          isHA: ((plans.enterprise_medium_ha.isHA))
+          maxVpns: ((plans.enterprise_medium_ha.maxVpns))
+        - planName: ((plans.enterprise_large_ha.name))
           poolName: enterprise-large-ha
           id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
-          active: true
-          description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
-          pointFormDescription:
-            - A Message VPN on dedicated Solace Message Router in an HA Cluster
-            - Up to 500 Service Instance Bindings
-            - Up to 1000 durable Endpoints
-            - Maximum of 20 GB Message Spool
-            - Maximum of 500K subscriptions
-            - One Message VPN Scoped Admin account
-          quota: 5
-          isHA: true
-          maxVpns: 1
+          status: active
+          description: ((plans.enterprise_large_ha.description))
+          pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
+          quota: ((plans.enterprise_large_ha.quota))
+          isHA: ((plans.enterprise_large_ha.isHA))
+          maxVpns: ((plans.enterprise_large_ha.maxVpns))
+        - planName: ((plans.enterprise_plan_5.name))
+          poolName: enterprise-plan-5
+          id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          status: active
+          description: ((plans.enterprise_plan_5.description))
+          pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
+          quota: ((plans.enterprise_plan_5.quota))
+          isHA: ((plans.enterprise_plan_5.isHA))
+          maxVpns: ((plans.enterprise_plan_5.maxVpns))
+        - planName: ((plans.enterprise_plan_6.name))
+          poolName: enterprise-plan-6
+          id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          status: active
+          description: ((plans.enterprise_plan_6.description))
+          pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
+          quota: ((plans.enterprise_plan_6.quota))
+          isHA: ((plans.enterprise_plan_6.isHA))
+          maxVpns: ((plans.enterprise_plan_6.maxVpns))
       solace_pubsub_broker:
         app_manifest:
           buildpack: java_buildpack
@@ -954,12 +1343,6 @@ instance_groups:
             SOLACE_LOAD_VERSION: ((solace_load_version))
             SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
             SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-            SCALING_TABLE_EXAMPLE: |
-              [
-              [ "first", "second", "third"],
-              [  1     ,  2      ,  3     ],  
-              [  10    ,  20     ,  30    ]  
-              ]
           memory: 1024M
           path: ((solace_service_broker_jar))
           health-check-http-endpoint: /health
@@ -989,8 +1372,12 @@ instance_groups:
       solace_pubsub_large: { from: large_list }
       solace_pubsub_medium_ha: { from: medium_ha_list }
       solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
       solace_pubsub_standard_medium: { from: standard_medium_list }
       solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
       internal_message_broker: { from: internal_pubsub }
     properties:
       apply_open_security_group: true
@@ -1043,6 +1430,130 @@ instance_groups:
       tls_config:
         value: disabled
       vmr_admin_password: ((vmr_admin_password))
+      service_catalog_static_inventory:
+        id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
+        service_name: solace-pubsub
+        service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+        bindable: true
+        plan_updatable: true
+        metadata:
+          displayName: Solace PubSub+
+          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          providerDisplayName: Solace Corporation
+          longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+          documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
+          supportUrl: http://dev.solace.com
+        tags:
+          - solace
+          - pubsub 
+          - solace-pubsub
+          - rest
+          - mqtt
+          - mq
+          - queue
+          - event-streaming
+          - amqp
+          - jms
+          - messaging
+          - publish-subscribe
+          - message-queuing
+          - request-reply
+        global_properties:
+          allocate_ahead: true
+          persistence: true
+        plans:
+        - planName: ((plans.standard_medium.name))
+          poolName: standard-medium
+          id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          status: active
+          description: ((plans.standard_medium.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium.quota))
+          isHA: ((plans.standard_medium.isHA))
+          maxVpns: ((plans.standard_medium.maxVpns))
+        - planName: ((plans.standard_medium_ha.name))
+          poolName: standard-medium-ha
+          id: 2286ba52-965b-11e8-9eb6-529269fb1459
+          status: active 
+          description: ((plans.standard_medium_ha.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium_ha.quota))
+          isHA: ((plans.standard_medium_ha.isHA))
+          maxVpns: ((plans.standard_medium_ha.maxVpns))
+        - planName: ((plans.standard_plan_3.name))
+          poolName: standard-plan-3
+          id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          status: active 
+          description: ((plans.standard_plan_3.description))
+          pointFormDescription: ((plans.standard_plan_3.point_form_description))
+          quota: ((plans.standard_plan_3.quota))
+          isHA: ((plans.standard_plan_3.isHA))
+          maxVpns: ((plans.standard_plan_3.maxVpns))
+        - planName: ((plans.standard_plan_4.name))
+          poolName: standard-plan-4
+          id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          status: active 
+          description: ((plans.standard_plan_4.description))
+          pointFormDescription: ((plans.standard_plan_4.point_form_description))
+          quota: ((plans.standard_plan_4.quota))
+          isHA: ((plans.standard_plan_4.isHA))
+          maxVpns: ((plans.standard_plan_4.maxVpns))
+        - planName: ((plans.enterprise_shared.name)) 
+          poolName: enterprise-shared
+          id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          status: active
+          description: ((plans.enterprise_shared.description))
+          pointFormDescription: ((plans.enterprise_shared.point_form_description))
+          quota: ((plans.enterprise_shared.quota))
+          isHA: ((plans.enterprise_shared.isHA))
+          maxVpns: ((plans.enterprise_shared.maxVpns))
+        - planName: ((plans.enterprise_large.name)) 
+          poolName: enterprise-large
+          id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          status: active
+          description: ((plans.enterprise_large.description))
+          pointFormDescription: ((plans.enterprise_large.point_form_description))
+          quota: ((plans.enterprise_large.quota))
+          isHA: ((plans.enterprise_large.isHA))
+          maxVpns: ((plans.enterprise_large.maxVpns))
+        - planName: ((plans.enterprise_medium_ha.name))
+          poolName: enterprise-medium-ha
+          id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          status: active
+          description: ((plans.enterprise_medium_ha.description))
+          pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
+          quota: ((plans.enterprise_medium_ha.quota))
+          isHA: ((plans.enterprise_medium_ha.isHA))
+          maxVpns: ((plans.enterprise_medium_ha.maxVpns))
+        - planName: ((plans.enterprise_large_ha.name))
+          poolName: enterprise-large-ha
+          id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          status: active
+          description: ((plans.enterprise_large_ha.description))
+          pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
+          quota: ((plans.enterprise_large_ha.quota))
+          isHA: ((plans.enterprise_large_ha.isHA))
+          maxVpns: ((plans.enterprise_large_ha.maxVpns))
+        - planName: ((plans.enterprise_plan_5.name))
+          poolName: enterprise-plan-5
+          id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          status: active
+          description: ((plans.enterprise_plan_5.description))
+          pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
+          quota: ((plans.enterprise_plan_5.quota))
+          isHA: ((plans.enterprise_plan_5.isHA))
+          maxVpns: ((plans.enterprise_plan_5.maxVpns))
+        - planName: ((plans.enterprise_plan_6.name))
+          poolName: enterprise-plan-6
+          id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          status: active
+          description: ((plans.enterprise_plan_6.description))
+          pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
+          quota: ((plans.enterprise_plan_6.quota))
+          isHA: ((plans.enterprise_plan_6.isHA))
+          maxVpns: ((plans.enterprise_plan_6.maxVpns))
   - name: docker
     release: docker
     consumes: {}
