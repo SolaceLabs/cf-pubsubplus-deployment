@@ -475,6 +475,7 @@ instance_groups:
       service_instances_api: 
         url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
         root_ca_cert: |
+          ((router_ca.certificate))
           ((application_ca.certificate))
           ((service_cf_internal_ca.certificate))
           ((uaa_ca.certificate))
