@@ -463,6 +463,8 @@ instance_groups:
       broker: { as: solace_pubsub_deployment_odb_broker }
     release: on-demand-service-broker
     properties:
+      broker_name: solace-pubsub-deployment-odb-broker
+      broker_url: https://solace-pubsub-deployment-odb-broker.((system_domain))
       disable_ssl_cert_verification: true
       expose_operational_errors: false
       startup_banner: true
@@ -471,7 +473,11 @@ instance_groups:
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
       service_instances_api: 
-        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        root_ca_cert: |
+          ((application_ca.certificate))
+          ((service_cf_internal_ca.certificate))
+          ((uaa_ca.certificate))
         authentication:
           basic:
             username: ((service_broker_user))
