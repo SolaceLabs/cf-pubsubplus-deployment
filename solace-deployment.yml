@@ -94,6 +94,7 @@ instance_groups:
         service_healthcheck_port: 9090
       settings: &config_settings
         pool_name: enterprise-shared
+        is_ha: ((plans.enterprise_shared.isHA))
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
@@ -166,6 +167,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: enterprise-large
+        is_ha: ((plans.enterprise_large.isHA))
       env:
         <<: *config_env
 - name: enterprise-medium-ha
@@ -215,6 +217,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: enterprise-medium-ha
+        is_ha: ((plans.enterprise_medium_ha.isHA))
       env:
         <<: *config_env
 - name: enterprise-large-ha
@@ -264,6 +267,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: enterprise-large-ha
+        is_ha: ((plans.enterprise_large_ha.isHA))
       env:
         <<: *config_env
 - name: enterprise-plan-5
@@ -307,6 +311,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: enterprise-plan-5
+        is_ha: ((plans.enterprise_plan_5.isHA))
       env:
         <<: *config_env
 - name: enterprise-plan-6
@@ -356,6 +361,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: enterprise-plan-6
+        is_ha: ((plans.enterprise_plan_6.isHA))
       env:
         <<: *config_env
 - name: standard-medium
@@ -399,6 +405,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: standard-medium
+        is_ha: ((plans.standard_medium.isHA))
       env:
         <<: *config_env
 - name: standard-medium-ha
@@ -448,6 +455,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: standard-medium-ha
+        is_ha: ((plans.standard_medium_ha.isHA))
       env:
         <<: *config_env
 - name: standard-plan-3
@@ -491,6 +499,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: standard-plan-3
+        is_ha: ((plans.standard_plan_3.isHA))
       env:
         <<: *config_env
 - name: standard-plan-4
@@ -540,6 +549,7 @@ instance_groups:
       settings:
         <<: *config_settings
         pool_name: standard-plan-4
+        is_ha: ((plans.standard_plan_4.isHA))
       env:
         <<: *config_env
 - name: management
