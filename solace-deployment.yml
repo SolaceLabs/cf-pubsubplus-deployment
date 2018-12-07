@@ -2,7 +2,7 @@
 name: solace_pubsub
 releases:
 - name: docker
-  version: latest
+  version: ((docker_version))
 - name: solace-pubsub
   version: latest
 - name: on-demand-service-broker
@@ -658,9 +658,11 @@ instance_groups:
       cf_deployment: cf
   - name: broker
     provides:
-      broker: { as: solace_pubsub_od_broker }
+      broker: { as: solace_pubsub_deployment_odb_broker }
     release: on-demand-service-broker
     properties:
+      broker_name: solace-pubsub-deployment-odb-broker
+      broker_url: https://solace-pubsub-deployment-odb-broker.((system_domain))
       disable_ssl_cert_verification: true
       expose_operational_errors: false
       startup_banner: true
@@ -669,7 +671,12 @@ instance_groups:
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
       service_instances_api: 
-        url: http://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+        root_ca_cert: |
+          ((router_ca.certificate))
+          ((application_ca.certificate))
+          ((service_cf_internal_ca.certificate))
+          ((uaa_ca.certificate))
         authentication:
           basic:
             username: ((service_broker_user))
@@ -706,11 +713,11 @@ instance_groups:
       service_catalog:
         id: 05e81eec-762e-415c-b840-a804fc526ac2
         service_name: solace-pubsub-od
-        service_description: Solace PubSub+ Message Broker
+        service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
         metadata:
-          displayName: Solace PubSub+ Message Broker
+          displayName: Solace PubSub+ Message Broker BOSH Deployment
         tags:
         - solace
         - pubsub
@@ -1218,8 +1225,8 @@ instance_groups:
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
-      user_controlled_upgrade_on_demand_instances: false
-      on_demand_upgrade_task_timer: 0,15,30,45 * * * *
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
+      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
       service_catalog_static_inventory:
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
@@ -1580,6 +1587,12 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+  - name: route_internal
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
   properties:
     pubsub_config_job: pubsub_internal_config
     containers:
