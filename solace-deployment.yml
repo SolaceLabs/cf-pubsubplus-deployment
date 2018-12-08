@@ -84,6 +84,7 @@ instance_groups:
     config:
       keys: &config_keys
         nodetype: message_routing
+        routing_mode: dmr
         username_admin_globalaccesslevel: admin
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
@@ -514,7 +515,7 @@ instance_groups:
           version: ((bosh_stemcell_version))
       service_catalog:
         id: 05e81eec-762e-415c-b840-a804fc526ac2
-        service_name: solace-pubsub-od
+        service_name: solace-pubsub-deployment
         service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
@@ -1099,6 +1100,7 @@ instance_groups:
     config:
       keys:
         nodetype: message_routing
+        routing_mode: dmr
         username_admin_globalaccesslevel: admin
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
@@ -1204,6 +1206,7 @@ instance_groups:
     config:
       keys:
         nodetype: monitoring
+        routing_mode: dmr
         username_admin_globalaccesslevel: admin
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
