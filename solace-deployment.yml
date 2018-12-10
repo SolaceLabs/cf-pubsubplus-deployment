@@ -988,6 +988,10 @@ instance_groups:
       tls_config:
         value: disabled
       vmr_admin_password: ((vmr_admin_password))
+      web_hook_config: 
+        selected_option:
+          web_hook_enabled: not_allowed
+        value: disabled
   - name: tests
     release: solace-pubsub
     provides: {}
