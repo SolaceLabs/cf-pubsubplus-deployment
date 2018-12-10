@@ -11,8 +11,20 @@
   path: /instance_groups/name=enterprise-medium-ha/instances
   value: ((medium_ha_plan_instances))
 - type: replace
+  path: /instance_groups/name=enterprise-plan-5/instances
+  value: ((enterprise_plan_5_instances))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/instances
+  value: ((enterprise_plan_6_instances))
+- type: replace
   path: /instance_groups/name=standard-medium/instances
   value: ((standard_medium_plan_instances))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/instances
   value: ((standard_medium_ha_plan_instances))
+- type: replace
+  path: /instance_groups/name=standard-plan-3/instances
+  value: ((standard_plan_3_instances))
+- type: replace
+  path: /instance_groups/name=standard-plan-4/instances
+  value: ((standard_plan_4_instances))
