@@ -83,7 +83,7 @@ plans:
     description: "This is an enterprise-shared service"
     point_form_description: [ must be, an array ]
     isHA: false
-    maxVpns: 1
+    maxVpns: 5
     quota: 1
   enterprise_large:
     name: enterprise-large
