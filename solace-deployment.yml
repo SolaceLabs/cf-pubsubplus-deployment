@@ -1293,6 +1293,7 @@ instance_groups:
         - planName: ((plans.standard_medium.name))
           poolName: standard-medium
           id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          idOD: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
           status: active
           description: ((plans.standard_medium.description))
           pointFormDescription:
@@ -1303,6 +1304,7 @@ instance_groups:
         - planName: ((plans.standard_medium_ha.name))
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
+          idOD: 850eedd6-b2b0-11e8-96f8-529269fb1459
           status: active
           description: ((plans.standard_medium_ha.description))
           pointFormDescription:
@@ -1313,6 +1315,7 @@ instance_groups:
         - planName: ((plans.standard_plan_3.name))
           poolName: standard-plan-3
           id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          idOD: 2387c133-9ca3-4a91-bafa-e4e221b17685
           status: active 
           description: ((plans.standard_plan_3.description))
           pointFormDescription: ((plans.standard_plan_3.point_form_description))
@@ -1322,6 +1325,7 @@ instance_groups:
         - planName: ((plans.standard_plan_4.name))
           poolName: standard-plan-4
           id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          idOD: 4fb7bffb-caad-4956-84a3-94616871d109
           status: active 
           description: ((plans.standard_plan_4.description))
           pointFormDescription: ((plans.standard_plan_4.point_form_description))
@@ -1331,6 +1335,7 @@ instance_groups:
         - planName: ((plans.enterprise_shared.name)) 
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          idOD: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
           status: active
           description: ((plans.enterprise_shared.description))
           pointFormDescription: ((plans.enterprise_shared.point_form_description))
@@ -1340,6 +1345,7 @@ instance_groups:
         - planName: ((plans.enterprise_large.name)) 
           poolName: enterprise-large
           id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          idOD: da3f5706-b2af-11e8-96f8-529269fb1459
           status: active
           description: ((plans.enterprise_large.description))
           pointFormDescription: ((plans.enterprise_large.point_form_description))
@@ -1349,6 +1355,7 @@ instance_groups:
         - planName: ((plans.enterprise_medium_ha.name))
           poolName: enterprise-medium-ha
           id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          idOD: 8bc308f1-caaf-7782-837b-91871924712e
           status: active
           description: ((plans.enterprise_medium_ha.description))
           pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
@@ -1358,6 +1365,7 @@ instance_groups:
         - planName: ((plans.enterprise_large_ha.name))
           poolName: enterprise-large-ha
           id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          idOD: 5abbd06c-b2b0-11e8-96f8-529269fb1459
           status: active
           description: ((plans.enterprise_large_ha.description))
           pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
@@ -1367,6 +1375,7 @@ instance_groups:
         - planName: ((plans.enterprise_plan_5.name))
           poolName: enterprise-plan-5
           id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          idOD: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
           status: active
           description: ((plans.enterprise_plan_5.description))
           pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
@@ -1376,6 +1385,7 @@ instance_groups:
         - planName: ((plans.enterprise_plan_6.name))
           poolName: enterprise-plan-6
           id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          idOD: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
           status: active
           description: ((plans.enterprise_plan_6.description))
           pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
@@ -1517,6 +1527,7 @@ instance_groups:
         - planName: ((plans.standard_medium.name))
           poolName: standard-medium
           id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          idOD: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
           status: active
           description: ((plans.standard_medium.description))
           pointFormDescription:
@@ -1527,7 +1538,8 @@ instance_groups:
         - planName: ((plans.standard_medium_ha.name))
           poolName: standard-medium-ha
           id: 2286ba52-965b-11e8-9eb6-529269fb1459
-          status: active 
+          idOD: 850eedd6-b2b0-11e8-96f8-529269fb1459
+          status: active
           description: ((plans.standard_medium_ha.description))
           pointFormDescription:
             - None
@@ -1537,6 +1549,7 @@ instance_groups:
         - planName: ((plans.standard_plan_3.name))
           poolName: standard-plan-3
           id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          idOD: 2387c133-9ca3-4a91-bafa-e4e221b17685
           status: active 
           description: ((plans.standard_plan_3.description))
           pointFormDescription: ((plans.standard_plan_3.point_form_description))
@@ -1546,6 +1559,7 @@ instance_groups:
         - planName: ((plans.standard_plan_4.name))
           poolName: standard-plan-4
           id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          idOD: 4fb7bffb-caad-4956-84a3-94616871d109
           status: active 
           description: ((plans.standard_plan_4.description))
           pointFormDescription: ((plans.standard_plan_4.point_form_description))
@@ -1555,6 +1569,7 @@ instance_groups:
         - planName: ((plans.enterprise_shared.name)) 
           poolName: enterprise-shared
           id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          idOD: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
           status: active
           description: ((plans.enterprise_shared.description))
           pointFormDescription: ((plans.enterprise_shared.point_form_description))
@@ -1564,6 +1579,7 @@ instance_groups:
         - planName: ((plans.enterprise_large.name)) 
           poolName: enterprise-large
           id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          idOD: da3f5706-b2af-11e8-96f8-529269fb1459
           status: active
           description: ((plans.enterprise_large.description))
           pointFormDescription: ((plans.enterprise_large.point_form_description))
@@ -1573,6 +1589,7 @@ instance_groups:
         - planName: ((plans.enterprise_medium_ha.name))
           poolName: enterprise-medium-ha
           id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          idOD: 8bc308f1-caaf-7782-837b-91871924712e
           status: active
           description: ((plans.enterprise_medium_ha.description))
           pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
@@ -1582,6 +1599,7 @@ instance_groups:
         - planName: ((plans.enterprise_large_ha.name))
           poolName: enterprise-large-ha
           id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          idOD: 5abbd06c-b2b0-11e8-96f8-529269fb1459
           status: active
           description: ((plans.enterprise_large_ha.description))
           pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
@@ -1591,6 +1609,7 @@ instance_groups:
         - planName: ((plans.enterprise_plan_5.name))
           poolName: enterprise-plan-5
           id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          idOD: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
           status: active
           description: ((plans.enterprise_plan_5.description))
           pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
@@ -1600,6 +1619,7 @@ instance_groups:
         - planName: ((plans.enterprise_plan_6.name))
           poolName: enterprise-plan-6
           id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          idOD: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
           status: active
           description: ((plans.enterprise_plan_6.description))
           pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
