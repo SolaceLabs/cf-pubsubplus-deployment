@@ -634,11 +634,11 @@ instance_groups:
             SOLACE_LOAD_VERSION: ((solace_load_version))
             SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
             SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-
           memory: 1024M
           path: ((solace_service_broker_jar)) 
           health-check-http-endpoint: /health
           health-check-type: http
+          timeout: 180
         enable_global_access_to_plans: ((enable_global_access_to_plans))
         password: ((service_broker_password))
         user: ((service_broker_user))
@@ -685,7 +685,7 @@ instance_groups:
   - name: service-adapter
     release: solace-service-adapter
     properties:
-      solace_instance_group_name: SolacePubSub+
+      solace_instance_group_name: Primary
       cf_deployment: cf
   - name: broker
     provides:
@@ -743,12 +743,12 @@ instance_groups:
           version: ((bosh_stemcell_version))
       service_catalog:
         id: 05e81eec-762e-415c-b840-a804fc526ac2
-        service_name: solace-pubsub-deployment
+        service_name: solace-pubsub-deployment-odb
         service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
         metadata:
-          displayName: Solace PubSub+ Message Broker BOSH Deployment
+          displayName: This Service is reserved for use by the Solace PubSub+ Deployment. Operators should NOT make this service or any of its plans accessible to users outside the solace org or solace-broker space.
         tags:
         - solace
         - pubsub
@@ -767,7 +767,7 @@ instance_groups:
           quotas:
             service_instance_limit: ((plans.standard_medium.quota))
           instance_groups:
-            - name: SolacePubSub+
+            - name: Primary
               vm_type: default
               persistent_disk_type: 20GB
               instances: 1
@@ -861,7 +861,7 @@ instance_groups:
           quotas: 
             service_instance_limit: ((plans.standard_plan_3.quota))
           instance_groups: 
-            - name: SolacePubSub+
+            - name: Primary
               vm_type: default
               persistent_disk_type: 20GB
               instances: 1
@@ -957,7 +957,7 @@ instance_groups:
           quotas: 
             service_instance_limit: ((plans.enterprise_shared.quota))
           instance_groups: 
-            - name: SolacePubSub+
+            - name: Primary
               vm_type: default
               persistent_disk_type: 20GB
               instances: 1
@@ -992,7 +992,7 @@ instance_groups:
           quotas: 
             service_instance_limit: ((plans.enterprise_large.quota))
           instance_groups: 
-            - name: SolacePubSub+
+            - name: Primary
               vm_type: default
               persistent_disk_type: 20GB
               instances: 1
@@ -1125,7 +1125,7 @@ instance_groups:
           quotas: 
             service_instance_limit: ((plans.enterprise_plan_5.quota))
           instance_groups: 
-            - name: SolacePubSub+
+            - name: Primary
               vm_type: default
               persistent_disk_type: 20GB
               instances: 1
