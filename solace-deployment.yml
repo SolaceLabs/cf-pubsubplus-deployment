@@ -701,17 +701,17 @@ instance_groups:
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
-      service_instances_api: 
-        url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
-        root_ca_cert: |
-          ((router_ca.certificate))
-          ((application_ca.certificate))
-          ((service_cf_internal_ca.certificate))
-          ((uaa_ca.certificate))
-        authentication:
-          basic:
-            username: ((service_broker_user))
-            password: ((service_broker_password))
+#      service_instances_api: 
+#        url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+#        root_ca_cert: |
+#          ((router_ca.certificate))
+#          ((application_ca.certificate))
+#          ((service_cf_internal_ca.certificate))
+#          ((uaa_ca.certificate))
+#        authentication:
+#          basic:
+#            username: ((service_broker_user))
+#            password: ((service_broker_password))
       bosh:
         url: ((bosh_host))
         authentication:
