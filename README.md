@@ -33,6 +33,7 @@ This project takes advantage of new features such as:
 - Stemcell: ubuntu-trusty, tested on version: "3541.10"
 - Compatible Solace PubSub BOSH releases: Version 2.1.x
 - Operator resolving BOSH cloud-config
+
    For correct resource allocation for each vm_type and plan please consult [Solace Pivotal Tile Installation Documentation](https://docs.pivotal.io/partners/solace-pubsub/installing.html)
 
 
@@ -70,7 +71,6 @@ bosh upload-release workspace/releases/cf-mysql-36.14.0.tgz
 bosh upload-release workspace/releases/docker-30.1.4.tgz
 bosh upload-release workspace/releases/solace-pubsub-broker-2.1.0.tgz
 bosh upload-release workspace/releases/solace-pubsub-2.1.0.tgz
-bosh upload-release workspace/releases/cf-mysql-36-13.0.tgz
 ~~~~
 
 <a name="deployment"></a>
@@ -136,7 +136,7 @@ BOSH operator files provide controls for:
 | [is_enterprise.yml](operations/is_enterprise.yml) | Adjusts the manifest to reflect enterprise Solace Pubsub message broker settings. Can only be used with an enterprise edition of solace-pubsub bosh release containing an enterprise version of Solace PubSub+ |
 | [is_evaluation.yml](operations/is_evaluation.yml) | Adjusts the manifest to reflect evaluation Solace Pubsub message broker settings. Can only be used with an evaluation edition of solace-pubsub bosh release containing an evaluation version of Solace PubSub+, which can be downloaded [here](https://network.pivotal.io/products/solace-pubsub/). |
 | [enable_tcp_routes.yml](operations/enable_tcp_routes.yml) | Adds tcp route configuration, see [tcp_routes_config.yml](operations/example-vars-files/tcp_routes_config.yml) file. 
-| [enable_ldap.yml](operations/enable_ldap/yml) | Adds ldap configuration, see this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
+| [enable_ldap.yml](operations/enable_ldap.yml) | Adds ldap configuration, see this [vars.yml](operations/example-vars-files/ldap_config.yml) file. 
 | [set_management_access_ldap.yml](operations/set_management_access_ldap.yml) | Adds ldap authorization for management access. Configuration is found in the same ldap [vars.yml](operations/example-vars-files/ldap_config.yml) file.
 | [set_application_access_ldap.yml](operations/set_application_access_ldap.yml) | Adds ldap authorization for application access. 
 | [enable_syslog.yml](operations/enable_syslog.yml) | Addes syslog configuration, see [syslog_config.yml](operations/example-vars-files/syslog_config.yml) file. 
