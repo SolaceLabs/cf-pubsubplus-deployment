@@ -1,0 +1,8 @@
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=standard-plan-4/status
+  value: inactive
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=standard-plan-4/status
+  value: inactive
+- type: remove
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4

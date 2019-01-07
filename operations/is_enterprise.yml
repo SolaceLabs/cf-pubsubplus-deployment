@@ -1,18 +1,19 @@
 - type: replace
-  path: /instance_groups/name=delete-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=delete-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/service_catalog/service_description
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/service_description
   value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/service_catalog/metadata/longDescription
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/metadata/longDescription
   value: 'Solace PubSub+ Enterprise Message Broker for real-time, multi-protocol data distribution'
 - type: replace
-  path: /instance_groups/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
+  path: /instance_groups/name=management/jobs/name=tests/properties/solace_pubsub_broker/app_manifest/env/IS_ENTERPRISE_MODE?
   value: true
+  
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/config/settings/edition
   value: 'enterprise'
@@ -26,92 +27,51 @@
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/config/settings/edition
+  value: 'enterprise'
+- type: replace
   path: /instance_groups/name=standard-medium/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/edition
   value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/credentialsPerVpn
-  value: 190
+  path: /instance_groups/name=standard-plan-3/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxConnections
-  value: 200
+  path: /instance_groups/name=standard-plan-4/properties/config/settings/edition
+  value: 'enterprise'
+  
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxRestConnections
-  value: 200
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxSubscriptions
-  value: 100000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxTransactedSessions
-  value: 200
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxTransactions
-  value: 1000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/plan/limit/maxEndpoints
-  value: 200
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/credentialsPerVpn
-  value: 9990
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxConnections
-  value: 10000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxRestConnections
-  value: 6000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxSubscriptions
-  value: 500000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/settings/edition
+  value: 'enterprise'
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxTransactedSessions
-  value: 10000
-- type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxTransactions
-  value: 50000
-- type: replace
-  path: /instance_groups/name=enterprise-large/properties/plan/limit/maxEndpoints
-  value: 10000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/credentialsPerVpn
-  value: 990
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxConnections
-  value: 1000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxRestConnections
-  value: 1000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxSubscriptions
-  value: 500000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxTransactedSessions
-  value: 1000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxTransactions
-  value: 5000
-- type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/plan/limit/maxEndpoints
-  value: 1000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/credentialsPerVpn
-  value: 9990
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxConnections
-  value: 10000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxRestConnections
-  value: 6000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxSubscriptions
-  value: 500000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxTransactedSessions
-  value: 10000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxTransactions
-  value: 50000
-- type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/plan/limit/maxEndpoints
-  value: 10000
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/edition
+  value: 'enterprise'

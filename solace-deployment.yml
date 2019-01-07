@@ -1,13 +1,18 @@
+
 name: solace_pubsub
 releases:
 - name: docker
-  version: latest
+  version: ((docker_version))
 - name: solace-pubsub
+  version: latest
+- name: on-demand-service-broker
   version: latest
 - name: solace-pubsub-broker
   version: latest
 - name: cf-mysql
   version: ((cf_mysql_version))
+- name: solace-service-adapter
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -29,7 +34,7 @@ instance_groups:
   - z3
   networks:
   - name: default
-  persistent_disk: 20480
+  persistent_disk: 30720
   jobs:
   - name: docker
     release: docker
@@ -51,9 +56,15 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    containers:
+    containers: &containers
     - dockerfile: |2-
                   FROM solace-app:latest
 
@@ -76,19 +87,10 @@ instance_groups:
       - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
       - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
       - /var/vcap/store/containers/pubsub/volumes/secrets:/run/secrets
-    plan:
-      limit:
-        maxVpns: 5
-        credentialsPerVpn: 100
-        maxConnections: 200
-        maxRestConnections: 200
-        maxSubscriptions: 100000
-        maxTransactedSessions: 200
-        maxTransactions: 1000
-        maxEndpoints: 200
     config:
-      keys:
+      keys: &config_keys
         nodetype: message_routing
+        routing_mode: dmr
         username_admin_globalaccesslevel: admin
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
@@ -97,9 +99,9 @@ instance_groups:
         service_semp_port: 8080
         service_semp_tlsport: 943
         service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
-      settings:
+      settings: &config_settings
         pool_name: enterprise-shared
+        is_ha: ((plans.enterprise_shared.isHA))
         broker_agent_port: 18080
         node_role: 'primary'
         starting_port: ((starting_port))
@@ -121,119 +123,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
-      env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
-
-- name: enterprise-large-ha
-  stemcell: default
-  instances: 0
-  vm_type: solace.large
-  azs:
-  - z1
-  - z2
-  - z3
-  networks:
-  - name: default
-  persistent_disk: 40960
-  jobs:
-  - name: docker
-    release: docker
-    consumes: {}
-  - name: pubsub_common
-    release: solace-pubsub
-    consumes: {}
-    provides:
-      solace_pubsub_instance: { as: large_ha_list }
-  - name: containers
-    release: solace-pubsub
-    consumes: {}
-  - name: broker_agent
-    release: solace-pubsub
-    consumes: {}
-  - name: route_registrar
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  - name: route_registrar_active
-    release: solace-pubsub
-    consumes:
-      nats_link:
-        from: nats
-        deployment: ((cf_deployment))
-  properties:
-    pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
-    config:
-      keys:
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 10000
-      settings:
-        pool_name: enterprise-large-ha
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
-      env:
+      env: &config_env
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
         broker_user: ((service_broker_user))
@@ -275,80 +165,24 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
+    containers: *containers
     config:
       keys:
-        nodetype: message_routing
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 10000
+        <<: *config_keys
       settings:
+        <<: *config_settings
         pool_name: enterprise-large
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
+        is_ha: ((plans.enterprise_large.isHA))
       env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
+        <<: *config_env
 - name: enterprise-medium-ha
   stemcell: default
   instances: 0
@@ -389,77 +223,166 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
+    containers: *containers
     config:
       keys:
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
+        <<: *config_keys
       settings:
+        <<: *config_settings
         pool_name: enterprise-medium-ha
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
+        is_ha: ((plans.enterprise_medium_ha.isHA))
       env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
+        <<: *config_env
+- name: enterprise-large-ha
+  stemcell: default
+  instances: 0
+  vm_type: solace.large
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 40960
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: large_ha_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: enterprise-large-ha
+        is_ha: ((plans.enterprise_large_ha.isHA))
+      env:
+        <<: *config_env
+- name: enterprise-plan-5
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 30720
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: enterprise_plan_5_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: enterprise-plan-5
+        is_ha: ((plans.enterprise_plan_5.isHA))
+      env:
+        <<: *config_env
+- name: enterprise-plan-6
+  stemcell: default
+  instances: 0
+  vm_type: solace.medium
+  azs:
+  - z1
+  - z2
+  - z3
+  networks:
+  - name: default
+  persistent_disk: 20480
+  jobs:
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: enterprise_plan_6_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: enterprise-plan-6
+        is_ha: ((plans.enterprise_plan_6.isHA))
+      env:
+        <<: *config_env
 - name: standard-medium
   stemcell: default
   instances: 0
@@ -492,87 +415,24 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: &env_file /var/vcap/store/pubsub_config/docker_env
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: &volumes
-      - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
-      - /var/vcap/store/containers/pubsub/volumes/var:/usr/sw/var
-      - /var/vcap/store/containers/pubsub/volumes/internalSpool:/usr/sw/internalSpool
-      - /var/vcap/store/containers/pubsub/volumes/adbBackup:/usr/sw/adb
-      - /var/vcap/store/containers/pubsub/volumes/adb:/usr/sw/internalSpool/softAdb
-      - /var/vcap/store/containers/pubsub/volumes/secrets:/run/secrets
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
+    containers: *containers
     config:
       keys:
-        nodetype: message_routing
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
+        <<: *config_keys
       settings:
+        <<: *config_settings
         pool_name: standard-medium
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
+        is_ha: ((plans.standard_medium.isHA))
       env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
-
+        <<: *config_env
 - name: standard-medium-ha
   stemcell: default
   instances: 0
@@ -613,479 +473,116 @@ instance_groups:
         deployment: ((cf_deployment))
   properties:
     pubsub_config_job: broker_agent
-    containers:
-    - dockerfile: |2-
-                  FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
-      env_file: *env_file
-      image: solace-bosh
-      name: pubsub
-      net: host
-      privileged: true
-      shm_size: 2G
-      uts: host
-      volumes: *volumes
-    plan:
-      limit:
-        maxVpns: 1
-        credentialsPerVpn: 500
-        maxConnections: 1000
-        maxRestConnections: 1000
-        maxSubscriptions: 500000
-        maxTransactedSessions: 1000
-        maxTransactions: 5000
-        maxEndpoints: 1000
+    containers: *containers
     config:
       keys:
-        username_admin_globalaccesslevel: admin
-        username_admin_password: ((vmr_admin_password))
-        username_mgmt_globalaccesslevel: admin
-        username_mgmt_password: ((mgmt_password))
-        service_ssh_port: &service_ssh_port 3022
-        service_semp_port: 8080
-        service_semp_tlsport: 943
-        service_healthcheck_port: 9090
-        system_scaling_maxconnectioncount: 1000
+        <<: *config_keys
       settings:
+        <<: *config_settings
         pool_name: standard-medium-ha
-        broker_agent_port: 18080
-        node_role: 'primary'
-        starting_port: ((starting_port))
-        edition: ((vmr_edition))
-        vmr_debug_logs: disabled
-        deployment_name: ((deployment_name))
-        ldap_config:
-          value: disabled
-        management_access_auth_scheme:
-          value: vmr_internal
-        application_access_auth_scheme:
-          value: vmr_internal
-        tls_config:
-          value: disabled
-        syslog_config:
-          value: disabled
-        tcp_routes_config:
-          selected_option:
-            tcp_route_enabled: not_allowed
-          value: disabled
-        tcp_routes_enabled: disabled
+        is_ha: ((plans.standard_medium_ha.isHA))
       env:
-        broker_hostname: solace-pubsub-broker.((app_domain))
-        broker_password: ((service_broker_password))
-        broker_user: ((service_broker_user))
-        cf_api_host: api.((system_domain))
-        cf_client_id: ((solace_router_client_id))
-        cf_client_secret: ((solace_router_client_secret))
-        cf_organization: ((solace_broker_cf_organization))
-        cf_space: ((solace_broker_cf_space))
-        system_domain: ((system_domain))
-- name: deploy-all
-  jobs:
-  - name: deploy-all
-    release: solace-pubsub-broker
-    provides: {}
-    consumes:
-      solace_pubsub_shared: { from: shared_list }
-      solace_pubsub_large: { from: large_list }
-      solace_pubsub_medium_ha: { from: medium_ha_list }
-      solace_pubsub_large_ha: { from: large_ha_list }
-      solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      mysql: { from: mysql-proxy }
-      credhub: { from: credhub, deployment: ((cf_deployment)) }
-  instances: 1
-  vm_type: minimal
+        <<: *config_env
+- name: standard-plan-3
   stemcell: default
-  lifecycle: errand
+  instances: 0
+  vm_type: solace.medium
   azs:
   - z1
+  - z2
+  - z3
   networks:
   - name: default
-  properties:
-    apply_open_security_group: true
-    app_domains:
-    - ((app_domain))
-    application_access_auth_scheme:
-      value: vmr_internal
-    cf:
-      admin_password: ((cf_admin_password))
-      admin_user: admin
-    uaa:
-      admin_client: admin
-      admin_client_secret: ((uaa_admin_client_secret))
-    domain: ((system_domain))
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    org: ((solace_broker_cf_organization))
-    security:
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    mysql_config:
-      value: internal
-      internal: 
-        user: service_broker
-        password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
-    secure_service_credentials: ((secure_service_credentials))
-    application_security_groups: ((application_security_groups))
-    default_orphaned_resource_policy: Abort
-    service_catalog:
-      id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
-      service_name: solace-pubsub
-      service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
-      bindable: true
-      plan_updatable: true
-      metadata:
-        displayName: Solace PubSub+
-        imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
-        providerDisplayName: Solace Corporation
-        longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
-        documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
-        supportUrl: http://dev.solace.com
-      tags:
-        - solace
-        - pubsub 
-        - solace-pubsub
-        - rest
-        - mqtt
-        - mq
-        - queue
-        - event-streaming
-        - amqp
-        - jms
-        - messaging
-        - publish-subscribe
-        - message-queuing
-        - request-reply
-      global_properties:
-        allocate_ahead: true
-        persistence: true
-      plans:
-      - planName: standard-medium
-        poolName: standard-medium
-        id: e5b905d0-965a-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a medium Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: false
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactedSessions: 1000
-          maxTransactions: 5000
-          maxEndpoints: 1000
-      - planName: standard-medium-ha
-        poolName: standard-medium-ha
-        id: 2286ba52-965b-11e8-9eb6-529269fb1459
-        description: A single Message VPN in a medium HA Standard Solace Message Router
-        pointFormDescription:
-          - None
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-      - planName: enterprise-shared
-        poolName: enterprise-shared
-        id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
-        description: A single Message VPN in a shared Solace Message Router useful for light traffic and development
-        pointFormDescription:
-          - A Message VPN on a shared Solace Message Router
-          - Up to 100 Service Instance Bindings
-          - Up to 200 durable Endpoints
-          - Maximum of 4 GB Message Spool
-          - Maximum of 100K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: false
-        evaluationLimits:
-          maxVpns: 5
-          credentialsPerVpn: 100
-          maxConnections: 200
-          maxRestConnections: 200
-          maxSubscriptions: 100000
-          maxTransactions: 1000
-          maxTransactedSessions: 200
-          maxEndpoints: 200
-        enterpriseLimits:
-          maxVpns: 5
-          credentialsPerVpn: 190
-          maxConnections: 200
-          maxRestConnections: 200
-          maxSubscriptions: 100000
-          maxTransactions: 1000
-          maxTransactedSessions: 200
-          maxEndpoints: 200
-      - planName: enterprise-large
-        poolName: enterprise-large
-        id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
-        description: A single message VPN on a dedicated Solace Message Router
-        pointFormDescription:
-          - A Message VPN on a dedicated Solace Message Router
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 20 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: false
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 9990
-          maxConnections: 10000
-          maxRestConnections: 6000
-          maxSubscriptions: 500000
-          maxTransactions: 50000
-          maxTransactedSessions: 10000
-          maxEndpoints: 10000
-      - planName: enterprise-medium-ha
-        poolName: enterprise-medium-ha
-        id: b3a25384-eedb-4b4c-af00-610ee4dce76c
-        description: A single Message VPN hosted on a Medium Solace PubSub+ Message Broker. Consumes 3 Medium-HA Solace PubSub+ Message Brokers to create an HA service instance.
-        pointFormDescription:
-          - A Message VPN on a Medium Solace Message Router in an HA Cluster
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 4 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 990
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-      - planName: enterprise-large-ha
-        poolName: enterprise-large-ha
-        id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
-        description: A single Message VPN hosted on a Large Solace PubSub+ Message Broker. Consumes 3 Large-HA Solace PubSub+ Message Brokers to create an HA service instance.
-        pointFormDescription:
-          - A Message VPN on dedicated Solace Message Router in an HA Cluster
-          - Up to 500 Service Instance Bindings
-          - Up to 1000 durable Endpoints
-          - Maximum of 20 GB Message Spool
-          - Maximum of 500K subscriptions
-          - One Message VPN Scoped Admin account
-        isHA: true
-        evaluationLimits:
-          maxVpns: 1
-          credentialsPerVpn: 500
-          maxConnections: 1000
-          maxRestConnections: 1000
-          maxSubscriptions: 500000
-          maxTransactions: 5000
-          maxTransactedSessions: 1000
-          maxEndpoints: 1000
-        enterpriseLimits:
-          maxVpns: 1
-          credentialsPerVpn: 9990
-          maxConnections: 10000
-          maxRestConnections: 6000
-          maxSubscriptions: 500000
-          maxTransactions: 50000
-          maxTransactedSessions: 10000
-          maxEndpoints: 10000
-    solace_pubsub_broker:
-      app_manifest:
-        buildpack: java_buildpack
-        env:
-          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-        memory: 1024M
-        path: ((solace_service_broker_jar))
-        health-check-http-endpoint: /health
-        health-check-type: http
-        timeout: 180
-      enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    space: ((solace_broker_cf_space))
-    ssl:
-      skip_cert_verify: true
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tls_config:
-      value: disabled
-    vmr_admin_password: ((vmr_admin_password))
-- name: tests
+  persistent_disk: 20480
   jobs:
-  - name: tests
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
     release: solace-pubsub
-    provides: {}
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_plan_3_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
     consumes:
-      solace_pubsub_shared: { from: shared_list }
-      solace_pubsub_large: { from: large_list }
-      solace_pubsub_medium_ha: { from: medium_ha_list }
-      solace_pubsub_large_ha: { from: large_ha_list }
-      solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-  instances: 1
-  vm_type: minimal
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: standard-plan-3
+        is_ha: ((plans.standard_plan_3.isHA))
+      env:
+        <<: *config_env
+- name: standard-plan-4
   stemcell: default
-  lifecycle: errand
+  instances: 0
+  vm_type: solace.medium
   azs:
   - z1
+  - z2
+  - z3
   networks:
   - name: default
-  properties:
-    apply_open_security_group: true
-    app_domains:
-    - ((app_domain))
-    application_access_auth_scheme:
-      value: vmr_internal
-    broker_hostname: solace-pubsub-broker.((app_domain))
-    broker_password: ((service_broker_password))
-    broker_user: ((service_broker_user))
-    cf:
-      admin_password: ((cf_admin_password))
-      admin_user: admin
-    domain: ((system_domain))
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    org: ((solace_broker_cf_organization))
-    security:
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    solace_pubsub_broker:
-      app_manifest:
-        buildpack: java_buildpack
-        env:
-          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-        memory: 1024M
-        path: ((solace_service_broker_jar))
-        health-check-http-endpoint: /health
-        health-check-type: http
-        timeout: 180
-      enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    space: ((solace_broker_cf_space))
-    ssl:
-      skip_cert_verify: true
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tls_config:
-      value: disabled
-    vmr_admin_password: ((vmr_admin_password))
-- name: delete-all
-  instances: 1
-  vm_type: minimal
-  stemcell: default
-  lifecycle: errand
-  azs:
-  - z1
-  networks:
-  - name: default
-  properties:
-    app_domains:
-    - ((app_domain))
-    application_access_auth_scheme:
-      value: vmr_internal
-    cf:
-      admin_password: ((cf_admin_password))
-      admin_user: admin
-    domain: ((system_domain))
-    ldap_config:
-      value: disabled
-    management_access_auth_scheme:
-      value: vmr_internal
-    org: ((solace_broker_cf_organization))
-    security:
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    solace_pubsub_broker:
-      app_manifest:
-        buildpack: java_buildpack
-        env:
-          IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-          JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-          SOLACE_LOAD_VERSION: ((solace_load_version))
-          SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-          SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-        memory: 1024M
-        path: ((solace_service_broker_jar)) 
-        health-check-http-endpoint: /health
-        health-check-type: http
-      enable_global_access_to_plans: ((enable_global_access_to_plans))
-      password: ((service_broker_password))
-      user: ((service_broker_user))
-    space: ((solace_broker_cf_space))
-    ssl:
-      skip_cert_verify: true
-    starting_port: ((starting_port))
-    syslog_config:
-      value: disabled
-    tcp_routes_config:
-      selected_option:
-        tcp_route_enabled: not_allowed
-      value: disabled
-    tls_config:
-      value: disabled
-    vmr_admin_password: ((vmr_admin_password))
+  persistent_disk: 20480
   jobs:
-  - name: delete-all
-    release: solace-pubsub-broker
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: standard_plan_4_list }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: broker_agent
+    release: solace-pubsub
+    consumes: {}
+  - name: route_registrar
+    release: solace-pubsub
     consumes:
-      solace_pubsub_shared: { from: shared_list }
-      solace_pubsub_large: { from: large_list }
-      solace_pubsub_medium_ha: { from: medium_ha_list }
-      solace_pubsub_large_ha: { from: large_ha_list }
-      solace_pubsub_standard_medium: { from: standard_medium_list }
-      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
-      mysql: { from: mysql-proxy }
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  - name: route_registrar_active
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: broker_agent
+    containers: *containers
+    config:
+      keys:
+        <<: *config_keys
+      settings:
+        <<: *config_settings
+        pool_name: standard-plan-4
+        is_ha: ((plans.standard_plan_4.isHA))
+      env:
+        <<: *config_env
 - name: management
   instances: 1
   networks:
@@ -1097,6 +594,67 @@ instance_groups:
   vm_type: small
   stemcell: default
   jobs:
+  - name: delete-all
+    release: solace-pubsub-broker
+    consumes:
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
+      solace_pubsub_standard_medium: { from: standard_medium_list }
+      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
+      mysql: { from: mysql-proxy }
+    properties:
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+      domain: ((system_domain))
+      ldap_config:
+        value: disabled
+      management_access_auth_scheme:
+        value: vmr_internal
+      org: ((solace_broker_cf_organization))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      solace_pubsub_broker:
+        app_manifest:
+          buildpack: java_buildpack
+          env:
+            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+            SOLACE_LOAD_VERSION: ((solace_load_version))
+            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+          memory: 1024M
+          path: ((solace_service_broker_jar)) 
+          health-check-http-endpoint: /health
+          health-check-type: http
+          timeout: 180
+        enable_global_access_to_plans: ((enable_global_access_to_plans))
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      space: ((solace_broker_cf_space))
+      ssl:
+        skip_cert_verify: true
+      starting_port: ((starting_port))
+      syslog_config:
+        value: disabled
+      tcp_routes_config:
+        selected_option:
+          tcp_route_enabled: not_allowed
+        value: disabled
+      tls_config:
+        value: disabled
+      vmr_admin_password: ((vmr_admin_password))
   - name: mysql
     release: cf-mysql
     properties:
@@ -1124,7 +682,1150 @@ instance_groups:
     provides:
       proxy:
         as: mysql-proxy
+  - name: service-adapter
+    release: solace-service-adapter
+    properties:
+      solace_instance_group_name: Primary
+      cf_deployment: cf
+  - name: broker
+    provides:
+      broker: { as: solace_pubsub_deployment_odb_broker }
+    release: on-demand-service-broker
+    properties:
+      broker_name: solace-pubsub-deployment-odb-broker
+      broker_url: https://solace-pubsub-deployment-odb-broker.((system_domain))
+      disable_ssl_cert_verification: true
+      expose_operational_errors: false
+      startup_banner: true
+      port: 7979
+      username: ((service_broker_user))
+      password: ((service_broker_password))
+      shutdown_timeout_in_seconds: 10
+#      service_instances_api: 
+#        url: https://solace-pubsub-broker.((system_domain))/solace/resources/solace_message_routers/upgrades
+#        root_ca_cert: |
+#          ((router_ca.certificate))
+#          ((application_ca.certificate))
+#          ((service_cf_internal_ca.certificate))
+#          ((uaa_ca.certificate))
+#        authentication:
+#          basic:
+#            username: ((service_broker_user))
+#            password: ((service_broker_password))
+      bosh:
+        url: ((bosh_host))
+        authentication:
+          uaa:
+            url: ((bosh_host))
+            client_id: admin
+            client_secret: ((bosh_admin_password))
+        root_ca_cert: ((bosh_root_ca_cert))
+        disable_ssl_cert_verification: ((bosh_disable_ssl_cert_verification))
+      cf:
+        root_ca_cert: ((uaa_ca.certificate))
+        disable_ssl_cert_verification: false
+        url: https://api.((system_domain))
+        authentication:
+          url: https://uaa.((system_domain))
+          user_credentials:
+            username: admin
+            password: ((cf_admin_password))
+      service_deployment:
+        releases:
+        - name: solace-pubsub
+          version: ((solace_pubsub_version))
+          jobs: [ containers, route_registrar, route_registrar_active, pubsub_common, pubsub_config, broker_agent ]
+        - name: docker
+          version: ((docker_version))
+          jobs: [ docker ]
+        stemcell:
+          os: ((bosh_stemcell))
+          version: ((bosh_stemcell_version))
+      service_catalog:
+        id: 05e81eec-762e-415c-b840-a804fc526ac2
+        service_name: solace-pubsub-deployment-odb
+        service_description: Solace PubSub+ Message Broker BOSH Deployment
+        bindable: true
+        plan_updatable: true
+        metadata:
+          displayName: This Service is reserved for use by the Solace PubSub+ Deployment. Operators should NOT make this service or any of its plans accessible to users outside the solace org or solace-broker space.
+        tags:
+        - solace
+        - pubsub
+        - messaging
+        global_properties:
+          allocate_ahead: true
+          persistence: true
+        plans:
+        - name: ((plans.standard_medium.name))
+          pool_name: standard-medium # Only used to improve ops file readability
+          plan_id: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
+          description: ((plans.standard_medium.description))
+          metadata:
+            display_name: A standalone instance of Solace PubSub+ Software
+            bullets: []
+          quotas:
+            service_instance_limit: ((plans.standard_medium.quota))
+          instance_groups:
+            - name: Primary
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update: &updates
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-medium
+              env:
+                <<: *config_env
+            plan:
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: ((plans.standard_medium_ha.name))
+          pool_name: standard-medium-ha # Only used to improve ops file readability
+          plan_id: 850eedd6-b2b0-11e8-96f8-529269fb1459
+          description: ((plans.standard_medium_ha.description))
+          metadata:
+            display_name: ((plans.standard_medium_ha.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.standard_medium_ha.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-medium-ha
+              env:
+                <<: *config_env
+        - name: ((plans.standard_plan_3.name))
+          pool_name: standard-plan-3 # Only used to improve ops file readability
+          plan_id: 2387c133-9ca3-4a91-bafa-e4e221b17685
+          description: ((plans.standard_plan_3.description))
+          metadata:
+            display_name: ((plans.standard_plan_3.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.standard_plan_3.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-plan-3
+              env:
+                <<: *config_env
+        - name: ((plans.standard_plan_4.name))
+          pool_name: standard-plan-4 # Only used to improve ops file readability
+          plan_id: 4fb7bffb-caad-4956-84a3-94616871d109
+          description: ((plans.standard_plan_4.description))
+          metadata:
+            display_name: ((plans.standard_plan_4.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.standard_plan_4.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1,z2,z3]
+          update:  
+            canaries: 1
+            canary_watch_time: 30000-240000
+            update_watch_time: 30000-600000
+            max_in_flight: 1
+            serial: true
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: standard-plan-4
+              env:
+                <<: *config_env
+        - name: ((plans.enterprise_shared.name)) 
+          pool_name: enterprise-shared # Only used to improve ops file readability
+          plan_id: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+          description: ((plans.enterprise_shared.description)) 
+          metadata:
+            display_name: ((plans.enterprise_shared.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_shared.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-shared
+              env:
+                <<: *config_env
+            plan:
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: ((plans.enterprise_large.name))
+          pool_name: enterprise-large # Only used to improve ops file readability
+          plan_id: da3f5706-b2af-11e8-96f8-529269fb1459
+          description: ((plans.enterprise_large.description))
+          metadata:
+            display_name: ((plans.enterprise_large.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_large.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          updates: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-large
+              env:
+                <<: *config_env
+            plan:
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: ((plans.enterprise_medium_ha.name))
+          pool_name: enterprise-medium-ha # Only used to improve ops file readability
+          plan_id: 8bc308f1-caaf-7782-837b-91871924712e
+          description: ((plans.enterprise_medium_ha.description))
+          metadata:
+            display_name: ((plans.enterprise_medium_ha.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_medium_ha.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
+          update:  *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-medium-ha
+              env:
+                <<: *config_env
+        - name: ((plans.enterprise_large_ha.name)) 
+          pool_name: enterprise-large-ha # Only used to improve ops file readability
+          plan_id: 5abbd06c-b2b0-11e8-96f8-529269fb1459
+          description: ((plans.enterprise_large_ha.description))
+          metadata:
+            display_name: ((plans.enterprise_large_ha.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_large_ha.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
+          update:  *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-large-ha
+              env:
+                <<: *config_env
+        - name: ((plans.enterprise_plan_5.name)) 
+          pool_name: enterprise-plan-5 # Only used to improve ops file readability
+          plan_id: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
+          description: ((plans.enterprise_plan_5.description)) 
+          metadata:
+            display_name: ((plans.enterprise_plan_5.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_plan_5.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: default
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+          update: *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-plan-5
+              env:
+                <<: *config_env
+            plan:
+              resources:
+                shm_size_message_routing: 2G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+        - name: ((plans.enterprise_plan_6.name)) 
+          pool_name: enterprise-plan-6 # Only used to improve ops file readability
+          plan_id: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
+          description: ((plans.enterprise_plan_6.description))
+          metadata:
+            display_name: ((plans.enterprise_plan_6.description))
+            bullets: []
+          quotas: 
+            service_instance_limit: ((plans.enterprise_plan_6.quota))
+          instance_groups: 
+            - name: Primary
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z1]
+            - name: Backup
+              vm_type: solace.medium
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z2]
+            - name: Monitor
+              vm_type: minimal
+              persistent_disk_type: 20GB
+              instances: 1
+              networks: [default]
+              azs: [z3]
+          update:  *updates
+          properties:
+            cf_api_host: api.((system_domain))
+            containers: *containers
+            plan:
+              resources:
+                shm_size_primary: 2G
+                shm_size_backup: 2G
+                shm_size_monitor: 1G
+              allowed_overrides:
+              - config.keys.*
+              - config.settings.*
+              - config.env.*
+            config:
+              keys:
+                <<: *config_keys
+              settings:
+                <<: *config_settings
+                pool_name: enterprise-plan-6
+              env:
+                <<: *config_env
+
+  - name: delete-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      polling_interval_seconds: 10
+  - name: upgrade-all-service-instances
+    release: on-demand-service-broker
+    properties:
+      max_in_flight: 1
+      polling_interval_seconds: 10
+      canaries: 1
+  - name: deploy-all
+    release: solace-pubsub-broker
+    provides: {}
+    consumes:
+      internal_message_broker: { from: internal_pubsub }
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
+      solace_pubsub_standard_medium: { from: standard_medium_list }
+      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
+      mysql: { from: mysql-proxy }
+      credhub: { from: credhub, deployment: ((cf_deployment)) }
+    properties:
+      apply_open_security_group: true
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+      uaa:
+        admin_client: admin
+        admin_client_secret: ((uaa_admin_client_secret))
+      domain: ((system_domain))
+      ldap_config:
+        value: disabled
+      management_access_auth_scheme:
+        value: vmr_internal
+      org: ((solace_broker_cf_organization))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      mysql_config:
+        value: internal
+        internal: 
+          user: service_broker
+          password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+      secure_service_credentials: ((secure_service_credentials))
+      application_security_groups: ((application_security_groups))
+      default_orphaned_resource_policy: Abort
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
+      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      service_catalog_static_inventory:
+        id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
+        service_name: solace-pubsub
+        service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+        bindable: true
+        plan_updatable: true
+        metadata:
+          displayName: Solace PubSub+
+          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          providerDisplayName: Solace Corporation
+          longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+          documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
+          supportUrl: http://dev.solace.com
+        tags:
+          - solace
+          - pubsub 
+          - solace-pubsub
+          - rest
+          - mqtt
+          - mq
+          - queue
+          - event-streaming
+          - amqp
+          - jms
+          - messaging
+          - publish-subscribe
+          - message-queuing
+          - request-reply
+        global_properties:
+          allocate_ahead: true
+          persistence: true
+        plans:
+        - planName: ((plans.standard_medium.name))
+          poolName: standard-medium
+          id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          idOD: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.standard_medium.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium.quota))
+          isHA: ((plans.standard_medium.isHA))
+          maxVpns: ((plans.standard_medium.maxVpns))
+        - planName: ((plans.standard_medium_ha.name))
+          poolName: standard-medium-ha
+          id: 2286ba52-965b-11e8-9eb6-529269fb1459
+          idOD: 850eedd6-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.standard_medium_ha.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium_ha.quota))
+          isHA: ((plans.standard_medium_ha.isHA))
+          maxVpns: ((plans.standard_medium_ha.maxVpns))
+        - planName: ((plans.standard_plan_3.name))
+          poolName: standard-plan-3
+          id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          idOD: 2387c133-9ca3-4a91-bafa-e4e221b17685
+          status: active 
+          description: ((plans.standard_plan_3.description))
+          pointFormDescription: ((plans.standard_plan_3.point_form_description))
+          quota: ((plans.standard_plan_3.quota))
+          isHA: ((plans.standard_plan_3.isHA))
+          maxVpns: ((plans.standard_plan_3.maxVpns))
+        - planName: ((plans.standard_plan_4.name))
+          poolName: standard-plan-4
+          id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          idOD: 4fb7bffb-caad-4956-84a3-94616871d109
+          status: active 
+          description: ((plans.standard_plan_4.description))
+          pointFormDescription: ((plans.standard_plan_4.point_form_description))
+          quota: ((plans.standard_plan_4.quota))
+          isHA: ((plans.standard_plan_4.isHA))
+          maxVpns: ((plans.standard_plan_4.maxVpns))
+        - planName: ((plans.enterprise_shared.name)) 
+          poolName: enterprise-shared
+          id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          idOD: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+          status: active
+          description: ((plans.enterprise_shared.description))
+          pointFormDescription: ((plans.enterprise_shared.point_form_description))
+          quota: ((plans.enterprise_shared.quota))
+          isHA: ((plans.enterprise_shared.isHA))
+          maxVpns: ((plans.enterprise_shared.maxVpns))
+        - planName: ((plans.enterprise_large.name)) 
+          poolName: enterprise-large
+          id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          idOD: da3f5706-b2af-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.enterprise_large.description))
+          pointFormDescription: ((plans.enterprise_large.point_form_description))
+          quota: ((plans.enterprise_large.quota))
+          isHA: ((plans.enterprise_large.isHA))
+          maxVpns: ((plans.enterprise_large.maxVpns))
+        - planName: ((plans.enterprise_medium_ha.name))
+          poolName: enterprise-medium-ha
+          id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          idOD: 8bc308f1-caaf-7782-837b-91871924712e
+          status: active
+          description: ((plans.enterprise_medium_ha.description))
+          pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
+          quota: ((plans.enterprise_medium_ha.quota))
+          isHA: ((plans.enterprise_medium_ha.isHA))
+          maxVpns: ((plans.enterprise_medium_ha.maxVpns))
+        - planName: ((plans.enterprise_large_ha.name))
+          poolName: enterprise-large-ha
+          id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          idOD: 5abbd06c-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.enterprise_large_ha.description))
+          pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
+          quota: ((plans.enterprise_large_ha.quota))
+          isHA: ((plans.enterprise_large_ha.isHA))
+          maxVpns: ((plans.enterprise_large_ha.maxVpns))
+        - planName: ((plans.enterprise_plan_5.name))
+          poolName: enterprise-plan-5
+          id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          idOD: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
+          status: active
+          description: ((plans.enterprise_plan_5.description))
+          pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
+          quota: ((plans.enterprise_plan_5.quota))
+          isHA: ((plans.enterprise_plan_5.isHA))
+          maxVpns: ((plans.enterprise_plan_5.maxVpns))
+        - planName: ((plans.enterprise_plan_6.name))
+          poolName: enterprise-plan-6
+          id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          idOD: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
+          status: active
+          description: ((plans.enterprise_plan_6.description))
+          pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
+          quota: ((plans.enterprise_plan_6.quota))
+          isHA: ((plans.enterprise_plan_6.isHA))
+          maxVpns: ((plans.enterprise_plan_6.maxVpns))
+      solace_pubsub_broker:
+        app_manifest:
+          buildpack: java_buildpack
+          env:
+            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+            SOLACE_LOAD_VERSION: ((solace_load_version))
+            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+          memory: 1024M
+          path: ((solace_service_broker_jar))
+          health-check-http-endpoint: /health
+          health-check-type: http
+          timeout: 180
+        enable_global_access_to_plans: ((enable_global_access_to_plans))
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      space: ((solace_broker_cf_space))
+      ssl:
+        skip_cert_verify: true
+      starting_port: ((starting_port))
+      syslog_config:
+        value: disabled
+      tcp_routes_config:
+        selected_option:
+          tcp_route_enabled: not_allowed
+        value: disabled
+      tls_config:
+        value: disabled
+      vmr_admin_password: ((vmr_admin_password))
+      web_hook_config: 
+        value: disabled
+  - name: tests
+    release: solace-pubsub
+    provides: {}
+    consumes:
+      solace_pubsub_shared: { from: shared_list }
+      solace_pubsub_large: { from: large_list }
+      solace_pubsub_medium_ha: { from: medium_ha_list }
+      solace_pubsub_large_ha: { from: large_ha_list }
+      solace_pubsub_enterprise_plan_5: { from: enterprise_plan_5_list }
+      solace_pubsub_enterprise_plan_6: { from: enterprise_plan_6_list }
+      solace_pubsub_standard_medium: { from: standard_medium_list }
+      solace_pubsub_standard_medium_ha: { from: standard_medium_ha_list }
+      solace_pubsub_standard_plan_3: { from: standard_plan_3_list }
+      solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
+      internal_message_broker: { from: internal_pubsub }
+    properties:
+      apply_open_security_group: true
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      broker_hostname: solace-pubsub-broker.((app_domain))
+      broker_password: ((service_broker_password))
+      broker_user: ((service_broker_user))
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+      domain: ((system_domain))
+      ldap_config:
+        value: disabled
+      management_access_auth_scheme:
+        value: vmr_internal
+      org: ((solace_broker_cf_organization))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      solace_pubsub_broker:
+        app_manifest:
+          buildpack: java_buildpack
+          env:
+            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+            SOLACE_LOAD_VERSION: ((solace_load_version))
+            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+          memory: 1024M
+          path: ((solace_service_broker_jar))
+          health-check-http-endpoint: /health
+          health-check-type: http
+          timeout: 180
+        enable_global_access_to_plans: ((enable_global_access_to_plans))
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      space: ((solace_broker_cf_space))
+      ssl:
+        skip_cert_verify: true
+      starting_port: ((starting_port))
+      syslog_config:
+        value: disabled
+      tcp_routes_config:
+        selected_option:
+          tcp_route_enabled: not_allowed
+        value: disabled
+      tls_config:
+        value: disabled
+      vmr_admin_password: ((vmr_admin_password))
+      service_catalog_static_inventory:
+        id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
+        service_name: solace-pubsub
+        service_description: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+        bindable: true
+        plan_updatable: true
+        metadata:
+          displayName: Solace PubSub+
+          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          providerDisplayName: Solace Corporation
+          longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
+          documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
+          supportUrl: http://dev.solace.com
+        tags:
+          - solace
+          - pubsub 
+          - solace-pubsub
+          - rest
+          - mqtt
+          - mq
+          - queue
+          - event-streaming
+          - amqp
+          - jms
+          - messaging
+          - publish-subscribe
+          - message-queuing
+          - request-reply
+        global_properties:
+          allocate_ahead: true
+          persistence: true
+        plans:
+        - planName: ((plans.standard_medium.name))
+          poolName: standard-medium
+          id: e5b905d0-965a-11e8-9eb6-529269fb1459
+          idOD: 5fbb5c9a-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.standard_medium.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium.quota))
+          isHA: ((plans.standard_medium.isHA))
+          maxVpns: ((plans.standard_medium.maxVpns))
+        - planName: ((plans.standard_medium_ha.name))
+          poolName: standard-medium-ha
+          id: 2286ba52-965b-11e8-9eb6-529269fb1459
+          idOD: 850eedd6-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.standard_medium_ha.description))
+          pointFormDescription:
+            - None
+          quota: ((plans.standard_medium_ha.quota))
+          isHA: ((plans.standard_medium_ha.isHA))
+          maxVpns: ((plans.standard_medium_ha.maxVpns))
+        - planName: ((plans.standard_plan_3.name))
+          poolName: standard-plan-3
+          id: b08a29db-f63b-4b64-9e9b-e31b75dc33f0
+          idOD: 2387c133-9ca3-4a91-bafa-e4e221b17685
+          status: active 
+          description: ((plans.standard_plan_3.description))
+          pointFormDescription: ((plans.standard_plan_3.point_form_description))
+          quota: ((plans.standard_plan_3.quota))
+          isHA: ((plans.standard_plan_3.isHA))
+          maxVpns: ((plans.standard_plan_3.maxVpns))
+        - planName: ((plans.standard_plan_4.name))
+          poolName: standard-plan-4
+          id: 341cae72-b1b0-40f9-84a6-c1ca32dcfd25
+          idOD: 4fb7bffb-caad-4956-84a3-94616871d109
+          status: active 
+          description: ((plans.standard_plan_4.description))
+          pointFormDescription: ((plans.standard_plan_4.point_form_description))
+          quota: ((plans.standard_plan_4.quota))
+          isHA: ((plans.standard_plan_4.isHA))
+          maxVpns: ((plans.standard_plan_4.maxVpns))
+        - planName: ((plans.enterprise_shared.name)) 
+          poolName: enterprise-shared
+          id: 68bc18fa-3b06-41a1-bd66-bc6ff2281b75
+          idOD: 6bc108f1-faaf-4782-8d7b-9120cb8b0d2e
+          status: active
+          description: ((plans.enterprise_shared.description))
+          pointFormDescription: ((plans.enterprise_shared.point_form_description))
+          quota: ((plans.enterprise_shared.quota))
+          isHA: ((plans.enterprise_shared.isHA))
+          maxVpns: ((plans.enterprise_shared.maxVpns))
+        - planName: ((plans.enterprise_large.name)) 
+          poolName: enterprise-large
+          id: 52dcd959-ee94-4bd8-b94f-630ddefd879e
+          idOD: da3f5706-b2af-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.enterprise_large.description))
+          pointFormDescription: ((plans.enterprise_large.point_form_description))
+          quota: ((plans.enterprise_large.quota))
+          isHA: ((plans.enterprise_large.isHA))
+          maxVpns: ((plans.enterprise_large.maxVpns))
+        - planName: ((plans.enterprise_medium_ha.name))
+          poolName: enterprise-medium-ha
+          id: b3a25384-eedb-4b4c-af00-610ee4dce76c
+          idOD: 8bc308f1-caaf-7782-837b-91871924712e
+          status: active
+          description: ((plans.enterprise_medium_ha.description))
+          pointFormDescription: ((plans.enterprise_medium_ha.point_form_description))
+          quota: ((plans.enterprise_medium_ha.quota))
+          isHA: ((plans.enterprise_medium_ha.isHA))
+          maxVpns: ((plans.enterprise_medium_ha.maxVpns))
+        - planName: ((plans.enterprise_large_ha.name))
+          poolName: enterprise-large-ha
+          id: 8a905ceb-5f6d-4080-ae77-efa15ba19a4b
+          idOD: 5abbd06c-b2b0-11e8-96f8-529269fb1459
+          status: active
+          description: ((plans.enterprise_large_ha.description))
+          pointFormDescription: ((plans.enterprise_large_ha.point_form_description))
+          quota: ((plans.enterprise_large_ha.quota))
+          isHA: ((plans.enterprise_large_ha.isHA))
+          maxVpns: ((plans.enterprise_large_ha.maxVpns))
+        - planName: ((plans.enterprise_plan_5.name))
+          poolName: enterprise-plan-5
+          id: 70feb9e8-31d5-4965-b910-619a82bc98be
+          idOD: 1f2462cf-2d33-47f0-b602-dda21fe64bd4
+          status: active
+          description: ((plans.enterprise_plan_5.description))
+          pointFormDescription: ((plans.enterprise_plan_5.point_form_description))
+          quota: ((plans.enterprise_plan_5.quota))
+          isHA: ((plans.enterprise_plan_5.isHA))
+          maxVpns: ((plans.enterprise_plan_5.maxVpns))
+        - planName: ((plans.enterprise_plan_6.name))
+          poolName: enterprise-plan-6
+          id: 15b60d5c-bc90-4a95-a8dc-d114b74ceac0
+          idOD: f398335f-bfdd-4f2f-a396-6b01a0f4ac14
+          status: active
+          description: ((plans.enterprise_plan_6.description))
+          pointFormDescription: ((plans.enterprise_plan_6.point_form_description))
+          quota: ((plans.enterprise_plan_6.quota))
+          isHA: ((plans.enterprise_plan_6.isHA))
+          maxVpns: ((plans.enterprise_plan_6.maxVpns))
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: internal_pubsub }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: pubsub_internal_config
+    release: solace-pubsub
+    consumes:
+      message_broker: { from: internal_pubsub }
+      monitor: { from: internal_monitor }
+  - name: route_internal
+    release: solace-pubsub
+    consumes:
+      nats_link:
+        from: nats
+        deployment: ((cf_deployment))
+  properties:
+    pubsub_config_job: pubsub_internal_config
+    containers:
+    - dockerfile: |2-
+                  FROM solace-app:latest
+
+                  RUN \
+                    echo '#!/bin/bash' > /sbin/dhclient && \
+                    echo 'exit 0' >> /sbin/dhclient && \
+                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
+                    chmod +x /sbin/dhclient
+      env_file: *env_file
+      image: solace-bosh
+      name: pubsub
+      net: host
+      privileged: true
+      shm_size: 1G
+      memory: 1G
+      memory_swap: 2G
+      uts: host
+      volumes: *volumes
+    plan:
+      limit:
+        unlimited: true
+    config:
+      keys:
+        nodetype: message_routing
+        routing_mode: dmr
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: *service_ssh_port
+        service_semp_port: 38080
+        service_semp_tlsport: 3943
+        service_healthcheck_port: 39090
+      settings:
+        edition: 'standard'
+        pool_name: standard-internal
+        broker_agent_port: 18080
+        node_role: 'primary'
+        starting_port: ((starting_port))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
+        redundancy_group_password: ((internal_redundancy_group_password))
+
+- name: arbitrator
+  instances: 0
+  persistent_disk_type: 10GB
+  networks:
+  - name: default
+  azs: [z3]
+  update:
+    serial: true
+  vm_type: default
+  stemcell: default
+  jobs:
+  - release: cf-mysql
+    name: arbitrator
+    properties:
+      cf_mysql:
+        mysql:
+          admin_password: ((cf_mysql_mysql_admin_password))
+          galera_healthcheck:
+            endpoint_password: ((cf_mysql_mysql_galera_healthcheck_endpoint_password))
+  - name: docker
+    release: docker
+    consumes: {}
+  - name: pubsub_common
+    release: solace-pubsub
+    consumes: {}
+    provides:
+      solace_pubsub_instance: { as: internal_monitor }
+  - name: containers
+    release: solace-pubsub
+    consumes: {}
+  - name: pubsub_internal_config
+    release: solace-pubsub
+    consumes:
+      message_broker: { from: internal_pubsub }
+      monitor: { from: internal_monitor }
+  properties:
+    pubsub_config_job: pubsub_internal_config
+    containers:
+    - dockerfile: |2-
+                  FROM solace-app:latest
+
+                  RUN \
+                    echo '#!/bin/bash' > /sbin/dhclient && \
+                    echo 'exit 0' >> /sbin/dhclient && \
+                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
+                    chmod +x /sbin/dhclient
+      env_file: *env_file
+      image: solace-bosh
+      name: pubsub
+      net: host
+      privileged: true
+      shm_size: 1G
+      memory: 1G
+      memory_swap: 2G
+      uts: host
+      volumes: *volumes
+    plan:
+      limit:
+        unlimited: true
+    config:
+      keys:
+        nodetype: monitoring
+        routing_mode: dmr
+        username_admin_globalaccesslevel: admin
+        username_admin_password: ((vmr_admin_password))
+        username_mgmt_globalaccesslevel: admin
+        username_mgmt_password: ((mgmt_password))
+        service_ssh_port: *service_ssh_port
+        service_semp_port: 38080
+        service_semp_tlsport: 3943
+        service_healthcheck_port: 39090
+      settings:
+        edition: 'standard'
+        pool_name: standard-internal
+        broker_agent_port: 18080
+        node_role: 'monitor'
+        starting_port: ((starting_port))
+        vmr_debug_logs: disabled
+        deployment_name: ((deployment_name))
+        ldap_config:
+          value: disabled
+        management_access_auth_scheme:
+          value: vmr_internal
+        application_access_auth_scheme:
+          value: vmr_internal
+        tls_config:
+          value: disabled
+        syslog_config:
+          value: disabled
+        tcp_routes_config:
+          selected_option:
+            tcp_route_enabled: not_allowed
+          value: disabled
+        tcp_routes_enabled: disabled
+      env:
+        broker_hostname: solace-pubsub-broker.((app_domain))
+        broker_password: ((service_broker_password))
+        broker_user: ((service_broker_user))
+        cf_api_host: api.((system_domain))
+        cf_client_id: ((solace_router_client_id))
+        cf_client_secret: ((solace_router_client_secret))
+        cf_organization: ((solace_broker_cf_organization))
+        cf_space: ((solace_broker_cf_space))
+        system_domain: ((system_domain))
+        redundancy_group_password: ((internal_redundancy_group_password))
+
 variables:
+- name: internal_redundancy_group_password
+  type: password
 - name: mgmt_password
   type: password
 - name: vmr_admin_password
@@ -1153,3 +1854,8 @@ variables:
   type: password
 - name: cf_mysql_proxy_api_password
   type: password
+- name: bosh_admin_password
+  type: password
+- name: bosh_root_ca_cert
+  type: certificate
+  options: {ca: example_ca, common_name: bosh-root-ca-cert}

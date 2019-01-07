@@ -1,19 +1,19 @@
 - type: remove
-  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config/selected_option
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/mysql_config?/value
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/value
   value: mysql_for_pcf
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/selected_option
   value: 
     service_name: ((mysql_for_pcf_service_name))
     service_plan: ((mysql_for_pcf_service_plan))
 - type: remove
   path: /instance_groups/name=management
 - type: remove 
-  path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/mysql
+  path: /instance_groups/name=management/jobs/name=deploy-all/jobs/name=management/jobs/name=deploy-all/consumes/mysql
 - type: remove
-  path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/mysql
+  path: /instance_groups/name=management/jobs/name=delete-all/jobs/name=management/jobs/name=delete-all/consumes/mysql
 - type: remove
   path: /releases/name=cf-mysql
 - type: remove

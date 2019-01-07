@@ -1,10 +1,10 @@
 - type: remove
-  path: /instance_groups/name=deploy-all/properties/mysql_config/selected_option?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config/selected_option?
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/mysql_config?/value
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/value
   value: external
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/mysql_config?/selected_option
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/selected_option
   value: 
     hostname: ((mysql_external_hostname))
     port: ((mysql_external_port))
@@ -14,9 +14,9 @@
 - type: remove
   path: /instance_groups/name=management
 - type: remove
-  path: /instance_groups/name=deploy-all/jobs/name=deploy-all/consumes/mysql
+  path: /instance_groups/name=management/jobs/name=deploy-all/jobs/name=management/jobs/name=deploy-all/consumes/mysql
 - type: remove
-  path: /instance_groups/name=delete-all/jobs/name=delete-all/consumes/mysql
+  path: /instance_groups/name=management/jobs/name=delete-all/jobs/name=management/jobs/name=delete-all/consumes/mysql
 - type: remove
   path: /releases/name=cf-mysql
 - type: remove

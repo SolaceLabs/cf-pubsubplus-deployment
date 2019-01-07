@@ -24,6 +24,18 @@
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/containers/0/memory_swap?
   value: 6G
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/containers/0/memory_swap?
+  value: 6G
 ##
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
@@ -45,6 +57,12 @@
 - type: replace
   path: /instance_groups/name=enterprise-large/persistent_disk?
   value: 20480
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/persistent_disk?
+  value: 20480
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/config/keys/service_ssh_port?
@@ -58,6 +76,12 @@
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/config/keys/service_ssh_port?
   value: 3022
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/config/keys/service_ssh_port?
+  value: 3022
 ## Fix SSH : 
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/ssh_port?
@@ -70,6 +94,12 @@
   value: 3022
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/ssh_port?
   value: 3022
 
 # Standard Plans
@@ -86,6 +116,18 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/containers/0/memory_swap?
   value: 6G
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/containers/0/memory_swap?
+  value: 6G
 ##
 # Should also set a smaller persistent disk for all VMs
 #
@@ -95,12 +137,24 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/persistent_disk?
   value: 20480
+- type: replace
+  path: /instance_groups/name=standard-plan-3/persistent_disk?
+  value: 20480
+- type: replace
+  path: /instance_groups/name=standard-plan-4/persistent_disk?
+  value: 20480
 ## Fix SSH : SERVICE_SSH_PORT
 - type: replace
   path: /instance_groups/name=standard-medium/properties/config/keys/service_ssh_port?
   value: 3022
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/config/keys/service_ssh_port?
   value: 3022
 ## Fix SSH : 
 - type: replace
@@ -109,4 +163,149 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/ssh_port?
   value: 3022
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/ssh_port?
+  value: 3022
   
+# On demand service catalog
+# Bosh Lite
+# Add memory constraints to the docker containers 
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/containers/0/memory_swap?
+  value: 6G
+##
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/keys/system_scaling_maxconnectioncount?
+  value: 1000
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/keys/system_scaling_maxconnectioncount?
+  value: 1000
+
+## Fix SSH : SERVICE_SSH_PORT
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/keys/service_ssh_port?
+  value: 3022
+## Fix SSH : 
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/ssh_port?
+  value: 3022
+
+# Standard Plans
+# Add memory constraints to the docker containers 
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/containers/0/memory_swap?
+  value: 6G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/containers/0/memory?
+  value: 4G
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/containers/0/memory_swap?
+  value: 6G
+
+## Fix SSH : SERVICE_SSH_PORT
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/keys/service_ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/keys/service_ssh_port?
+  value: 3022
+## Fix SSH : 
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/ssh_port?
+  value: 3022
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/ssh_port?
+  value: 3022
