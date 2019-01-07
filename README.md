@@ -145,7 +145,6 @@ BOSH operator files provide controls for:
 | [mysql_for_pcf.yml](operations/mysql_for_pcf.yml) | Disables the internal mysql provided by Solace Pubsub in favour of Mysql for PCF |
 | [orphaned_resource_policy_delete.yml](operations/orphaned_resource_policy_delete.yml) | Sets the default orphaned resource policy for all plans to 'Delete' away from default of 'Abort' |
 | [orphaned_resource-policy_service_owned.yml](operations/orphaned_resource_policy_service_owned.yml) | Sets the default orphaned resource policy for all plans to 'Service Owned' away from default of 'Abort' |
-| [set_pubsub_version.yml](operations/set_pubsub_version.yml) | Can be used to manually set the Pubsub and Service Broker versions |
 
 Only one of these required files can be used and should only be applied as the last operator file, [is_evaluation.yml](operations/is_evaluation.yml) or [is_enterprise.yml](operations/is_enterprise.yml). Please select the one matching your available solace-pubsub bosh release.
 
