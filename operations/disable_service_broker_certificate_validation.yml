@@ -1,24 +1,74 @@
 # Disables service broker's certificate validation when communicating with the VMR
 # This adds certificates
 - type: replace
-  path: /instance_groups/name=Community-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-shared/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Shared-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Medium-HA-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Large-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=Large-HA-VMR/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-plan-5/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=deploy-all/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=enterprise-plan-6/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 - type: replace
-  path: /instance_groups/name=tests/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: true
 
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+
+# On demand service catalog  
+# Disables service broker's certificate validation when communicating with the VMR
+# This adds certificates
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/tls_config/selected_option?/broker_validate_cert_disabled?
+  value: true

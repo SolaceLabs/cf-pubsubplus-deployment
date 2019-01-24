@@ -1,0 +1,16 @@
+- type: remove
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config/selected_option?
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/value
+  value: internal_ha
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/mysql_config?/internal_ha
+  value: 
+    user: service_broker
+    password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+- type: replace
+  path: /instance_groups/name=management/instances
+  value: 2
+- type: replace
+  path: /instance_groups/name=arbitrator/instances
+  value: 1

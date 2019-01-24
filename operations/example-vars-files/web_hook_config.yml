@@ -1,0 +1,8 @@
+web_hook_config:
+  web_hook_host: test-app
+  web_hook_port: 8080
+  web_hook_path: /service-lifecycle
+  web_hook_credentials:
+    identity: solacetest
+    password: solacetest
+  web_hook_tls_enabled: false

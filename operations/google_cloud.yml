@@ -1,26 +1,105 @@
 # Google Cloud
 # This replaces the vm_type elements with Google Cloud types.
 - type: replace
-  path: /instance_groups/name=Community-VMR/vm_type
+  path: /instance_groups/name=enterprise-shared/vm_type
   value: medium.disk
 - type: replace
-  path: /instance_groups/name=Shared-VMR/vm_type
+  path: /instance_groups/name=enterprise-medium-ha/vm_type
   value: medium.disk
 - type: replace
-  path: /instance_groups/name=Medium-HA-VMR/vm_type
-  value: medium.disk
-- type: replace
-  path: /instance_groups/name=Large-VMR/vm_type
+  path: /instance_groups/name=enterprise-large/vm_type
   value: xlarge
 - type: replace
-  path: /instance_groups/name=Large-HA-VMR/vm_type
+  path: /instance_groups/name=enterprise-large-ha/vm_type
   value: xlarge
 - type: replace
-  path: /instance_groups/name=deploy-all/vm_type
+  path: /instance_groups/name=enterprise-plan-5/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=standard-medium/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=standard-plan-3/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=standard-plan-4/vm_type
+  value: medium.disk
+
+# On demand catalog  
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/instance_groups/name=Backup/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-medium-ha/instance_groups/name=Monitor/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/instance_groups/name=Primary/vm_type
+  value: xlarge
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/instance_groups/name=Primary/vm_type
+  value: xlarge
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/instance_groups/name=Backup/vm_type
+  value: xlarge
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large-ha/instance_groups/name=Monitor/vm_type
+  value: xlarge
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-5/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/instance_groups/name=Backup/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-plan-6/instance_groups/name=Monitor/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/instance_groups/name=Backup/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-medium-ha/instance_groups/name=Monitor/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-3/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/instance_groups/name=Primary/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/instance_groups/name=Backup/vm_type
+  value: medium.disk
+- type: replace
+  path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/instance_groups/name=Monitor/vm_type
+  value: medium.disk
+
+  
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/vm_type
   value: micro
 - type: replace
-  path: /instance_groups/name=tests/vm_type
+  path: /instance_groups/name=management/jobs/name=tests/vm_type
   value: micro
 - type: replace
-  path: /instance_groups/name=delete-all/vm_type
+  path: /instance_groups/name=management/jobs/name=delete-all/vm_type
   value: micro
