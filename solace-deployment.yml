@@ -627,18 +627,21 @@ instance_groups:
         user: ((service_broker_user))
       solace_pubsub_broker:
         app_manifest:
-          buildpack: java_buildpack
-          env:
-            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-            SOLACE_LOAD_VERSION: ((solace_load_version))
-            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-          memory: 1024M
-          path: ((solace_service_broker_jar)) 
-          health-check-http-endpoint: /health
-          health-check-type: http
-          timeout: 180
+          applications:
+          - name: ((solace_service_broker_name))
+            buildpacks:
+              - java_buildpack
+            env:
+              IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+              JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+              SOLACE_LOAD_VERSION: ((solace_load_version))
+              SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+              SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+            memory: 1024M
+            path: ((solace_service_broker_jar)) 
+            health-check-http-endpoint: /health
+            health-check-type: http
+            timeout: 180
         enable_global_access_to_plans: ((enable_global_access_to_plans))
         password: ((service_broker_password))
         user: ((service_broker_user))
@@ -1388,18 +1391,21 @@ instance_groups:
           maxVpns: ((plans.enterprise_plan_6.maxVpns))
       solace_pubsub_broker:
         app_manifest:
-          buildpack: java_buildpack
-          env:
-            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-            SOLACE_LOAD_VERSION: ((solace_load_version))
-            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-          memory: 1024M
-          path: ((solace_service_broker_jar))
-          health-check-http-endpoint: /health
-          health-check-type: http
-          timeout: 180
+          applications:
+          - name: ((solace_service_broker_name))
+            buildpacks:
+              - java_buildpack
+            env:
+              IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+              JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+              SOLACE_LOAD_VERSION: ((solace_load_version))
+              SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+              SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+            memory: 1024M
+            path: ((solace_service_broker_jar)) 
+            health-check-http-endpoint: /health
+            health-check-type: http
+            timeout: 180
         enable_global_access_to_plans: ((enable_global_access_to_plans))
         password: ((service_broker_password))
         user: ((service_broker_user))
@@ -1458,18 +1464,21 @@ instance_groups:
         user: ((service_broker_user))
       solace_pubsub_broker:
         app_manifest:
-          buildpack: java_buildpack
-          env:
-            IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
-            JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
-            SOLACE_LOAD_VERSION: ((solace_load_version))
-            SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
-            SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
-          memory: 1024M
-          path: ((solace_service_broker_jar))
-          health-check-http-endpoint: /health
-          health-check-type: http
-          timeout: 180
+          applications:
+          - name: ((solace_service_broker_name))
+            buildpacks:
+              - java_buildpack
+            env:
+              IS_ENTERPRISE_MODE: '((is_enterprise_mode))'
+              JBP_CONFIG_CONTAINER_CERTIFICATE_TRUST_STORE: '{enabled: true}'
+              SOLACE_LOAD_VERSION: ((solace_load_version))
+              SOLACE_ROUTER_CLIENT_ID: ((solace_router_client_id))
+              SOLACE_ROUTER_CLIENT_SECRET: ((solace_router_client_secret))
+            memory: 1024M
+            path: ((solace_service_broker_jar)) 
+            health-check-http-endpoint: /health
+            health-check-type: http
+            timeout: 180
         enable_global_access_to_plans: ((enable_global_access_to_plans))
         password: ((service_broker_password))
         user: ((service_broker_user))
