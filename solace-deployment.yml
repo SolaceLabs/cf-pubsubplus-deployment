@@ -1263,7 +1263,7 @@ instance_groups:
         plan_updatable: true
         metadata:
           displayName: Solace PubSub+
-          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          imageUrl: https://solace-pubsub-broker.((app_domain))/assets/images/logo_green.png
           providerDisplayName: Solace Corporation
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
@@ -1505,7 +1505,7 @@ instance_groups:
         plan_updatable: true
         metadata:
           displayName: Solace PubSub+
-          imageUrl: http://solace.com/wp-content/uploads/2018/05/Solace_Logo_Green_360x100-1.png
+          imageUrl: https://solace-pubsub-broker.((app_domain))/assets/images/logo_green.png
           providerDisplayName: Solace Corporation
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
