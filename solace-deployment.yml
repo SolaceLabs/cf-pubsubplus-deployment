@@ -990,7 +990,7 @@ instance_groups:
               instances: 1
               networks: [default]
               azs: [z1]
-          updates: *updates
+          update: *updates
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
