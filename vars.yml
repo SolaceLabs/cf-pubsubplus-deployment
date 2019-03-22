@@ -54,6 +54,11 @@ mysql_external_dbname: solace
 mysql_external_user: solace_mysql_user
 mysql_external_password: solace_db_mysql_password
 
+
+## The name of the solace pubsub+ service in the marketplace
+solace_service_name: solace-pubsub
+
+## The definition of the plans available for the solace pubsub+ service
 plans:
   standard_medium:
     name: standard-medium
