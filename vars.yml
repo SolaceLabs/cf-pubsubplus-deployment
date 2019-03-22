@@ -23,6 +23,11 @@ on_demand_upgrade_task_timer: 0,15,30,45 * * * *
 
 # This is the password set for the "admin" user on the VMR
 vmr_admin_password: admin1
+
+# These are the current and previous keys used to encrypt password columns in the service broker db.
+db_encryption_key:
+db_encryption_key_prev:
+
 ##
 # Control populating each plan with VMRs
 # Note that the "HA" Plans need to be provided in groups of 3
@@ -49,6 +54,11 @@ mysql_external_dbname: solace
 mysql_external_user: solace_mysql_user
 mysql_external_password: solace_db_mysql_password
 
+
+## The name of the solace pubsub+ service in the marketplace
+solace_service_name: solace-pubsub
+
+## The definition of the plans available for the solace pubsub+ service
 plans:
   standard_medium:
     name: standard-medium
