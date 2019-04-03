@@ -609,6 +609,7 @@ instance_groups:
       solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
       mysql: { from: mysql-proxy }
     properties:
+      solace_service_name: ((solace_service_name))
       app_domains:
       - ((app_domain))
       application_access_auth_scheme:
@@ -1220,6 +1221,7 @@ instance_groups:
       mysql: { from: mysql-proxy }
       credhub: { from: credhub, deployment: ((cf_deployment)) }
     properties:
+      solace_service_name: ((solace_service_name))
       apply_open_security_group: true
       app_domains:
       - ((app_domain))
