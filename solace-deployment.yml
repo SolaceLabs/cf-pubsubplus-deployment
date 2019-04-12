@@ -95,7 +95,7 @@ instance_groups:
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
         username_mgmt_password: ((mgmt_password))
-        username_monitor_globalaccesslevel: ((username_monitor_globalaccesslevel))
+        username_monitor_globalaccesslevel: monitor 
         username_monitor_password: ((username_monitor_password))
         username_monitor_user: ((username_monitor_user))
         monitor_user_enabled: ((monitor_user_enabled))
@@ -1272,7 +1272,7 @@ instance_groups:
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
           supportUrl: http://dev.solace.com
-          shareable: true
+          shareable: ((is_shareable))
         tags:
           - solace
           - pubsub 
@@ -1515,7 +1515,7 @@ instance_groups:
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
           supportUrl: http://dev.solace.com
-          shareable: true
+          shareable: ((is_shareable)) 
         tags:
           - solace
           - pubsub 
@@ -1691,8 +1691,6 @@ instance_groups:
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
         username_mgmt_password: ((mgmt_password))
-        username_monitor_globalaccesslevel: read-only
-        username_monitor_password: ((monitor_password))
         service_ssh_port: *service_ssh_port
         service_semp_port: 38080
         service_semp_tlsport: 3943
@@ -1799,8 +1797,6 @@ instance_groups:
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
         username_mgmt_password: ((mgmt_password))
-        username_monitor_globalaccesslevel: read-only
-        username_monitor_password: ((monitor_password))
         service_ssh_port: *service_ssh_port
         service_semp_port: 38080
         service_semp_tlsport: 3943
@@ -1844,8 +1840,6 @@ variables:
 - name: internal_redundancy_group_password
   type: password
 - name: mgmt_password
-  type: password
-- name: monitor_password
   type: password
 - name: vmr_admin_password
   type: password
