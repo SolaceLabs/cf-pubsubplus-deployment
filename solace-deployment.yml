@@ -95,10 +95,6 @@ instance_groups:
         username_admin_password: ((vmr_admin_password))
         username_mgmt_globalaccesslevel: admin
         username_mgmt_password: ((mgmt_password))
-        username_monitor_globalaccesslevel: monitor 
-        username_monitor_password: ((username_monitor_password))
-        username_monitor_user: ((username_monitor_user))
-        monitor_user_enabled: ((monitor_user_enabled))
         service_ssh_port: &service_ssh_port 3022
         service_semp_port: 8080
         service_semp_tlsport: 943
@@ -108,6 +104,10 @@ instance_groups:
         is_ha: ((plans.enterprise_shared.isHA))
         broker_agent_port: 18080
         node_role: 'primary'
+        username_monitor_globalaccesslevel: read-only
+        username_monitor_password: ((username_monitor_password))
+        username_monitor_user: ((username_monitor_user))
+        monitor_user_enabled: ((monitor_user_enabled))
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
