@@ -1241,6 +1241,8 @@ instance_groups:
       domain: ((system_domain))
       ldap_config:
         value: disabled
+      binding_config:
+        value: ip_addresses
       management_access_auth_scheme:
         value: vmr_internal
       org: ((solace_broker_cf_organization))
