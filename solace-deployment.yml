@@ -740,6 +740,7 @@ instance_groups:
         service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
+        instances_retrievable: false
         metadata:
           displayName: This Service is reserved for use by the Solace PubSub+ Deployment. Operators should NOT make this service or any of its plans accessible to users outside the solace org or solace-broker space.
         tags:
