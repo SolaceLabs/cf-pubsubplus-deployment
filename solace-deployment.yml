@@ -613,6 +613,7 @@ instance_groups:
       solace_pubsub_standard_plan_4: { from: standard_plan_4_list }
       mysql: { from: mysql-proxy }
     properties:
+      solace_service_name: ((solace_service_name))
       app_domains:
       - ((app_domain))
       application_access_auth_scheme:
@@ -743,6 +744,7 @@ instance_groups:
         service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
+        instances_retrievable: false
         metadata:
           displayName: This Service is reserved for use by the Solace PubSub+ Deployment. Operators should NOT make this service or any of its plans accessible to users outside the solace org or solace-broker space.
         tags:
@@ -994,7 +996,7 @@ instance_groups:
               instances: 1
               networks: [default]
               azs: [z1]
-          updates: *updates
+          update: *updates
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
@@ -1224,6 +1226,7 @@ instance_groups:
       mysql: { from: mysql-proxy }
       credhub: { from: credhub, deployment: ((cf_deployment)) }
     properties:
+      solace_service_name: ((solace_service_name))
       apply_open_security_group: true
       app_domains:
       - ((app_domain))
@@ -1243,6 +1246,8 @@ instance_groups:
       domain: ((system_domain))
       ldap_config:
         value: disabled
+      binding_config:
+        value: ip_addresses
       management_access_auth_scheme:
         value: vmr_internal
       org: ((solace_broker_cf_organization))
