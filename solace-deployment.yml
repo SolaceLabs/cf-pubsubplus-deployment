@@ -104,10 +104,7 @@ instance_groups:
         is_ha: ((plans.enterprise_shared.isHA))
         broker_agent_port: 18080
         node_role: 'primary'
-        username_monitor_globalaccesslevel: read-only
-        username_monitor_password: ((username_monitor_password))
-        username_monitor_user: ((username_monitor_user))
-        monitor_user_enabled: ((monitor_user_enabled))
+        monitor_user_config: disabled
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
@@ -1259,6 +1256,8 @@ instance_groups:
         internal: 
           user: service_broker
           password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+      monitor_user_config: 
+        value: disabled 
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
