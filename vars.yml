@@ -58,6 +58,9 @@ mysql_external_password: solace_db_mysql_password
 ## The name of the solace pubsub+ service in the marketplace
 solace_service_name: solace-pubsub
 
+# Whether the solace service is shareable across orgs and spaces or not
+is_shareable: true
+
 ## The definition of the plans available for the solace pubsub+ service
 plans:
   standard_medium:
