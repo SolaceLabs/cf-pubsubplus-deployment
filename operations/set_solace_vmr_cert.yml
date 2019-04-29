@@ -382,6 +382,9 @@
   path: /instance_groups/name=management/jobs/name=deploy-all/properties/tls_config/selected_option?/broker_validate_cert_disabled?
   value: false
 - type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/tls_config/selected_option?/enable_client_certificates
+  value: ((enable_client_certificates))
+- type: replace
   path: /instance_groups/name=management/jobs/name=deploy-all/properties/tls_config/selected_option?/rsa_server_cert/private_key_pem?
   value: ((solace_vmr_cert.private_key))
 - type: replace

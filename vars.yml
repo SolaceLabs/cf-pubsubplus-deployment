@@ -61,6 +61,9 @@ solace_service_name: solace-pubsub
 # Whether the solace service is shareable across orgs and spaces or not
 is_shareable: true
 
+# Whether client certificate validation is enabled
+enable_client_certificates: true
+
 ## The definition of the plans available for the solace pubsub+ service
 plans:
   standard_medium:
