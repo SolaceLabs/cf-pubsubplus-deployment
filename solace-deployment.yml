@@ -1675,6 +1675,9 @@ instance_groups:
       security:
         password: ((service_broker_password))
         user: ((service_broker_user))
+      config:
+        settings:
+          node_role: 'primary'
   - name: route_internal
     release: solace-pubsub
     consumes:
