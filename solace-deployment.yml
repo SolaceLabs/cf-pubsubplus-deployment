@@ -1261,8 +1261,7 @@ instance_groups:
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
-      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
-      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))	
       service_catalog_static_inventory:
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
@@ -1657,6 +1656,29 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+    properties:
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
+      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+        ssl_certs: |
+          ((router_ca.certificate))
+          ((application_ca.certificate))
+          ((service_cf_internal_ca.certificate))
+          ((uaa_ca.certificate))
+      ssl:
+        skip_cert_verify: true
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      config:
+        settings:
+          node_role: 'primary'
   - name: route_internal
     release: solace-pubsub
     consumes:
