@@ -1240,6 +1240,8 @@ instance_groups:
       uaa:
         admin_client: admin
         admin_client_secret: ((uaa_admin_client_secret))
+        services_credhub_client: services_credhub_client
+        services_credhub_client_secret: ((uaa_services_credhub_client_secret))
       domain: ((system_domain))
       ldap_config:
         value: disabled
