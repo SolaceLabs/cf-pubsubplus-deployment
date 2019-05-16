@@ -104,6 +104,7 @@ instance_groups:
         is_ha: ((plans.enterprise_shared.isHA))
         broker_agent_port: 18080
         node_role: 'primary'
+        monitor_user_config: disabled
         starting_port: ((starting_port))
         edition: ((vmr_edition))
         vmr_debug_logs: disabled
@@ -740,6 +741,7 @@ instance_groups:
         service_description: Solace PubSub+ Message Broker BOSH Deployment
         bindable: true
         plan_updatable: true
+        instances_retrievable: false
         metadata:
           displayName: This Service is reserved for use by the Solace PubSub+ Deployment. Operators should NOT make this service or any of its plans accessible to users outside the solace org or solace-broker space.
         tags:
@@ -991,7 +993,7 @@ instance_groups:
               instances: 1
               networks: [default]
               azs: [z1]
-          updates: *updates
+          update: *updates
           properties:
             cf_api_host: api.((system_domain))
             containers: *containers
@@ -1243,6 +1245,8 @@ instance_groups:
       domain: ((system_domain))
       ldap_config:
         value: disabled
+      binding_config:
+        value: ip_addresses
       management_access_auth_scheme:
         value: vmr_internal
       org: ((solace_broker_cf_organization))
@@ -1254,11 +1258,12 @@ instance_groups:
         internal: 
           user: service_broker
           password: ((cf_mysql_mysql_seeded_databases_service_broker_password))
+      monitor_user_config: 
+        value: disabled 
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
       default_orphaned_resource_policy: Abort
-      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
-      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))	
       service_catalog_static_inventory:
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
@@ -1272,6 +1277,7 @@ instance_groups:
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
           supportUrl: http://dev.solace.com
+          shareable: ((is_shareable))
         tags:
           - solace
           - pubsub 
@@ -1514,6 +1520,7 @@ instance_groups:
           longDescription: Solace PubSub+ Message Broker for real-time, multi-protocol data distribution
           documentationUrl: http://docs.pivotal.io/partners/solace-pubsub/
           supportUrl: http://dev.solace.com
+          shareable: ((is_shareable)) 
         tags:
           - solace
           - pubsub 
@@ -1651,6 +1658,29 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+    properties:
+      user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
+      on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      app_domains:
+      - ((app_domain))
+      application_access_auth_scheme:
+        value: vmr_internal
+      cf:
+        admin_password: ((cf_admin_password))
+        admin_user: admin
+        ssl_certs: |
+          ((router_ca.certificate))
+          ((application_ca.certificate))
+          ((service_cf_internal_ca.certificate))
+          ((uaa_ca.certificate))
+      ssl:
+        skip_cert_verify: true
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
+      config:
+        settings:
+          node_role: 'primary'
   - name: route_internal
     release: solace-pubsub
     consumes:
