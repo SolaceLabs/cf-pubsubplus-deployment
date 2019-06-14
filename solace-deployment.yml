@@ -13,6 +13,8 @@ releases:
   version: ((cf_mysql_version))
 - name: solace-service-adapter
   version: latest
+- name: bpm
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -23,6 +25,12 @@ stemcells:
 - alias: default
   os: ((bosh_stemcell))
   version: ((bosh_stemcell_version))
+addons:
+  # Broker uses BPM to isolate co-located BOSH jobs from one another
+  - name: bpm
+    jobs:
+    - name: bpm
+      release: bpm
 instance_groups:
 - name: enterprise-shared
   stemcell: default
