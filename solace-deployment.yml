@@ -26,7 +26,6 @@ stemcells:
   os: ((bosh_stemcell))
   version: ((bosh_stemcell_version))
 addons:
-  # Broker uses BPM to isolate co-located BOSH jobs from one another
   - name: bpm
     jobs:
     - name: bpm
