@@ -53,13 +53,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -163,13 +163,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -213,13 +213,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -263,13 +263,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -313,13 +313,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -363,13 +363,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -413,13 +413,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -463,13 +463,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -513,13 +513,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -563,13 +563,13 @@ instance_groups:
     release: solace-pubsub
     consumes: {}
   - name: route_registrar
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
   - name: route_registrar_active
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
@@ -728,9 +728,12 @@ instance_groups:
             password: ((cf_admin_password))
       service_deployment:
         releases:
+        - name: route-registrar
+          version: ((route_registrar_version))
+          jobs: [ route_registrar, route_registrar_active ]
         - name: solace-pubsub
           version: ((solace_pubsub_version))
-          jobs: [ containers, route_registrar, route_registrar_active, pubsub_common, pubsub_config, broker_agent ]
+          jobs: [ containers, pubsub_common, pubsub_config, broker_agent ]
         - name: docker
           version: ((docker_version))
           jobs: [ docker ]
@@ -1711,7 +1714,7 @@ instance_groups:
         settings:
           node_role: 'primary'
   - name: route_internal
-    release: solace-pubsub
+    release: route-registrar
     consumes:
       nats_link:
         from: nats
