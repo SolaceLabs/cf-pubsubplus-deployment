@@ -1,9 +1,8 @@
 solace_load_version: soltr_9.3.0.22
 bosh_stemcell: "ubuntu-xenial"
-bosh_stemcell_version: "97.32"
+bosh_stemcell_version: "456.27"
 solace_service_broker_jar: solace-service-broker-0.0.1301.jar
 solace_service_broker_name: solace-service-broker-0.0.1301
-cf_mysql_version: "36.18.0"
-docker_version: "35.0.0"
+cf_mysql_version: "36.19.0"
+docker_version: "35.3.3"
 route_registrar_version: "1.0.0"
-
