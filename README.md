@@ -28,10 +28,10 @@ This project takes advantage of new features such as:
 ## Prerequisites
 
 - A deployment of [BOSH](https://github.com/cloudfoundry/bosh)
-- A deployment of [Cloud Foundry](https://github.com/cloudfoundry/cf-deployment), tested on v3.0.0
+- A deployment of [Cloud Foundry](https://github.com/cloudfoundry/cf-deployment), tested on v12.0.0
 - Instructions for installing BOSH and Cloud Foundry can be found at https://docs.cloudfoundry.org/.
 - Stemcell: ubuntu-xenial, tested on version: "97.32"
-- Compatible Solace PubSub BOSH releases: Version 2.2.x
+- Compatible Solace PubSub BOSH releases: Version 2.5.x
 - Operator resolving BOSH cloud-config
 
    For correct resource allocation for each vm_type and plan please consult [Solace Pivotal Tile Installation Documentation](https://docs.pivotal.io/partners/solace-pubsub/installing.html)
@@ -43,9 +43,11 @@ These Solace provided BOSH Releases can be obtained from Solace, or extracted fr
 - solace-pubsub
 - solace-pubsub-broker
 - solace-service-adapter
-- docker-33.0.0
-- cf-mysql-36.16.0
-- on-demand-service-broker-0.24.0.
+- solace-bosh-dns-aliases
+- docker-35.0.0
+- cf-mysql-36.18.0
+- on-demand-service-broker-0.26.1
+- cf-cli-1.18.0
 
 Using the Solace Pivotal Tile you can extract the necessary BOSH releases that need to be used for this deployment.
 
@@ -57,24 +59,26 @@ Please download or obtain a Solace Pivotal Tile file and keep it around for late
 For example, download version 2.2.1 and place it in:
 
 ~~~~
-cf-solace-messaging-deployment/workspace/solace-pubsub-2.2.1.pivotal
+cf-solace-messaging-deployment/workspace/solace-pubsub-2.5.1.pivotal
 ~~~~
 
 The Solace Pivotal Tile file is a zip file from which we can extract the required BOSH releases.
 
 ~~~~
 cd workspace
-unzip -o -d . solace-pubsub-2.2.1.pivotal releases/*.tgz
+unzip -o -d . solace-pubsub-2.5.1.pivotal releases/*.tgz
 ~~~~
 
 Example of uploading the Solace provided releases to BOSH.
 ~~~~
-bosh upload-release workspace/releases/cf-mysql-36.16.0.tgz
-bosh upload-release workspace/releases/docker-33.0.0.tgz
-bosh upload-release workspace/releases/on-demand-service-broker-0.24.0.tgz
-bosh upload-release workspace/releases/solace-pubsub-broker-2.2.1.tgz
-bosh upload-release workspace/releases/solace-pubsub-2.2.1.tgz
-bosh upload-release workspace/releases/solace-service-adapter-2.2.1.tgz
+bosh upload-release workspace/releases/cf-mysql-36.18.0.tgz
+bosh upload-release workspace/releases/docker-35.0.0.tgz
+bosh upload-release workspace/releases/on-demand-service-broker-0.26.1.tgz
+bosh upload-release workspace/releases/cf-cli-1.18.0.tgz
+bosh upload-release workspace/releases/solace-pubsub-broker-2.5.1.tgz
+bosh upload-release workspace/releases/solace-pubsub-2.5.1.tgz
+bosh upload-release workspace/releases/solace-service-adapter-2.5.1.tgz
+bosh upload-release workspace/releases/solace-bosh-dns-aliases-0.0.3.tgz
 ~~~~
 
 For deployment on bosh-lite, docker bosh release version 31.0.1 must be used.
