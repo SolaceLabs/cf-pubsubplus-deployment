@@ -48,6 +48,7 @@
 - type: replace
   path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-shared/properties/config/settings/edition
   value: 'enterprise'
+
 - type: replace
   path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=enterprise-large/properties/config/settings/edition
   value: 'enterprise'
@@ -75,3 +76,41 @@
 - type: replace
   path: /instance_groups/name=management/jobs/name=broker/properties/service_catalog/plans/pool_name=standard-plan-4/properties/config/settings/edition
   value: 'enterprise'
+
+
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-shared/productKey?
+  value: ((plans.enterprise_shared.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-shared/productKey?
+  value: ((plans.enterprise_shared.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-large/productKey?
+  value: ((plans.enterprise_large.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-large/productKey?
+  value: ((plans.enterprise_large.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-medium-ha/productKey?
+  value: ((plans.enterprise_medium_ha.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-medium-ha/productKey?
+  value: ((plans.enterprise_medium_ha.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-large-ha/productKey?
+  value: ((plans.enterprise_large_ha.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-large-ha/productKey?
+  value: ((plans.enterprise_large_ha.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-plan-5/productKey?
+  value: ((plans.enterprise_plan_5.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-plan-5/productKey?
+  value: ((plans.enterprise_plan_5.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/service_catalog_static_inventory/plans/poolName=enterprise-plan-6/productKey?
+  value: ((plans.enterprise_plan_6.productKey))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/service_catalog_static_inventory/plans/poolName=enterprise-plan-6/productKey?
+  value: ((plans.enterprise_plan_6.productKey))

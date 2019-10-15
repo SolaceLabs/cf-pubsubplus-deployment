@@ -100,6 +100,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 5
+    productKey: ""
     quota: 1
   enterprise_large:
     name: enterprise-large
@@ -107,6 +108,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_medium_ha:
     name: enterprise-medium-ha
@@ -114,6 +116,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_large_ha:
     name: enterprise-large-ha
@@ -121,6 +124,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_plan_5:
     name: enterprise-plan-5
@@ -128,6 +132,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_plan_6:
     name: enterprise-plan-6
@@ -135,4 +140,5 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
