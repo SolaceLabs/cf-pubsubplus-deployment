@@ -710,6 +710,9 @@ instance_groups:
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
+      # Global errand upgrade-all-service-instances properties
+      canaries: ((on_demand_upgrade_canaries))
+      max_in_flight: ((on_demand_upgrade_max_in_flight))
       bosh:
         url: ((bosh_host))
         authentication:
@@ -1695,6 +1698,8 @@ instance_groups:
     properties:
       user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))
       on_demand_upgrade_task_timer: ((on_demand_upgrade_task_timer))
+      on_demand_upgrade_canaries: ((on_demand_upgrade_canaries))
+      on_demand_upgrade_max_in_flight: ((on_demand_upgrade_max_in_flight))
       app_domains:
       - ((app_domain))
       application_access_auth_scheme:
