@@ -21,6 +21,10 @@ user_controlled_upgrade_on_demand_instances: false
 # On demand upgrade task timer
 on_demand_upgrade_task_timer: 0,15,30,45 * * * *
 
+## Controls the parallel execution of on demand broker upgrade tasks with BOSH
+on_demand_upgrade_canaries: 1
+on_demand_upgrade_max_in_flight: 3
+
 # This is the password set for the "admin" user on the VMR
 vmr_admin_password: admin1
 
@@ -58,6 +62,12 @@ mysql_external_password: solace_db_mysql_password
 ## The name of the solace pubsub+ service in the marketplace
 solace_service_name: solace-pubsub
 
+# Whether the solace service is shareable across orgs and spaces or not
+is_shareable: true
+
+# Whether client certificate validation is enabled
+enable_client_certificates: true
+
 ## The definition of the plans available for the solace pubsub+ service
 plans:
   standard_medium:
@@ -94,6 +104,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 5
+    productKey: ""
     quota: 1
   enterprise_large:
     name: enterprise-large
@@ -101,6 +112,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_medium_ha:
     name: enterprise-medium-ha
@@ -108,6 +120,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_large_ha:
     name: enterprise-large-ha
@@ -115,6 +128,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_plan_5:
     name: enterprise-plan-5
@@ -122,6 +136,7 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: false
     maxVpns: 1
+    productKey: ""
     quota: 1
   enterprise_plan_6:
     name: enterprise-plan-6
@@ -129,4 +144,5 @@ plans:
     point_form_description: [ must be, an array ]
     isHA: true
     maxVpns: 1
+    productKey: ""
     quota: 1
