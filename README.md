@@ -1,4 +1,4 @@
-# CF-SOLACE-PUBSUBPLUS-DEPLOYMENT
+# CF-PUBSUBPLUS-DEPLOYMENT
 
 A Cloud Foundry Solace PubSub+ BOSH Deployment
 
