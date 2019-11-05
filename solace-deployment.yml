@@ -71,12 +71,6 @@ instance_groups:
     containers: &containers
     - dockerfile: |2-
                   FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
       env_file: &env_file /var/vcap/store/pubsub_config/docker_env
       image: solace-bosh
       name: pubsub
@@ -1731,12 +1725,6 @@ instance_groups:
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
       env_file: *env_file
       image: solace-bosh
       name: pubsub
