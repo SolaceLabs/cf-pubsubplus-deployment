@@ -17,6 +17,8 @@ releases:
   version: latest
 - name: solace-route-registrar
   version: ((route_registrar_version))
+- name: syslog
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -66,7 +68,12 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: &syslog
+      migration:
+        disabled: true
     pubsub_config_job: broker_agent
     containers: &containers
     - dockerfile: |2-
@@ -128,6 +135,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+
       env: &config_env
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
@@ -176,7 +184,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -226,7 +237,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -276,7 +290,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -326,7 +343,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -376,7 +396,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -426,7 +449,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -476,7 +502,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -526,7 +555,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -576,7 +608,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -742,6 +777,9 @@ instance_groups:
         - name: docker
           version: ((docker_version))
           jobs: [ docker ]
+        - name: syslog
+          version: 11.5.0
+          jobs: [ syslog_forwarder ]
         stemcell:
           os: ((bosh_stemcell))
           version: ((bosh_stemcell_version))
@@ -785,6 +823,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -837,6 +876,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -879,6 +919,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -933,6 +974,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -970,6 +1012,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1005,6 +1048,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1052,6 +1096,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1101,6 +1146,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1138,6 +1184,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1185,6 +1232,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1204,7 +1252,6 @@ instance_groups:
                 pool_name: enterprise-plan-6
               env:
                 <<: *config_env
-
   - name: delete-all-service-instances
     release: on-demand-service-broker
     properties:
@@ -1726,7 +1773,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: pubsub_internal_config
     containers:
     - dockerfile: |2-
@@ -1832,7 +1882,10 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: pubsub_internal_config
     containers:
     - dockerfile: |2-
