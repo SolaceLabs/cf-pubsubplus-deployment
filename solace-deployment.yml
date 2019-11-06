@@ -1264,7 +1264,7 @@ instance_groups:
       canaries: 1
   - name: cf-cli-6-linux
     release: cf-cli
-  - name: broker-logs
+  - name: solace-broker-logs
     release: solace-pubsub-broker
     properties:
       org: ((solace_broker_cf_organization))
