@@ -1,6 +1,6 @@
 - type: replace
-  path: /instance_groups/name=management/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=management/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=management/properties/syslog/address?
   value: ((syslog.hostname))
@@ -10,10 +10,13 @@
 - type: replace
   path: /instance_groups/name=management/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=management/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 
 - type: replace
-  path: /instance_groups/name=arbitrator/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=arbitrator/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=arbitrator/properties/syslog/address?
   value: ((syslog.hostname))
@@ -23,10 +26,13 @@
 - type: replace
   path: /instance_groups/name=arbitrator/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=arbitrator/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 
 - type: replace
-  path: /instance_groups/name=enterprise-shared/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-shared/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/syslog/address?
   value: ((syslog.hostname))
@@ -36,6 +42,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-shared/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/config/settings/syslog_config/value
   value: enabled
@@ -82,8 +91,8 @@
   path: /instance_groups/name=enterprise-shared/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=enterprise-large/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-large/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/syslog/address?
   value: ((syslog.hostname))
@@ -93,6 +102,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-large/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/config/settings/syslog_config/value
   value: enabled
@@ -139,8 +151,8 @@
   path: /instance_groups/name=enterprise-large/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=enterprise-medium-ha/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-medium-ha/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -150,6 +162,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-medium-ha/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/config/settings/syslog_config/value
   value: enabled
@@ -196,8 +211,8 @@
   path: /instance_groups/name=enterprise-medium-ha/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=enterprise-large-ha/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-large-ha/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -207,6 +222,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-large-ha/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/config/settings/syslog_config/value
   value: enabled
@@ -256,8 +274,8 @@
   path: /instance_groups/name=enterprise-large-ha/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=enterprise-plan-5/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-plan-5/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-plan-5/properties/syslog/address?
   value: ((syslog.hostname))
@@ -267,6 +285,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-plan-5/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-5/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-plan-5/properties/config/settings/syslog_config/value
   value: enabled
@@ -313,8 +334,8 @@
   path: /instance_groups/name=enterprise-plan-5/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=enterprise-plan-6/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=enterprise-plan-6/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=enterprise-plan-6/properties/syslog/address?
   value: ((syslog.hostname))
@@ -324,6 +345,9 @@
 - type: replace
   path: /instance_groups/name=enterprise-plan-6/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=enterprise-plan-6/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=enterprise-plan-6/properties/config/settings/syslog_config/value
   value: enabled
@@ -371,8 +395,8 @@
   value: ((syslog.broker_and_agent_logs))
   
 - type: replace
-  path: /instance_groups/name=standard-medium/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=standard-medium/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=standard-medium/properties/syslog/address?
   value: ((syslog.hostname))
@@ -382,6 +406,9 @@
 - type: replace
   path: /instance_groups/name=standard-medium/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=standard-medium/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=standard-medium/properties/config/settings/syslog_config/value
   value: enabled
@@ -428,8 +455,8 @@
   path: /instance_groups/name=standard-medium/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=standard-medium-ha/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=standard-medium-ha/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -439,6 +466,9 @@
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=standard-medium-ha/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/config/settings/syslog_config/value
   value: enabled
@@ -486,8 +516,8 @@
   value: ((syslog.broker_and_agent_logs))
 
 - type: replace
-  path: /instance_groups/name=standard-plan-3/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=standard-plan-3/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=standard-plan-3/properties/syslog/address?
   value: ((syslog.hostname))
@@ -497,6 +527,9 @@
 - type: replace
   path: /instance_groups/name=standard-plan-3/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=standard-plan-3/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=standard-plan-3/properties/config/settings/syslog_config/value
   value: enabled
@@ -543,8 +576,8 @@
   path: /instance_groups/name=standard-plan-3/properties/syslog_broker_and_agent_logs?
   value: ((syslog.broker_and_agent_logs))
 - type: replace
-  path: /instance_groups/name=standard-plan-4/properties/syslog/migration/disabled
-  value: false
+  path: /instance_groups/name=standard-plan-4/properties/syslog/migration?/disabled
+  value: ((syslog.migration.disabled))
 - type: replace
   path: /instance_groups/name=standard-plan-4/properties/syslog/address?
   value: ((syslog.hostname))
@@ -554,6 +587,9 @@
 - type: replace
   path: /instance_groups/name=standard-plan-4/properties/syslog/port?
   value: ((syslog.port))
+- type: replace
+  path: /instance_groups/name=standard-plan-4/properties/syslog/custom_rule?
+  value: ((syslog.custom_rule))
 - type: replace
   path: /instance_groups/name=standard-plan-4/properties/config/settings/syslog_config/value
   value: enabled
