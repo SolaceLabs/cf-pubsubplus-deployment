@@ -17,6 +17,8 @@ releases:
   version: latest
 - name: solace-route-registrar
   version: ((route_registrar_version))
+- name: bpm
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -593,6 +595,8 @@ instance_groups:
   vm_type: small
   stemcell: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: delete-all
     release: solace-pubsub-broker
     consumes:
@@ -704,6 +708,15 @@ instance_groups:
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
+      service_instances_api:
+        url: https://solace-pubsub-broker.((app_domain))/solace/resources/solace_message_routers/upgrades
+        root_ca_cert: |
+          ((uaa_ca.certificate))
+        disable_ssl_cert_verification: false
+        authentication:
+          basic:
+            username: ((service_broker_user))
+            password: ((service_broker_password))
       # Global errand upgrade-all-service-instances properties
       canaries: ((on_demand_upgrade_canaries))
       max_in_flight: ((on_demand_upgrade_max_in_flight))
@@ -725,6 +738,8 @@ instance_groups:
           user_credentials:
             username: admin
             password: ((cf_admin_password))
+      service_adapter:
+        mount_paths: [ /var/vcap/jobs/service-adapter/config/service-adapter.conf ]
       service_deployment:
         releases:
         - name: solace-route-registrar
@@ -1198,11 +1213,20 @@ instance_groups:
                 pool_name: enterprise-plan-6
               env:
                 <<: *config_env
-
+  - name: delete-all-service-instances-errand
+    release: solace-pubsub-broker
+    properties:
+      polling_interval_seconds: 10
   - name: delete-all-service-instances
     release: on-demand-service-broker
     properties:
       polling_interval_seconds: 10
+  - name: upgrade-all-service-instances-errand
+    release: solace-pubsub-broker
+    properties:
+      max_in_flight: 1
+      polling_interval_seconds: 10
+      canaries: 1
   - name: upgrade-all-service-instances
     release: on-demand-service-broker
     properties:
