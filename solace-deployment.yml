@@ -1797,6 +1797,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        monitor_user_config: disabled
       env:
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
@@ -1903,6 +1904,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        monitor_user_config: disabled
       env:
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
