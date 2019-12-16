@@ -1,6 +1,6 @@
 - type: replace
   path: /instance_groups/name=management/properties/syslog/migration?/disabled
-  value: ((syslog.management_bosh_vm_logs_disabled))
+  value: ((syslog.management_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=management/properties/syslog/address?
   value: ((syslog.hostname))
@@ -22,7 +22,7 @@
 
 - type: replace
   path: /instance_groups/name=arbitrator/properties/syslog/migration?/disabled
-  value: ((syslog.management_bosh_vm_logs_disabled))
+  value: ((syslog.management_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=arbitrator/properties/syslog/address?
   value: ((syslog.hostname))
@@ -44,7 +44,7 @@
 
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-shared/properties/syslog/address?
   value: ((syslog.hostname))
@@ -104,7 +104,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-large/properties/syslog/address?
   value: ((syslog.hostname))
@@ -158,7 +158,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-medium-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -212,7 +212,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-large-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -266,7 +266,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=enterprise-plan-5/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-plan-5/properties/syslog/address?
   value: ((syslog.hostname))
@@ -320,7 +320,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=enterprise-plan-6/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=enterprise-plan-6/properties/syslog/address?
   value: ((syslog.hostname))
@@ -375,7 +375,7 @@
   
 - type: replace
   path: /instance_groups/name=standard-medium/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=standard-medium/properties/syslog/address?
   value: ((syslog.hostname))
@@ -429,7 +429,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=standard-medium-ha/properties/syslog/address?
   value: ((syslog.hostname))
@@ -484,7 +484,7 @@
 
 - type: replace
   path: /instance_groups/name=standard-plan-3/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=standard-plan-3/properties/syslog/address?
   value: ((syslog.hostname))
@@ -538,7 +538,7 @@
   value: ((syslog.vmr_system_logs))
 - type: replace
   path: /instance_groups/name=standard-plan-4/properties/syslog/migration?/disabled
-  value: ((syslog.message_broker_bosh_vm_logs_disabled))
+  value: ((syslog.message_broker_bosh_vm_logs_inversed))
 - type: replace
   path: /instance_groups/name=standard-plan-4/properties/syslog/address?
   value: ((syslog.hostname))
@@ -1007,6 +1007,12 @@
   path: /instance_groups/name=management/jobs/name=deploy-all/properties/syslog_config/selected_option?/syslog_vmr_system_logs?
   value: ((syslog.vmr_system_logs))
 - type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/syslog_config/selected_option?/syslog_management_bosh_vm_logs?
+  value: ((syslog.management_bosh_vm_logs))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=deploy-all/properties/syslog_config/selected_option?/syslog_message_broker_bosh_vm_logs?
+  value: ((syslog.message_broker_bosh_vm_logs))
+- type: replace
   path: /instance_groups/name=management/jobs/name=tests/properties/syslog_config/value
   value: enabled
 - type: replace
@@ -1027,6 +1033,12 @@
 - type: replace
   path: /instance_groups/name=management/jobs/name=tests/properties/syslog_config/selected_option?/syslog_vmr_system_logs?
   value: ((syslog.vmr_system_logs))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/syslog_config/selected_option?/syslog_management_bosh_vm_logs?
+  value: ((syslog.management_bosh_vm_logs))
+- type: replace
+  path: /instance_groups/name=management/jobs/name=tests/properties/syslog_config/selected_option?/syslog_message_broker_bosh_vm_logs?
+  value: ((syslog.message_broker_bosh_vm_logs))
 - type: replace
   path: /instance_groups/name=management/jobs/name=delete-all/properties/syslog_config/value
   value: enabled
