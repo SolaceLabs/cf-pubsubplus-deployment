@@ -1365,6 +1365,7 @@ instance_groups:
         value: disabled 
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
+      message_broker_healthcheck_port: 9090
       default_orphaned_resource_policy: Abort
       user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))	
       user_controlled_auto_upgrade_by_default: true
