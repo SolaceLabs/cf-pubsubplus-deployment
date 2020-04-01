@@ -80,6 +80,7 @@ instance_groups:
     containers: &containers
     - dockerfile: |2-
                   FROM solace-app:latest
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
       env_file: &env_file /var/vcap/store/pubsub_config/docker_env
       image: solace-bosh
       name: pubsub
@@ -729,6 +730,11 @@ instance_groups:
     properties:
       solace_instance_group_name: Primary
       cf_deployment: cf
+      app_domains:
+      - ((app_domain))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
   - name: broker
     provides:
       broker: { as: solace_pubsub_deployment_odb_broker }
@@ -1802,6 +1808,7 @@ instance_groups:
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
       env_file: *env_file
       image: solace-bosh
       name: pubsub
@@ -1906,6 +1913,7 @@ instance_groups:
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
 
                   RUN \
                     echo '#!/bin/bash' > /sbin/dhclient && \
