@@ -34,12 +34,12 @@ This project takes advantage of new features such as:
 - Compatible Solace PubSub BOSH releases: Version 2.5.x
 - Operator resolving BOSH cloud-config
 
-   For correct resource allocation for each vm_type and plan please consult [Solace Pivotal Tile Installation Documentation](https://docs.pivotal.io/partners/solace-pubsub/installing.html)
+   For correct resource allocation for each vm_type and plan please consult [Solace Tanzu Tile Installation Documentation](https://docs.pivotal.io/partners/solace-pubsub/installing.html)
 
 
 ### The Solace BOSH Releases
 
-These Solace provided BOSH Releases can be obtained from Solace, or extracted from a Solace Pivotal Tile.
+These Solace provided BOSH Releases can be obtained from Solace, or extracted from a Solace Tanzu Tile.
 - solace-pubsub
 - solace-pubsub-broker
 - solace-service-adapter
@@ -49,12 +49,12 @@ These Solace provided BOSH Releases can be obtained from Solace, or extracted fr
 - on-demand-service-broker-0.26.1
 - cf-cli-1.18.0
 
-Using the Solace Pivotal Tile you can extract the necessary BOSH releases that need to be used for this deployment.
+Using the Solace Tanzu Tile you can extract the necessary BOSH releases that need to be used for this deployment.
 
-* The Solace Pivotal Evaluation Tile is available for download from [PivNet](https://network.pivotal.io/products/solace-pubsub/).
-* The Solace Pivotal Enterprise Tile is available by contacting Solace.
+* The Solace Tanzu Evaluation Tile is available for download from [Tanzu Network](https://network.pivotal.io/products/solace-pubsub/).
+* The Solace Tanzu Enterprise Tile is available by contacting Solace.
 
-Please download or obtain a Solace Pivotal Tile file and keep it around for later use. 
+Please download or obtain a Solace Tanzu Tile file and keep it around for later use. 
 
 For example, download version 2.6.0 and place it in:
 
@@ -62,7 +62,7 @@ For example, download version 2.6.0 and place it in:
 workspace/solace-pubsub-2.6.0.pivotal
 ~~~~
 
-The Solace Pivotal Tile file is a zip file from which we can extract the required BOSH releases.
+The Solace Tanzu Tile file is a zip file from which we can extract the required BOSH releases.
 
 ~~~~
 cd workspace
@@ -230,7 +230,7 @@ This project is licensed under the Apache License, Version 2.0. - See the [LICEN
 ## Resources
 
 For more information about Bosh, Cloud Foundry and the Solace PubSub+ service these resources:
-- [Solace PubSub+ for Pivotal Platform](https://docs.pivotal.io/partners/solace-pubsub/)
+- [Solace PubSub+ for VMware Tanzu](https://docs.pivotal.io/partners/solace-pubsub/)
 - [Solace PubSub+ tutorials and sample application for Cloud Foundry](https://dev.solace.com/samples/solace-samples-cloudfoundry-java/)
 - [Cloud Foundry Documentation](https://docs.cloudfoundry.org/)
 - [Bosh Documentation](https://bosh.io/docs)
@@ -239,6 +239,5 @@ For more information about Bosh, Cloud Foundry and the Solace PubSub+ service th
 
 For more information about Solace technology in general please visit these resources:
 
-- The Solace Developer Portal website at: https://dev.solace.com
-- Understanding [Solace technology.](https://dev.solace.com/tech/)
-- Ask the [Solace community](https://dev.solace.com/community/).
+- The Solace Developer Portal website at: https://solace.dev
+- Ask the [Solace community](https://solace.community).
