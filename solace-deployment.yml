@@ -1362,6 +1362,8 @@ instance_groups:
       security:
         password: ((service_broker_password))
         user: ((service_broker_user))
+      service_broker_dashboard_client_user: solace
+      service_broker_dashboard_client_password: ((service_broker_dashboard_client_password))
       mysql_config:
         value: internal
         internal: 
@@ -1982,6 +1984,8 @@ instance_groups:
         redundancy_group_password: ((internal_redundancy_group_password))
 
 variables:
+- name: service_broker_dashboard_client_password
+  type: password
 - name: internal_redundancy_group_password
   type: password
 - name: mgmt_password
