@@ -132,6 +132,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        enable_rest_routes: ((enable_rest_routes))
 
       env: &config_env
         broker_hostname: solace-pubsub-broker.((app_domain))
@@ -1549,6 +1550,8 @@ instance_groups:
       db_encryption_key_prev: ((db_encryption_key_prev))
       web_hook_config: 
         value: disabled
+      log_retention_config:
+        value: max_size
   - name: tests
     release: solace-pubsub
     provides: {}
