@@ -1552,6 +1552,7 @@ instance_groups:
         value: disabled
       log_retention_config:
         value: max_size
+      enable_rest_routes: ((enable_rest_routes))
   - name: tests
     release: solace-pubsub
     provides: {}
