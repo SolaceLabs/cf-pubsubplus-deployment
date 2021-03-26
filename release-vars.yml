@@ -5,4 +5,5 @@ solace_service_broker_jar: solace-service-broker-0.0.1356.jar
 solace_service_broker_name: solace-service-broker-0.0.1356
 cf_mysql_version: "36.19.0"
 docker_version: "35.3.3"
-route_registrar_version: "1.0.0"
+route_registrar_version: "1.2.0"
+syslog_version: "11.6.1"

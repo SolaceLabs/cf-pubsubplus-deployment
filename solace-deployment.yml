@@ -17,6 +17,10 @@ releases:
   version: latest
 - name: solace-route-registrar
   version: ((route_registrar_version))
+- name: syslog
+  version: latest
+- name: bpm
+  version: latest
 update:
   canaries: 1
   canary_watch_time: 30000-240000
@@ -66,23 +70,23 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: &syslog
+      migration:
+        disabled: true
     pubsub_config_job: broker_agent
     containers: &containers
     - dockerfile: |2-
                   FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
       env_file: &env_file /var/vcap/store/pubsub_config/docker_env
       image: solace-bosh
       name: pubsub
       net: host
       privileged: true
-      shm_size: 2G
+      shm_size: 1G
       uts: host
       volumes: &volumes
       - /var/vcap/store/containers/pubsub/volumes/jail:/usr/sw/jail
@@ -128,6 +132,8 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        enable_rest_routes: ((enable_rest_routes))
+
       env: &config_env
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
@@ -176,7 +182,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -226,7 +235,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -276,7 +288,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -326,7 +341,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -376,7 +394,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -426,7 +447,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -476,7 +500,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -526,7 +553,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -576,7 +606,10 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: broker_agent
     containers: *containers
     config:
@@ -599,6 +632,8 @@ instance_groups:
   vm_type: small
   stemcell: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: delete-all
     release: solace-pubsub-broker
     consumes:
@@ -696,6 +731,11 @@ instance_groups:
     properties:
       solace_instance_group_name: Primary
       cf_deployment: cf
+      app_domains:
+      - ((app_domain))
+      security:
+        password: ((service_broker_password))
+        user: ((service_broker_user))
   - name: broker
     provides:
       broker: { as: solace_pubsub_deployment_odb_broker }
@@ -710,6 +750,15 @@ instance_groups:
       username: ((service_broker_user))
       password: ((service_broker_password))
       shutdown_timeout_in_seconds: 10
+      service_instances_api:
+        url: https://solace-pubsub-broker.((app_domain))/solace/resources/solace_message_routers/upgrades
+        root_ca_cert: |
+          ((uaa_ca.certificate))
+        disable_ssl_cert_verification: false
+        authentication:
+          basic:
+            username: ((service_broker_user))
+            password: ((service_broker_password))
       # Global errand upgrade-all-service-instances properties
       canaries: ((on_demand_upgrade_canaries))
       max_in_flight: ((on_demand_upgrade_max_in_flight))
@@ -731,6 +780,8 @@ instance_groups:
           user_credentials:
             username: admin
             password: ((cf_admin_password))
+      service_adapter:
+        mount_paths: [ /var/vcap/jobs/service-adapter/config/service-adapter.conf ]
       service_deployment:
         releases:
         - name: solace-route-registrar
@@ -742,6 +793,9 @@ instance_groups:
         - name: docker
           version: ((docker_version))
           jobs: [ docker ]
+        - name: syslog
+          version: ((syslog_version))
+          jobs: [ syslog_forwarder ]
         stemcell:
           os: ((bosh_stemcell))
           version: ((bosh_stemcell_version))
@@ -785,6 +839,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -837,6 +892,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -879,6 +935,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -933,6 +990,7 @@ instance_groups:
             max_in_flight: 1
             serial: true
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -970,6 +1028,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1005,6 +1064,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1052,6 +1112,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1101,6 +1162,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1138,6 +1200,7 @@ instance_groups:
               azs: [z1]
           update: *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             config:
@@ -1185,6 +1248,7 @@ instance_groups:
               azs: [z3]
           update:  *updates
           properties:
+            syslog: *syslog
             cf_api_host: api.((system_domain))
             containers: *containers
             plan:
@@ -1204,11 +1268,20 @@ instance_groups:
                 pool_name: enterprise-plan-6
               env:
                 <<: *config_env
-
+  - name: delete-all-service-instances-errand
+    release: solace-pubsub-broker
+    properties:
+      polling_interval_seconds: 10
   - name: delete-all-service-instances
     release: on-demand-service-broker
     properties:
       polling_interval_seconds: 10
+  - name: upgrade-all-service-instances-errand
+    release: solace-pubsub-broker
+    properties:
+      max_in_flight: 1
+      polling_interval_seconds: 10
+      canaries: 1
   - name: upgrade-all-service-instances
     release: on-demand-service-broker
     properties:
@@ -1217,7 +1290,7 @@ instance_groups:
       canaries: 1
   - name: cf-cli-6-linux
     release: cf-cli
-  - name: broker-logs
+  - name: solace-broker-logs
     release: solace-pubsub-broker
     properties:
       org: ((solace_broker_cf_organization))
@@ -1290,6 +1363,8 @@ instance_groups:
       security:
         password: ((service_broker_password))
         user: ((service_broker_user))
+      service_broker_dashboard_client_user: solace
+      service_broker_dashboard_client_password: ((service_broker_dashboard_client_password))
       mysql_config:
         value: internal
         internal: 
@@ -1299,8 +1374,10 @@ instance_groups:
         value: disabled 
       secure_service_credentials: ((secure_service_credentials))
       application_security_groups: ((application_security_groups))
+      message_broker_healthcheck_port: 9090
       default_orphaned_resource_policy: Abort
       user_controlled_upgrade_on_demand_instances: ((user_controlled_upgrade_on_demand_instances))	
+      user_controlled_auto_upgrade_by_default: true
       service_catalog_static_inventory:
         id: 9b629341-3e08-47f1-bd56-aa05e78a47f3
         service_name: solace-pubsub
@@ -1473,6 +1550,9 @@ instance_groups:
       db_encryption_key_prev: ((db_encryption_key_prev))
       web_hook_config: 
         value: disabled
+      log_retention_config:
+        value: max_size
+      enable_rest_routes: ((enable_rest_routes))
   - name: tests
     release: solace-pubsub
     provides: {}
@@ -1726,25 +1806,23 @@ instance_groups:
       nats_link:
         from: nats
         deployment: ((cf_deployment))
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: pubsub_internal_config
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
-
-                  RUN \
-                    echo '#!/bin/bash' > /sbin/dhclient && \
-                    echo 'exit 0' >> /sbin/dhclient && \
-                    echo '3a:40:d5:42:f4:86' > /usr/sw/.nodeIdentifyingMacAddr && \
-                    chmod +x /sbin/dhclient
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
       env_file: *env_file
       image: solace-bosh
       name: pubsub
       net: host
       privileged: true
       shm_size: 1G
-      memory: 1G
-      memory_swap: 2G
+      memory: 2.5G
+      memory_swap: 2.5G # use RAM in bosh-lite as swap is not properly created
       uts: host
       volumes: *volumes
     plan:
@@ -1785,6 +1863,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        monitor_user_config: disabled
       env:
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
@@ -1832,11 +1911,15 @@ instance_groups:
     consumes:
       message_broker: { from: internal_pubsub }
       monitor: { from: internal_monitor }
+  - name: syslog_forwarder
+    release: syslog
   properties:
+    syslog: *syslog
     pubsub_config_job: pubsub_internal_config
     containers:
     - dockerfile: |2-
                   FROM solace-app:latest
+                  HEALTHCHECK CMD (printenv service_semp_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I % bash -c "netstat -tulpn | egrep '0.0.0.0:%'") && (printenv service_semp_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{} -o /dev/null | xargs -I % test % -eq 200") && (printenv nodetype | xargs -I % test % == "monitoring" || printenv service_healthcheck_port | xargs -I {} bash -c "curl -sL -X GET -w '%{http_code}' 0.0.0.0:{}/health-check/direct-active -o /dev/null | xargs -I % test % -eq 200 -o % -eq 503")
 
                   RUN \
                     echo '#!/bin/bash' > /sbin/dhclient && \
@@ -1849,8 +1932,8 @@ instance_groups:
       net: host
       privileged: true
       shm_size: 1G
-      memory: 1G
-      memory_swap: 2G
+      memory: 2.5G
+      memory_swap: 2.5G
       uts: host
       volumes: *volumes
     plan:
@@ -1891,6 +1974,7 @@ instance_groups:
             tcp_route_enabled: not_allowed
           value: disabled
         tcp_routes_enabled: disabled
+        monitor_user_config: disabled
       env:
         broker_hostname: solace-pubsub-broker.((app_domain))
         broker_password: ((service_broker_password))
@@ -1904,6 +1988,8 @@ instance_groups:
         redundancy_group_password: ((internal_redundancy_group_password))
 
 variables:
+- name: service_broker_dashboard_client_password
+  type: password
 - name: internal_redundancy_group_password
   type: password
 - name: mgmt_password
